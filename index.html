@@ -104,6 +104,12 @@
           <td>true</td>
         </tr>
         <tr>
+          <td>threshold</td>
+          <td>минимальное смещение указателя для смены слайда</td>
+          <td>Number</td>
+          <td>30</td>
+        </tr>
+        <tr>
           <td>keyboard</td>
           <td>управление стрелками клавиатуры</td>
           <td>Boolean</td>
@@ -122,28 +128,22 @@
           <td>true</td>
         </tr>
         <tr>
-          <td>pagination</td>
-          <td>пагинация</td>
-          <td>Boolean</td>
-          <td>true</td>
-        </tr>
-        <tr>
-          <td>navNextVal</td>
-          <td>текст кнопки назад</td>
-          <td>String</td>
-          <td>Next</td>
-        </tr>
-        <tr>
           <td>navPrevVal</td>
-          <td>текст кнопки вперед</td>
+          <td>текст кнопки назад</td>
           <td>String</td>
           <td>Prev</td>
         </tr>
         <tr>
-          <td>threshold</td>
-          <td>минимальное смещение указателя для смены слайда</td>
-          <td>Number</td>
-          <td>30</td>
+          <td>navNextVal</td>
+          <td>текст кнопки вперед</td>
+          <td>String</td>
+          <td>Next</td>
+        </tr>
+        <tr>
+          <td>pagination</td>
+          <td>пагинация</td>
+          <td>Boolean</td>
+          <td>true</td>
         </tr>
         <tr>
           <td>onReady</td>
@@ -229,13 +229,9 @@
   <script>
     const crystalSlider = new CrystalSlider({
       keyboard: true,
-      loop: false,
       easing: 'cubic-bezier(0.785, 0.135, 0.15, 0.86)',
       navPrevVal: '',
       navNextVal: '',
-      draggable: true,
-      // nav: false,
-      // pagination: true,
 
       beforeChange: function () {
         console.log('Before change');
