@@ -1,7 +1,8 @@
 /*
-  Name   : Crystal Slider
-  Author : Vadim Bogomazov
-  Github : https://github.com/VadimBogomazov/CrystalSlider
+  Name    : Crystal Slider
+  Version : 1.0.0
+  Github  : https://github.com/VadimBogomazov/CrystalSlider
+  Author  : Vadim Bogomazov
 */
 
 (function (window) {
