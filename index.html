@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Crystal Slider</title>
+
+  <meta name="viewport" content="width=device-width,user-scalable=no">
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="dist/crystalslider.min.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <h1 class="page-wrapper__title">Crystal Slider</h1>
+  
+    <div class="crystal-slider">
+      <div>
+        <img src="img/slide-1.jpg" alt="">
+      </div>
+      <div>
+        <img src="img/slide-2.jpg" alt="">
+      </div>
+      <div>
+        <img src="img/slide-3.jpg" alt="">
+      </div>
+      <div>
+        <img src="img/slide-4.jpg" alt="">
+      </div>
+    </div>
+
+    <div class="page-section">
+      <h2>Особенности</h2>
+      <ul>
+        <li>легкий JavaScript слайдер с минимально необходимым функционалом;</li>
+        <li>без зависимостей;</li>
+        <li>адаптивный;</li>
+        <li>поддержка touch-устройств;</li>
+      </ul>
+
+      <h2>Как установить</h2>
+      <p>Базовая разметка HTML в документе:</p>
+
+      <pre><code>&lt;div class="crystal-slider"&gt;
+  &lt;div&gt;
+    &lt;img src="img/slide-1.jpg" alt=""&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;img src="img/slide-2.jpg" alt=""&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;img src="img/slide-3.jpg" alt=""&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      <p>CSS слайдера разделен на стили, необходимые для работы плагина, и базовую тему. Просто подключите файл crystalslider.css в ваш документ:</p>
+
+      <pre><code>&lt;link rel="stylesheet" href="css/crystalslider.css"&gt;</code></pre>
+
+      <p>Инициализация плагина:</p>
+      <pre><code>&lt;script src="js/crystalslider.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const crystalSlider = new CrystalSlider();
+&lt;/script&gt;</code></pre>
+
+      <h2>Опции</h2>
+
+      <p>Слайдер принимает следующие опции:</p>
+      <table>
+        <tr>
+          <th>Название</th>
+          <th>Описание</th>
+          <th>Тип</th>
+          <th>По умолчанию</th>
+        </tr>
+        <tr>
+          <td>selector</td>
+          <td>селектор слайдера</td>
+          <td>String</td>
+          <td>.crystal-slider</td>   
+        </tr>
+        <tr>
+          <td>activeSlide</td>
+          <td>индекс активного слайда</td>
+          <td>Number</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>loop</td>
+          <td>цикличность слайдера</td>  
+          <td>Boolean</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>duration</td>
+          <td>продолжительность анимации</td>
+          <td>Number</td>
+          <td>500</td>
+        </tr>
+        <tr>
+          <td>draggable</td>
+          <td>активация/деактивация драга</td>
+          <td>Boolean</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>keyboard</td>
+          <td>управление стрелками клавиатуры</td>
+          <td>Boolean</td>
+          <td>false</td>
+        </tr>
+        <tr>
+          <td>easing</td>
+          <td>функция анимации</td>
+          <td>String</td>
+          <td>ease-out</td>
+        </tr>
+        <tr>
+          <td>nav</td>
+          <td>навигация</td>
+          <td>Boolean</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>pagination</td>
+          <td>пагинация</td>
+          <td>Boolean</td>
+          <td>true</td>
+        </tr>
+        <tr>
+          <td>navNextVal</td>
+          <td>текст кнопки назад</td>
+          <td>String</td>
+          <td>Next</td>
+        </tr>
+        <tr>
+          <td>navPrevVal</td>
+          <td>текст кнопки вперед</td>
+          <td>String</td>
+          <td>Prev</td>
+        </tr>
+        <tr>
+          <td>threshold</td>
+          <td>минимальное смещение указателя для смены слайда</td>
+          <td>Number</td>
+          <td>30</td>
+        </tr>
+        <tr>
+          <td>onReady</td>
+          <td>callback после инициализации слайдера</td>
+          <td>Function</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>beforeChange</td>
+          <td>callback перед сменой слайда</td>
+          <td>Function</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>afterChange</td>
+          <td>callback после смены слайда</td>
+          <td>Function</td>
+          <td></td>
+        </tr>
+      </table>
+
+      <h2>API</h2>
+
+      <h3>Методы</h3>
+
+      <table>
+        <tr>
+          <td>
+            nextSlide()
+          </td>
+          <td>
+            следующий слайд
+          </td>
+        </tr>
+        <tr>
+          <td>
+            prevSlide()
+          </td>
+          <td>
+            предыдущий слайд
+          </td>
+        </tr>
+        <tr>
+          <td>
+            goToSlide(index)
+          </td>
+          <td>
+            переход на слайд с заданным индексом
+          </td>
+        </tr>
+      </table>
+  
+      <h3>Свойства</h3>
+
+      <table>
+        <tr>
+          <td>
+            activeSlide
+          </td>
+          <td>
+            индекс активного слайда
+          </td>
+        </tr>
+        <tr>
+          <td>
+            slidesCount
+          </td>
+          <td>
+            количество слайдов
+          </td>
+        </tr>
+      </table>
+
+      <h2>Дополнительно</h2>
+      <ul>
+        <li>Github проекта: <a href="https://github.com/VadimBogomazov/CrystalSlider">https://github.com/VadimBogomazov/CrystalSlider</a></li>
+        <li>Лицензия: MIT</li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="dist/crystalslider.min.js"></script>
+  <script>
+    const crystalSlider = new CrystalSlider({
+      keyboard: true,
+      loop: false,
+      easing: 'cubic-bezier(0.785, 0.135, 0.15, 0.86)',
+      navPrevVal: '',
+      navNextVal: '',
+      draggable: true,
+      // nav: false,
+      // pagination: true,
+
+      beforeChange: function () {
+        console.log('Before change');
+      },
+      afterChange: function () {
+        console.log('After change');
+      },
+      onReady: function () {
+        console.log('Slider is ready');
+      }
+    });
+  </script>
+</body>
+</html>
