@@ -104,6 +104,12 @@
           <td>true</td>
         </tr>
         <tr>
+          <td>autoHeight</td>
+          <td>изменение высоты под активный слайд</td>
+          <td>Boolean</td>
+          <td>false</td>
+        </tr>
+        <tr>
           <td>threshold</td>
           <td>минимальное смещение указателя для смены слайда</td>
           <td>Number</td>
@@ -220,6 +226,7 @@
       <h2>Дополнительно</h2>
       <ul>
         <li>Github проекта: <a href="https://github.com/VadimBogomazov/CrystalSlider">https://github.com/VadimBogomazov/CrystalSlider</a></li>
+        <li>Версия: 1.0.0</li>
         <li>Лицензия: MIT</li>
       </ul>
     </div>
@@ -228,6 +235,7 @@
   <script src="dist/crystalslider.min.js"></script>
   <script>
     const crystalSlider = new CrystalSlider({
+      autoHeight: true,
       keyboard: true,
       easing: 'cubic-bezier(0.785, 0.135, 0.15, 0.86)',
       navPrevVal: '',

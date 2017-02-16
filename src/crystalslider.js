@@ -26,9 +26,11 @@
         loop        : true,
         duration    : 500,
         draggable   : true,
+        autoHeight  : false,
         threshold   : 30,
         keyboard    : false,
         easing      : 'ease-out',
+
         // Nav
         nav        : true,
         navPrevVal : 'Prev',
@@ -148,6 +150,7 @@
     _setPosition(changeSlide = true) {
       const t = this;
       const opts = t.options;
+      const containerStyle = t._container.style;
       const trackStyle = t._track.style;
 
       t._isMove = true;
@@ -156,9 +159,21 @@
       trackStyle.webkitTransition = `-webkit-transform ${opts.duration}ms ${opts.easing}`;
       trackStyle.transition = `transform ${opts.duration}ms ${opts.easing}`;
 
+      if (opts.autoHeight === true) {
+        containerStyle.webkitTransition = `height ${opts.duration}ms ease-out`;
+        containerStyle.transition = `height ${opts.duration}ms ease-out`;
+      }
+
+
       setTimeout(() => {
         trackStyle.webkitTransition = '';
         trackStyle.transition = '';
+
+        if (opts.autoHeight === true) {
+          containerStyle.webkitTransition = '';
+          containerStyle.transition = '';
+        }
+
         t._isMove = false;
 
         if (changeSlide) {
@@ -202,6 +217,7 @@
       }
 
       t._disableNavBtns();
+      t._setHeight();
       t._setPosition();
     }
 
@@ -216,6 +232,16 @@
 
       t._dragCoords.start = 0;
       t._dragCoords.end   = 0;
+    }
+
+    _setHeight() {
+      const t = this;
+      const opts = t.options;
+      const container = t._container;
+
+      if (opts.autoHeight === false) return;
+
+      container.style.height = `${t._slides[t.activeSlide - 1].clientHeight}px`;
     }
 
     // Build methods
@@ -241,6 +267,7 @@
 
       container.classList.add(t._containerCls);
       container.appendChild(track);
+
       slider.appendChild(container);
 
       // Slide settings
@@ -262,6 +289,7 @@
 
       slider.classList.add(t._sliderReadyCls);
 
+      t._setHeight();
       t._updateWidth();
       t._callSliderEvent(opts.onReady, t.activeSlide, t.slidesCount);
     }
@@ -311,8 +339,8 @@
         <button role="button" class="${t._navBtnCls + ' ' + t._navNextBtnCls}" data-crystal-button="next">${opts.navNextVal}</button>
       `;
 
-      t._nav = nav;
-      t._container.appendChild(t._nav);
+      t._nav = nav
+      t._slider.appendChild(t._nav);
     }
 
     // Events
@@ -470,15 +498,16 @@
       const t     = this;
       const track = t._track;
 
-      clearTimeout(t._windowTimer);
-      t._windowTimer = setTimeout(function() {
+      if (t._windowTimer) clearTimeout(t._windowTimer);
 
+      t._windowTimer = setTimeout(function() {
         t.windowWidth = window.innerWidth;
         t._sliderWidth = t._slider.getBoundingClientRect().width;
         t._transformX  = Math.ceil(-t._sliderWidth * (t.activeSlide - 1));
 
         track.style.width      = `${t._sliderWidth * t.slidesCount}px`;
         track.style[transform] = `translate3d(${t._transformX}px, 0, 0)`;
+        t._setHeight();
       }, 50);
     }
 

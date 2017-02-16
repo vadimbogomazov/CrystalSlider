@@ -14,7 +14,6 @@
   &__track {
     margin: 0;
     padding: 0;
-    display: flex;
 
     &.is-draggable {
       cursor: grab;
@@ -26,6 +25,7 @@
   }
 
   &__slide {
+    float: left;
     position: relative;
   }
 }
@@ -143,4 +143,4 @@
   }
 }
 
-/* /CrystalSlider */ 
+/* /CrystalSlider */
