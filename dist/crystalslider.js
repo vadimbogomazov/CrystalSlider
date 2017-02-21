@@ -455,6 +455,9 @@
     }
 
     _mouseClickHandler(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
       const t       = this;
       const opts    = t.options;
       const target  = e.target;

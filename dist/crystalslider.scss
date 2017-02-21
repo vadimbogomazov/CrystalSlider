@@ -1,4 +1,4 @@
-/* Crystal Slider */
+/* CrystalSlider */
 
 /* Required styles */
 
@@ -35,11 +35,6 @@
     background: none;
     cursor: pointer;
     user-select: none;
-
-    &:focus,
-    &:active {
-      outline: none;
-    }
   }
 }
 
@@ -146,4 +141,4 @@
   }
 }
 
-/* /Crystal Slider */
+/* /CrystalSlider */
