@@ -1,5 +1,7 @@
 # Crystal Slider
 
+### Readme languages: [English](README.md), [Русский](README.ru-Ru.md)
+
 ## Features
 
 - lightweight JavaScript slider with minimally required functionality;
@@ -48,7 +50,7 @@ The last step — include crystalslider.min.js and call plugin:
 
 ## Options
 
-Slider get the following options:
+The slider plugin has the following options:
 
 | Name | Description | Type | Default |
 | ------ | ------ | ------ | ------ |
