@@ -1,4 +1,4 @@
-/* CrystalSlider */
+/* Crystal Slider */
 
 /* Required styles */
 
@@ -8,7 +8,6 @@
 
   &__slides-container {
     overflow: hidden;
-    position: relative;
   }
 
   &__track {
@@ -35,6 +34,11 @@
     background: none;
     cursor: pointer;
     user-select: none;
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
   }
 }
 
@@ -46,6 +50,15 @@
 
 .crystal-slider {
   padding-bottom: 32px;
+
+  &__title {
+    background: rgba(0, 0, 0, .8);
+    bottom: 0;
+    color: #fff;
+    left: 0;
+    position: absolute;
+    right: 0;
+  }
 }
 
 .crystal-slider-nav {
@@ -141,4 +154,4 @@
   }
 }
 
-/* /CrystalSlider */
+/* /Crystal Slider */

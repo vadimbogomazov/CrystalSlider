@@ -8,7 +8,6 @@
 
   &__slides-container {
     overflow: hidden;
-    position: relative;
   }
 
   &__track {
@@ -51,6 +50,17 @@
 
 .crystal-slider {
   padding-bottom: 32px;
+
+  &__title {
+    background: rgba(0, 0, 0, .8);
+    bottom: 0;
+    color: #fff;
+    font-weight: 700;
+    left: 0;
+    padding: 8px 32px;
+    position: absolute;
+    right: 0;
+  }
 }
 
 .crystal-slider-nav {

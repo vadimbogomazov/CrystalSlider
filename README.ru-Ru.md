@@ -1,6 +1,6 @@
 # Crystal Slider
 
-### Языки руководства: [English](README.md), [Русский](README.ru-Ru.md)
+Языки руководства: [English](README.md), [Русский](README.ru-Ru.md)
 
 ## Особенности
 
@@ -57,10 +57,12 @@ CSS слайдера разделен на стили, необходимые д
 | selector | селектор слайдера | String | .crystal-slider |
 | activeSlide | индекс активного слайда | Number | 1 |
 | loop | цикличность слайдера | Boolean | true |
-| duration | продолжительность анимации | Number | 500 |
+| fade | включение/отключение fade режима | Boolean | false |
+| duration | продолжительность анимации (в миллисекундах) | Number | 500 |
 | draggable | включение/отключение драга | Boolean | true |
 | adaptiveHeight | включение/отключение адаптивной высоты для слайдера | Boolean | false |
-| threshold | минимальное смещение указателя для смены слайда | Number | 30 |
+| threshold | минимальное смещение указателя для смены слайда (в пикселях) | Number | 30 |
+| title | включение/отключение заголовков слайдов | Boolean | false |
 | keyboard | управление стрелками клавиатуры | Boolean | false |
 | easing | функция анимации | String | ease-out |
 | nav | включение/отключение навигации | Boolean | true |

@@ -1,6 +1,6 @@
 # Crystal Slider
 
-### Readme languages: [English](README.md), [Русский](README.ru-Ru.md)
+Readme languages: [English](README.md), [Русский](README.ru-Ru.md)
 
 ## Features
 
@@ -57,16 +57,18 @@ The slider plugin has the following options:
 | selector | slider selector | String | .crystal-slider |
 | activeSlide | set index of the active slide | Number | 1 |
 | loop | enable/disable slider loop | Boolean | true |
-| duration | animation duration | Number | 500 |
+| fade | enable/disable fade mode | Boolean | false |
+| duration | animation duration (in milliseconds) | Number | 500 |
 | draggable | enable/disable drag | Boolean | true |
 | adaptiveHeight | enable/disable adaptive height for slider | Boolean | false |
-| threshold | touch dragging threshold | Number | 30 |
+| threshold | touch dragging threshold (in pixels) | Number | 30 |
+| title | enable/disable slides titles | Boolean | false |
 | keyboard | enable/disable keyboard arrows | Boolean | false |
 | easing | animation function | String | ease-out |
 | nav | enable/disable navigation | Boolean | true |
 | navPrevVal | previous button text | String | Prev |
 | navNextVal | next button text | String | Next |
-| pagination | enabled/disabled pagination | Boolean | true |
+| pagination | enable/disable pagination | Boolean | true |
 | onReady | callback after slider init | Function | |
 | beforeChange | callback before slide change | Function | |
 | afterChange | callback after slide change | Function | |

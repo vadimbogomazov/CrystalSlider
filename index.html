@@ -15,16 +15,16 @@
     <h1 class="page-wrapper__title">Crystal Slider</h1>
 
     <div class="crystal-slider">
-      <div>
+      <div data-crystal-title="Slide description">
         <img src="img/slide-1.jpg" alt="">
       </div>
-      <div>
+      <div data-crystal-title="Slide description 2">
         <img src="img/slide-2.jpg" alt="">
       </div>
-      <div>
+      <div data-crystal-title="Slide description 3">
         <img src="img/slide-3.jpg" alt="">
       </div>
-      <div>
+      <div data-crystal-title="Slide description 4">
         <img src="img/slide-4.jpg" alt="">
       </div>
     </div>
@@ -98,8 +98,14 @@
           <td>true</td>
         </tr>
         <tr>
+          <td>fade</td>
+          <td>enable/disable fade mode</td>
+          <td>Boolean</td>
+          <td>false</td>
+        </tr>
+        <tr>
           <td>duration</td>
-          <td>animation duration in milliseconds</td>
+          <td>animation duration (in milliseconds)</td>
           <td>Number</td>
           <td>500</td>
         </tr>
@@ -117,9 +123,15 @@
         </tr>
         <tr>
           <td>threshold</td>
-          <td>touch dragging threshold</td>
+          <td>touch dragging threshold (in pixels)</td>
           <td>Number</td>
           <td>30</td>
+        </tr>
+        <tr>
+          <td>title</td>
+          <td>enable/disable slides titles</td>
+          <td>Boolean</td>
+          <td>false</td>
         </tr>
         <tr>
           <td>keyboard</td>
@@ -153,7 +165,7 @@
         </tr>
         <tr>
           <td>pagination</td>
-          <td>enabled/disabled pagination</td>
+          <td>enable/disable pagination</td>
           <td>Boolean</td>
           <td>true</td>
         </tr>
@@ -230,6 +242,7 @@
       </table>
 
       <h2>Extra</h2>
+
       <ul>
         <li>Github: <a href="https://github.com/VadimBogomazov/CrystalSlider">https://github.com/VadimBogomazov/CrystalSlider</a></li>
         <li>Version: 1.0.0</li>
@@ -241,8 +254,10 @@
   <script src="dist/crystalslider.min.js"></script>
   <script>
     const crystalSlider = new CrystalSlider({
+      // fade: true,
       adaptiveHeight: true,
       keyboard: true,
+      title: true,
       easing: 'cubic-bezier(0.785, 0.135, 0.15, 0.86)',
       navPrevVal: '',
       navNextVal: '',

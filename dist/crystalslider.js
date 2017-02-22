@@ -23,11 +23,13 @@
         // Main
         selector       : `.${sliderCls}`,
         activeSlide    : 1,
+        fade           : false,
         loop           : true,
         duration       : 500,
         draggable      : true,
         adaptiveHeight : false,
         threshold      : 30,
+        titles         : false,
         keyboard       : false,
         easing         : 'ease-out',
         // Nav
@@ -36,6 +38,7 @@
         navNextVal     : 'Next',
         // Pagination
         pagination     : true,
+        zIndex         : 98,
         // Callbacks
         onReady        : function () {},
         beforeChange   : function () {},
@@ -68,7 +71,7 @@
       t._touch         = null;
       t._windowTimer   = null;
 
-      if (t.options.draggable === true) {
+      if (t.isEnabled('draggable')) {
         t._dragCoords = {
           start: 0,
           end: 0,
@@ -76,10 +79,10 @@
       }
 
       // Classes
-      t._sliderReadyCls     = `${sliderCls}_ready`;
       t._containerCls       = `${sliderCls}__slides-container`
       t._trackCls           = `${sliderCls}__track`;
       t._slideCls           = `${sliderCls}__slide`;
+      t._titleCls           = `${sliderCls}__title`;
 
       t._navCls             = `${sliderCls}-nav`;
       t._navBtnCls          = `${t._navCls}__btn`;
@@ -91,6 +94,7 @@
       t._paginationItemCls  = `${t._paginationCls}__item`
       t._paginationBtnCls   = `${t._paginationCls}__btn`;
 
+      t._sliderReadyCls     = 'is-ready';
       t._activeCls          = 'is-active';
       t._draggableCls       = 'is-draggable';
       t._touchCls           = 'is-touch';
@@ -112,12 +116,12 @@
       const t    = this;
       const opts = t.options;
 
-      if (t.activeSlide <= 1 && opts.loop === false) return;
+      if (t.activeSlide <= 1 && !t.isEnabled('loop')) return;
       if (isFunction(opts.beforeChange)) {
         opts.beforeChange.call(t, t.activeSlide, t.slidesCount);
       }
 
-      (t.activeSlide <= 1 && opts.loop === true) ? t.activeSlide = t.slidesCount : t.activeSlide -= 1;
+      (t.activeSlide <= 1 && t.isEnabled('loop')) ? t.activeSlide = t.slidesCount : t.activeSlide -= 1;
       t._setActiveSlide();
     }
 
@@ -125,12 +129,12 @@
       const t    = this;
       const opts = t.options;
 
-      if ((t.activeSlide >= t.slidesCount) && opts.loop === false) return;
+      if ((t.activeSlide >= t.slidesCount) && !t.isEnabled('loop')) return;
       if (isFunction(opts.beforeChange)) {
         opts.beforeChange.call(t, t.activeSlide, t.slidesCount);
       }
 
-      (t.activeSlide >= t.slidesCount && opts.loop === true) ? t.activeSlide = 1 : t.activeSlide += 1;
+      (t.activeSlide >= t.slidesCount && t.isEnabled('loop')) ? t.activeSlide = 1 : t.activeSlide += 1;
       t._setActiveSlide();
     }
 
@@ -149,25 +153,30 @@
     _setPosition(changeSlide = true) {
       const t = this;
       const opts = t.options;
+      const slides = t._slides;
       const containerStyle = t._container.style;
       const trackStyle = t._track.style;
 
       t._isMove = true;
-      t._transformX = Math.ceil(-t._sliderWidth * (t.activeSlide - 1));
-      trackStyle[transform] = `translate3d(${t._transformX}px, 0, 0)`;
-      trackStyle.webkitTransition = `-webkit-transform ${opts.duration}ms ${opts.easing}`;
-      trackStyle.transition = `transform ${opts.duration}ms ${opts.easing}`;
 
-      if (opts.adaptiveHeight === true) {
-        containerStyle.webkitTransition = `height ${opts.duration}ms ease-out`;
-        containerStyle.transition = `height ${opts.duration}ms ease-out`;
+      if (!t.isEnabled('fade')) {
+        t._transformX = Math.ceil(-t._sliderWidth * (t.activeSlide - 1));
+
+        trackStyle[transform] = `translate3d(${t._transformX}px, 0, 0)`;
+        trackStyle.webkitTransition = `-webkit-transform ${opts.duration}ms ${opts.easing}`;
+        trackStyle.transition = `transform ${opts.duration}ms ${opts.easing}`;
+      }
+
+      if (t.isEnabled('adaptiveHeight')) {
+        containerStyle.webkitTransition = `height ${opts.duration}ms ${opts.easing}`;
+        containerStyle.transition = `height ${opts.duration}ms ${opts.easing}`;
       }
 
       setTimeout(() => {
         trackStyle.webkitTransition = '';
         trackStyle.transition = '';
 
-        if (opts.adaptiveHeight === true) {
+        if (t.isEnabled('adaptiveHeight')) {
           containerStyle.webkitTransition = '';
           containerStyle.transition = '';
         }
@@ -188,7 +197,7 @@
       const nav         = t._nav;
       const activeSlide = t.activeSlide;
 
-      if (opts.nav === true && opts.loop === false) {
+      if (t.isEnabled('nav') && !t.isEnabled('loop')) {
         nav.querySelectorAll(`.${t._navBtnCls}`).forEach((elem) => elem.classList.remove(t._disabledCls));
 
         if (activeSlide <= 1) {
@@ -206,10 +215,22 @@
       const slides     = t._slides;
       const pagination = t._pagination;
 
-      slides.forEach((elem) => elem.classList.remove(t._activeCls));
+      slides.forEach((elem) => {
+        if (t.isEnabled('fade')) {
+          elem.style.opacity = 0;
+          elem.style.zIndex = opts.zIndex - 1;
+        }
+        elem.classList.remove(t._activeCls);
+      });
+
+      if (t.isEnabled('fade')) {
+        slides[t.activeSlide - 1].style.opacity = 1;
+        slides[t.activeSlide - 1].style.zIndex = opts.zIndex;
+      }
+
       slides[t.activeSlide - 1].classList.add(t._activeCls);
 
-      if (opts.pagination) {
+      if (t.isEnabled('pagination')) {
         pagination.querySelectorAll(`.${t._paginationBtnCls}`).forEach((elem) => elem.classList.remove(t._activeCls));
         pagination.querySelectorAll(`.${t._paginationBtnCls}`)[t.activeSlide - 1].classList.add(t._activeCls);
       }
@@ -237,30 +258,36 @@
       const opts = t.options;
       const container = t._container;
 
-      if (opts.adaptiveHeight === false) return;
+      if (!t.isEnabled('adaptiveHeight')) return;
 
       container.style.height = `${t._slides[t.activeSlide - 1].clientHeight}px`;
     }
 
+    isEnabled(option) {
+      return (this.options[option] === true) || false;
+    }
+
     // Build methods
     _build() {
-      const t        = this;
-      const opts     = t.options;
-      const slider   = t._slider;
-      const slides   = t._slides;
-      const container  = doc.createElement('div');
-      const track    = doc.createElement('div');
-      const fragment = doc.createDocumentFragment();
-      t._transformX  = Math.ceil(-t._sliderWidth * (t.activeSlide - 1));
+      const t         = this;
+      const opts      = t.options;
+      const slider    = t._slider;
+      const slides    = t._slides;
+      const activeSlide = slides[t.activeSlide - 1];
+      const container = doc.createElement('div');
+      const track     = doc.createElement('div');
+      const fragment  = doc.createDocumentFragment();
+
+      t._transformX   = Math.ceil(-t._sliderWidth * (t.activeSlide - 1));
 
       slider.id = t._id;
       slider.classList.add(t._id);
 
       track.classList.add(t._trackCls);
-      if (opts.draggable) {
+      if (t.isEnabled('draggable')) {
         track.classList.add(t._draggableCls);
       }
-      track.style.width      = `${t._sliderWidth * t.slidesCount}px`;
+      track.style.width = `${t._sliderWidth * t.slidesCount}px`;
       track.style[transform] = `translate3d(${t._transformX}px, 0, 0)`;
 
       container.classList.add(t._containerCls);
@@ -270,14 +297,38 @@
 
       // Slide settings
       slides.forEach((elem, index) => {
+        const elemStyle = elem.style;
+
         elem.classList.add(t._slideCls);
         elem.setAttribute('data-crystal-slide', index + 1);
-        elem.style.width = `${100 / t.slidesCount}%`;
+        elemStyle.width = `${100 / t.slidesCount}%`;
+
+        if (t.isEnabled('fade')) {
+          elemStyle.transition = `opacity ${opts.duration}ms ${opts.easing}`;
+          elemStyle.position = 'relative';
+          elemStyle.left = -(parseInt(elemStyle.width) * index) + '%';
+        }
+
+        if (t.isEnabled('fade') && index !== t.activeSlide - 1) {
+          elemStyle.opacity = 0;
+          elemStyle.zIndex = opts.zIndex - 1;
+        }
+
+        if (t.isEnabled('titles')) {
+          const title = doc.createElement('div');
+          title.classList.add(t._titleCls);
+          title.innerHTML = elem.getAttribute('data-crystal-title');
+
+          elem.appendChild(title);
+        }
+
         fragment.appendChild(elem);
       });
 
       track.appendChild(fragment);
-      slides[t.activeSlide - 1].classList.add(t._activeCls);
+      activeSlide.style.opacity = 1;
+      activeSlide.style.zIndex = opts.zIndex;
+      activeSlide.classList.add(t._activeCls);
 
       t._container = container;
       t._track = track;
@@ -294,7 +345,7 @@
       const opts = t.options;
       const nav  = doc.createElement('div');
 
-      if (opts.nav === false && t.slidesCount < 1) return;
+      if (!t.isEnabled('nav') && t.slidesCount < 1) return;
 
       nav.classList.add(t._navCls);
       nav.innerHTML = `
@@ -312,7 +363,7 @@
       const ul       = doc.createElement('ul');
       const fragment = doc.createDocumentFragment();
 
-      if (opts.pagination === false && t.slidesCount < 1) return;
+      if (!t.isEnabled('pagination') && t.slidesCount < 1) return;
 
       t._pagination = doc.createElement('div');
       t._pagination.classList.add(t._paginationCls);
@@ -359,14 +410,14 @@
       addEventListener('DOMContentLoaded', t._updateWidth.bind(t));
       addEventListener('resize', t._resizeHandler.bind(t));
 
-      if (opts.keyboard === true) {
+      if (t.isEnabled('keyboard')) {
         addEventListener('keyup', t._keyUpHandler.bind(t));
       }
 
       slider.addEventListener('click', t._mouseClickHandler.bind(t));
       track.addEventListener(transitionEnd, t._transitionEndHandler.bind(this));
 
-      if (opts.draggable === true) {
+      if (t.isEnabled('draggable')) {
         touchEvents.forEach((event) => {
           track.addEventListener(event.name, t[event.handler].bind(t), (event.name === 'touchmove' || event.name === 'touchstart') ? { passive: true } : false);
         });
@@ -402,8 +453,11 @@
         if (e.changedTouches[0].identifier !== t._touch.identifier) return;
       }
 
-      t._dragCoords.end        = (t._touch) ? e.changedTouches[0].pageX : e.pageX;
-      t._track.style.transform = `translate3d(${t._transformX + (t._dragCoords.end - t._dragCoords.start)}px, 0, 0)`;
+      t._dragCoords.end = (t._touch) ? e.changedTouches[0].pageX : e.pageX;
+
+      if (!t.isEnabled('fade')) {
+        t._track.style.transform = `translate3d(${t._transformX + (t._dragCoords.end - t._dragCoords.start)}px, 0, 0)`;
+      }
     }
 
     _touchEndHandler(e) {
@@ -455,9 +509,6 @@
     }
 
     _mouseClickHandler(e) {
-      e.preventDefault();
-      e.stopPropagation();
-
       const t       = this;
       const opts    = t.options;
       const target  = e.target;
@@ -507,18 +558,20 @@
       t._windowTimer = setTimeout(function() {
         t.windowWidth = window.innerWidth;
         t._sliderWidth = t._slider.getBoundingClientRect().width;
-        t._transformX  = Math.ceil(-t._sliderWidth * (t.activeSlide - 1));
 
-        track.style.width      = `${t._sliderWidth * t.slidesCount}px`;
+        if (!t.isEnabled('fade')) {
+          t._transformX = Math.ceil(-t._sliderWidth * (t.activeSlide - 1));
+        }
+
+        track.style.width = `${t._sliderWidth * t.slidesCount}px`;
         track.style[transform] = `translate3d(${t._transformX}px, 0, 0)`;
+
         t._setHeight();
       }, 50);
     }
 
     _resizeHandler() {
-      const t = this;
-
-      t._updateWidth();
+      this._updateWidth();
     }
 
     // Init slider

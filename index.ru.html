@@ -16,16 +16,16 @@
     <h1 class="page-wrapper__title">Crystal Slider</h1>
 
     <div class="crystal-slider">
-      <div>
+      <div data-crystal-title="Описание к слайду">
         <img src="img/slide-1.jpg" alt="">
       </div>
-      <div>
+      <div data-crystal-title="Описание к слайду 2">
         <img src="img/slide-2.jpg" alt="">
       </div>
-      <div>
+      <div data-crystal-title="Описание к слайду 3">
         <img src="img/slide-3.jpg" alt="">
       </div>
-      <div>
+      <div data-crystal-title="Описание к слайду 4">
         <img src="img/slide-4.jpg" alt="">
       </div>
     </div>
@@ -99,8 +99,14 @@
           <td>true</td>
         </tr>
         <tr>
+          <td>fade</td>
+          <td>включение/отключение fade режима</td>
+          <td>Boolean</td>
+          <td>false</td>
+        </tr>
+        <tr>
           <td>duration</td>
-          <td>продолжительность анимации</td>
+          <td>продолжительность анимации (в миллисекундах)</td>
           <td>Number</td>
           <td>500</td>
         </tr>
@@ -118,9 +124,15 @@
         </tr>
         <tr>
           <td>threshold</td>
-          <td>минимальное смещение указателя для смены слайда</td>
+          <td>минимальное смещение указателя для смены слайда (в пикселях)</td>
           <td>Number</td>
           <td>30</td>
+        </tr>
+        <tr>
+          <td>title</td>
+          <td>включение/отключение заголовков слайдов</td>
+          <td>Boolean</td>
+          <td>false</td>
         </tr>
         <tr>
           <td>keyboard</td>
@@ -231,6 +243,7 @@
       </table>
 
       <h2>Дополнительно</h2>
+
       <ul>
         <li>Github: <a href="https://github.com/VadimBogomazov/CrystalSlider">https://github.com/VadimBogomazov/CrystalSlider</a></li>
         <li>Версия: 1.0.0</li>
@@ -242,8 +255,10 @@
   <script src="dist/crystalslider.min.js"></script>
   <script>
     const crystalSlider = new CrystalSlider({
-      autoHeight: true,
+      fade: true,
+      adaptiveHeight: true,
       keyboard: true,
+      title: true,
       easing: 'cubic-bezier(0.785, 0.135, 0.15, 0.86)',
       navPrevVal: '',
       navNextVal: '',
