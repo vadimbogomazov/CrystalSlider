@@ -43,6 +43,7 @@ gulp.task('scripts', () => {
 });
 
 gulp.task('watch', () => {
+  gulp.watch(`${paths.src}/*.*`, ['copy']);
   gulp.watch(`${paths.src}/**.scss`, ['sass']);
   gulp.watch(`${paths.src}/**.js`, ['scripts']);
 });

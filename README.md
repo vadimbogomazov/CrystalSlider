@@ -31,7 +31,7 @@ Add basic html markup into your document:
 
 ### Step 2
 
-CSS slider is divided into styles needed for the plugin, and basic theme. Just include crystalslider.css:
+Slider css is divided into styles needed for the plugin, and basic theme. Just include crystalslider.css:
 
 ```html
 <link rel="stylesheet" href="css/crystalslider.css">
@@ -68,7 +68,9 @@ The slider plugin has the following options:
 | nav | enable/disable navigation | Boolean | true |
 | navPrevVal | previous button text | String | Prev |
 | navNextVal | next button text | String | Next |
-| pagination | enable/disable pagination | Boolean | true |
+| pagination | enable/disable pagination | Boolean | false |
+| thumbnails | enable/disable thumbnails (urls taken from data-attributes of slides) | Boolean | true |
+| zIndex | z-index of the active slide (using in fade mode) | Number | 98 |
 | onReady | callback after slider init | Function | |
 | beforeChange | callback before slide change | Function | |
 | afterChange | callback after slide change | Function | |
@@ -80,6 +82,8 @@ The slider plugin has the following options:
 | prevSlide() | go to previous slide |
 | nextSlide() | go to next slide |
 | goToSlide(index) | go to slide with current index |
+| isEnabledOption(option) | return true if option is active |
+| destroy() | remove all event listeners |
 | activeSlide | get index of the active slide |
 | slidesCount | get number of slides |
 

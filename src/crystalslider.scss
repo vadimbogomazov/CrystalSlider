@@ -13,19 +13,25 @@
   &__track {
     margin: 0;
     padding: 0;
-
-    &.is-draggable {
-      cursor: grab;
-    }
-
-    &.is-touch {
-      cursor: grabbing;
-    }
   }
 
   &__slide {
     float: left;
     position: relative;
+  }
+}
+
+.crystal-slider {
+  &.is-draggable {
+    .crystal-slider__track {
+      cursor: grab;
+    }
+  }
+
+  &.is-touch {
+    .crystal-slider__track {
+      cursor: grabbing;
+    }
   }
 }
 
@@ -44,6 +50,11 @@
 
 .crystal-slider-pagination {
   user-select: none;
+
+  &__inner {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }
 
 /* Basic theme */
@@ -51,7 +62,7 @@
 .crystal-slider {
   padding-bottom: 32px;
 
-  &__title {
+  &__caption {
     background: rgba(0, 0, 0, .8);
     bottom: 0;
     color: #fff;
@@ -116,7 +127,6 @@
   }
 
   &__item {
-    display: inline-block;
     margin: 0 0 0 16px;
     position: relative;
     height: 10px;

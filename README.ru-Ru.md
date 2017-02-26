@@ -39,7 +39,7 @@ CSS слайдера разделен на стили, необходимые д
 
 ### Шаг 3
 
-Последний шаг - подключите crystalslider.min.js и вызовите плагин:
+Последний шаг — подключите crystalslider.min.js и вызовите плагин:
 
 ```html
 <script src="js/crystalslider.min.js"></script>
@@ -69,6 +69,8 @@ CSS слайдера разделен на стили, необходимые д
 | navPrevVal | текст кнопки назад | String | Prev |
 | navNextVal | текст кнопки вперед | String | Next |
 | pagination | включение/отключение пагинации | Boolean | true |
+| thumbnails | включение/отключение миниатюр (изображения берутся из data-атрибутов слайдов) | Boolean | false |
+| zIndex | z-index активного слайда (используется в fade режиме) | Number | 98 |
 | onReady | callback после инициализации слайдера | Function | |
 | beforeChange | callback перед сменой слайда | Function | |
 | afterChange | callback после смены слайда | Function | |
@@ -80,6 +82,8 @@ CSS слайдера разделен на стили, необходимые д
 | prevSlide() | предыдущий слайд |
 | nextSlide() | следующий слайд |
 | goToSlide(index) | переход на слайд с заданным индексом |
+| isEnabledOption(option) | возвращает true, если опция активна |
+| destroy | удаляет все слушатели событий |
 | activeSlide | индекс активного слайда |
 | slidesCount | количество слайдов |
 
