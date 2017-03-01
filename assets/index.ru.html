@@ -16,16 +16,16 @@
     <h1 class="page-wrapper__title">Crystal Slider</h1>
 
     <div class="crystal-slider">
-      <div data-crystal-title="Описание к слайду">
+      <div data-crystal-caption="Описание к слайду">
         <img src="img/slide-1.jpg" alt="">
       </div>
-      <div data-crystal-title="Описание к слайду 2">
+      <div data-crystal-caption="Описание к слайду 2">
         <img src="img/slide-2.jpg" alt="">
       </div>
-      <div data-crystal-title="Описание к слайду 3">
+      <div data-crystal-caption="Описание к слайду 3">
         <img src="img/slide-3.jpg" alt="">
       </div>
-      <div data-crystal-title="Описание к слайду 4">
+      <div data-crystal-caption="Описание к слайду 4">
         <img src="img/slide-4.jpg" alt="">
       </div>
     </div>
@@ -156,13 +156,13 @@
         </tr>
         <tr>
           <td>navPrevVal</td>
-          <td>текст кнопки назад</td>
+          <td>значение кнопки назад</td>
           <td>String</td>
           <td>Prev</td>
         </tr>
         <tr>
           <td>navNextVal</td>
-          <td>текст кнопки вперед</td>
+          <td>значение кнопки вперед</td>
           <td>String</td>
           <td>Next</td>
         </tr>
@@ -170,7 +170,7 @@
           <td>pagination</td>
           <td>пагинация</td>
           <td>Boolean</td>
-          <td>true</td>
+          <td>false</td>
         </tr>
         <tr>
           <td>thumbnails</td>
@@ -246,7 +246,15 @@
             destroy()
           </td>
           <td>
-            удаляет все слушатели событий
+            уничтожает слайдер
+          </td>
+        </tr>
+        <tr>
+          <td>
+            reinit(options)
+          </td>
+          <td>
+            реинициализация слайдера с новыми опциями
           </td>
         </tr>
       </table>
@@ -283,26 +291,6 @@
   </div>
 
   <script src="../dist/crystalslider.min.js"></script>
-  <script>
-    const crystalSlider = new CrystalSlider({
-      fade: true,
-      adaptiveHeight: true,
-      keyboard: true,
-      title: true,
-      easing: 'cubic-bezier(0.785, 0.135, 0.15, 0.86)',
-      navPrevVal: '',
-      navNextVal: '',
-
-      beforeChange: function () {
-        console.log('Before change');
-      },
-      afterChange: function () {
-        console.log('After change');
-      },
-      onReady: function () {
-        console.log('Slider is ready');
-      }
-    });
-  </script>
+  <script src="js/scripts.js"></script>
 </body>
 </html>

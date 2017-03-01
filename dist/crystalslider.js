@@ -5,107 +5,54 @@
   Author  : Vadim Bogomazov
 */
 
-(function (window) {
+(function () {
   'use strict';
 
   const doc           = document;
   const transform     = transformProp();
   const transitionEnd = transitionEndEventName();
+  const sliderCls     = 'crystal-slider';
+
+    // Default options
+  const options = {
+    // Main
+    selector       : `.${sliderCls}`,
+    activeSlide    : 1,
+    loop           : true,
+    fade           : false,
+    duration       : 500,
+    draggable      : true,
+    adaptiveHeight : false,
+    threshold      : 30,
+    captions       : false,
+    keyboard       : false,
+    easing         : 'ease-out',
+    // Nav
+    nav            : true,
+    navPrevVal     : 'Prev',
+    navNextVal     : 'Next',
+    // Pagination
+    pagination     : false,
+    thumbnails     : false,
+    zIndex         : 98,
+    // Callbacks
+    onReady        : function () {},
+    beforeChange   : function () {},
+    afterChange    : function () {},
+  };
 
   class CrystalSlider {
     constructor(opts) {
       CrystalSlider._count = (CrystalSlider._count || 0) + 1;
 
-      // Default options
-      const sliderCls = 'crystal-slider';
-      const t   = this;
-      t.options = {
-        // Main
-        selector       : `.${sliderCls}`,
-        activeSlide    : 1,
-        loop           : true,
-        fade           : false,
-        duration       : 500,
-        draggable      : true,
-        adaptiveHeight : false,
-        threshold      : 30,
-        captions       : false,
-        keyboard       : false,
-        easing         : 'ease-out',
-        // Nav
-        nav            : true,
-        navPrevVal     : 'Prev',
-        navNextVal     : 'Next',
-        // Pagination
-        pagination     : true,
-        thumbnails     : false,
-        zIndex         : 98,
-        // Callbacks
-        onReady        : function () {},
-        beforeChange   : function () {},
-        afterChange    : function () {},
-      }
+      const t = this;
 
-      if (isObject(opts)) {
-        t.options = Object.assign(t.options, opts);
-      }
+      t.options = Object.assign(options, opts);
+      t._id = `${sliderCls + '-' + CrystalSlider._count}`;
 
-      t._id     = `${sliderCls + '-' + CrystalSlider._count}`;
-      t._slider = doc.querySelector(t.options.selector);
-
-      if (t._slider === null) {
-        throw new Error(`Selector ${t.options.selector} does not exist`);
-      }
-
-      // Private properties
-      t._sliderWidth   = t._slider.getBoundingClientRect().width;
-      t._slides        = Array.from(t._slider.children);
-      t._isTouchDevice = isTouchDevice();
-
-      t._isMove        = false;
-      t._isTouched     = false;
-
-      t._container     = null;
-      t._track         = null;
-      t._nav           = null;
-      t._pagination    = null;
-      t._captions      = null;
-      t._transformX    = null;
-      t._touch         = null;
-      t._windowTimer   = null;
-
-      // Classes
-      t._containerCls       = `${sliderCls}__slides-container`
-      t._trackCls           = `${sliderCls}__track`;
-      t._slideCls           = `${sliderCls}__slide`;
-      t._captionCls         = `${sliderCls}__caption`;
-
-      t._navCls             = `${sliderCls}-nav`;
-      t._navBtnCls          = `${t._navCls}__btn`;
-      t._navPrevBtnCls      = `${t._navBtnCls}_prev`;
-      t._navNextBtnCls      = `${t._navBtnCls}_next`;
-
-      t._paginationCls      = `${sliderCls}-pagination`;
-      t._paginationInnerCls = `${t._paginationCls}__inner`;
-      t._paginationItemCls  = `${t._paginationCls}__item`
-      t._paginationBtnCls   = `${t._paginationCls}__btn`;
-
-      t._sliderReadyCls     = 'is-ready';
-      t._activeCls          = 'is-active';
-      t._draggableCls       = 'is-draggable';
-      t._touchCls           = 'is-touch';
-      t._disabledCls        = 'is-disabled';
-
-      // Public read-only properties
-      t.slidesCount = t._slides.length;
-      t.activeSlide = t.options.activeSlide;
-
-      if (t.activeSlide < 1 || t.activeSlide > t.slidesCount) {
-        throw new Error(`Slide index ${t.activeSlide} does not exist`);
-      }
-
-      t._bindEvents();
       t._init();
+      t._build();
+      t._bindEvents();
     }
 
     // Public methods
@@ -139,7 +86,7 @@
       const t    = this;
       const opts = this.options;
 
-      if (Number.isInteger(index) || (index < 1 && index > t.slidesCount)) return;
+      if (!Number.isInteger(index) || (index < 1 && index > t.slidesCount)) return;
       t._callSliderEvent(opts.beforeChange, t.activeSlide, t.slidesCount);
 
       t.activeSlide = index;
@@ -148,6 +95,82 @@
 
     isEnabledOption(option) {
       return (this.options[option] === true) || false;
+    }
+
+    destroy() {
+      const t = this;
+      const slider = t._slider;
+      const track = t._track;
+
+      // Remove window listeners
+      if (t.isEnabledOption('keyboard')) {
+        window.removeEventListener('keyup', t._keyUpHandler);
+      }
+      window.removeEventListener('resize', t._resizeHandler);
+
+      // Remove slider listeners
+      if (t.isEnabledOption('nav') || t.isEnabledOption('pagination')) {
+        slider.removeEventListener('click', t._mouseClickHandler);
+      }
+
+      if (t.isEnabledOption('draggable')) {
+        track.removeEventListener((t._isTouchDevice) ? 'touchstart' : 'mousedown', t._touchStartHandler);
+        track.removeEventListener((t._isTouchDevice) ? 'touchmove'  : 'mousemove', t._touchMoveHandler);
+        track.removeEventListener((t._isTouchDevice) ? 'touchend'   : 'mouseup', t._touchEndHandler);
+        track.removeEventListener('mouseleave', t._touchEndHandler);
+      }
+
+      // Remove attributes
+      slider.removeAttribute('id')
+      slider.classList.remove(t._sliderReadyCls, t._id, t._draggableCls);
+
+      // Remove controls
+      if (t.isEnabledOption('nav')) {
+        removeElem(t._nav);
+      }
+
+      if (t.isEnabledOption('pagination')) {
+        removeElem(t._pagination);
+      }
+
+      if (t.isEnabledOption('captions')) {
+        slider.querySelectorAll(`.${t._captionCls}`).forEach(caption => removeElem(caption));
+      }
+
+      t._slides.forEach(elem => {
+        elem.classList.remove(t._slideCls, t._activeCls);
+        elem.removeAttribute('style');
+        elem.removeAttribute('data-crystal-slide');
+      });
+
+      // Remove wrappers
+      unwrap(t._track);
+      unwrap(t._container);
+
+      if (t._windowTimer) {
+        clearTimeout(t._windowTimer);
+      }
+    }
+
+    reinit(opts) {
+      const t = this;
+
+      t.destroy();
+
+      if (isObject(opts)) {
+        t.options = Object.assign(options, opts);
+      }
+
+      // Public read-only properties
+      t.slidesCount = t._slides.length;
+      t.activeSlide = t.options.activeSlide;
+
+      t._build();
+      t._bindEvents();
+
+      if (t.isEnabledOption('adaptiveHeight')) {
+        t._setHeight();
+      }
     }
 
     // Private Methods
@@ -238,17 +261,19 @@
 
       if (t.slidesCount > 1) {
         t._disableNavBtns();
-        t._setHeight();
+        if (t.isEnabledOption('adaptiveHeight')) {
+          t._setHeight();
+        }
+
         t._setPosition();
       } else {
         t._setPosition(false);
       }
-
     }
 
     _callSliderEvent(sliderEvent, values) {
       if (isFunction(sliderEvent)) {
-        sliderEvent.apply(this, [...arguments].shift());
+        sliderEvent.apply(this, [...arguments].slice(1));
       }
     }
 
@@ -264,13 +289,75 @@
       const opts = t.options;
       const container = t._container;
 
-      if (!t.isEnabledOption('adaptiveHeight')) return;
-
       container.style.height = `${t._slides[t.activeSlide - 1].clientHeight}px`;
     }
 
-    // Init slider
     _init() {
+      const t = this;
+
+      console.log(this)
+
+      t._slider = doc.querySelector(t.options.selector);
+
+      if (t._slider === null) {
+        throw new Error(`Selector ${t.options.selector} does not exist`);
+      }
+
+      // Private properties
+      t._sliderWidth   = t._slider.getBoundingClientRect().width;
+      t._slides        = Array.from(t._slider.children);
+      t._isTouchDevice = isTouchDevice();
+
+      t._isMove        = false;
+      t._isTouched     = false;
+
+      t._container     = null;
+      t._track         = null;
+      t._nav           = null;
+      t._pagination    = null;
+      t._transformX    = null;
+      t._touch         = null;
+      t._windowTimer   = null;
+
+      if (t.options.draggable === true) {
+        t._dragCoords = {
+          start: 0,
+          end: 0,
+        };
+      }
+
+      // Classes
+      t._sliderReadyCls     = `${sliderCls}_ready`;
+      t._containerCls       = `${sliderCls}__slides-container`
+      t._trackCls           = `${sliderCls}__track`;
+      t._slideCls           = `${sliderCls}__slide`;
+      t._captionCls         = `${sliderCls}__caption`;
+
+      t._navCls             = `${sliderCls}-nav`;
+      t._navBtnCls          = `${t._navCls}__btn`;
+      t._navPrevBtnCls      = `${t._navBtnCls}_prev`;
+      t._navNextBtnCls      = `${t._navBtnCls}_next`;
+
+      t._paginationCls      = `${sliderCls}-pagination`;
+      t._paginationInnerCls = `${t._paginationCls}__inner`;
+      t._paginationItemCls  = `${t._paginationCls}__item`
+      t._paginationBtnCls   = `${t._paginationCls}__btn`;
+
+      t._activeCls          = 'is-active';
+      t._draggableCls       = 'is-draggable';
+      t._touchCls           = 'is-touch';
+      t._disabledCls        = 'is-disabled';
+
+      // Public read-only properties
+      t.slidesCount = t._slides.length;
+      t.activeSlide = t.options.activeSlide;
+
+      if (t.activeSlide < 1 || t.activeSlide > t.slidesCount) {
+        throw new Error(`Slide index ${t.activeSlide} does not exist`);
+      }
+    }
+
+    _build() {
       const t           = this;
       const opts        = t.options;
       const slider      = t._slider;
@@ -281,7 +368,7 @@
       const fragment    = doc.createDocumentFragment();
       t._transformX     = Math.ceil(-t._sliderWidth * (t.activeSlide - 1));
 
-      slider.id = t._id;
+      slider.setAttribute('data-crystal-id', t._id);
       slider.classList.add(t._id);
       if (t.isEnabledOption('draggable')) {
         slider.classList.add(t._draggableCls);
@@ -360,7 +447,7 @@
         <button role="button" class="${t._navBtnCls + ' ' + t._navNextBtnCls}" data-crystal-button="next">${opts.navNextVal}</button>
       `;
 
-      t._nav = nav
+      t._nav = nav;
       t._slider.appendChild(t._nav);
     }
 
@@ -404,81 +491,6 @@
       t._disableNavBtns();
     }
 
-    destroy() {
-      const t = this;
-      const slider = t._slider;
-
-      // Remove window listeners
-      if (t.isEnabledOption('keyboard')) {
-        window.removeEventListener('keyup', t._keyUpHandler);
-      }
-
-      window.removeEventListener('resize', t._resizeHandler);
-
-      // Remove slider listeners
-      if (t.isEnabledOption('nav') || t.isEnabledOption('pagination')) {
-        slider.removeEventListener('click', t._mouseClickHandler);
-      }
-
-      if (t.isEnabledOption('draggable')) {
-        slider.removeEventListener('mousedown', t._touchStartHandler);
-        slider.removeEventListener('mousemove', t._touchMoveHandler);
-        slider.removeEventListener('mouseup', t._touchEndHandler);
-        slider.removeEventListener('mouseleave', t._touchEndHandler);
-      }
-
-      // Remove attributes
-      slider.removeAttribute('id')
-      slider.classList.remove(t._sliderReadyCls);
-      slider.classList.remove(t._id);
-      slider.classList.remove(t._draggableCls);
-
-      // Remove controls
-      if (t.isEnabledOption('nav')) {
-        removeElem(t._nav);
-      }
-
-      if (t.isEnabledOption('pagination')) {
-        removeElem(t._pagination);
-      }
-
-      if (t.isEnabledOption('captions')) {
-        slider.querySelectorAll(`.${t._captionCls}`).forEach(caption => removeElem(caption));
-      }
-
-      t._slides.forEach(elem => {
-        elem.classList.remove(t._slideCls);
-        elem.classList.remove(t._activeCls);
-        elem.removeAttribute('style');
-        elem.removeAttribute('data-crystal-slide');
-      });
-
-      // Remove wrappers
-      unwrap(t._track);
-      unwrap(t._container);
-
-      if (t._windowTimer) {
-        clearTimeout(t._windowTimer);
-      }
-    }
-
-    reinit(opts) {
-      const t = this;
-
-      t.destroy();
-
-      if (isObject(opts)) {
-        t.options = Object.assign(t.options, opts);
-      }
-
-      // Public read-only properties
-      t.slidesCount = t._slides.length;
-      t.activeSlide = t.options.activeSlide;
-
-      t._bindEvents();
-      t._init();
-    }
-
     // Events
     _bindEvents() {
       const t = this;
@@ -501,11 +513,11 @@
       });
 
       // Window events
+      window.addEventListener('DOMContentLoaded', t._updateWidth);
+      window.addEventListener('resize', t._resizeHandler);
       if (t.isEnabledOption('adaptiveHeight')) {
         window.addEventListener('load', t._setHeight);
       }
-      window.addEventListener('DOMContentLoaded', t._updateWidth);
-      window.addEventListener('resize', t._resizeHandler);
       if (t.isEnabledOption('keyboard')) {
         window.addEventListener('keyup', t._keyUpHandler);
       }
@@ -521,10 +533,10 @@
           end: 0,
         };
 
-        t._slider.addEventListener((t._isTouchDevice) ? 'touchstart' : 'mousedown', t._touchStartHandler, false);
-        t._slider.addEventListener((t._isTouchDevice) ? 'touchmove'  : 'mousemove', t._touchMoveHandler, false);
-        t._slider.addEventListener((t._isTouchDevice) ? 'touchend'   : 'mouseup', t._touchEndHandler, false);
-        t._slider.addEventListener('mouseleave', t._touchEndHandler);
+        t._track.addEventListener((t._isTouchDevice) ? 'touchstart' : 'mousedown', t._touchStartHandler, false);
+        t._track.addEventListener((t._isTouchDevice) ? 'touchmove'  : 'mousemove', t._touchMoveHandler, false);
+        t._track.addEventListener((t._isTouchDevice) ? 'touchend'   : 'mouseup', t._touchEndHandler, false);
+        t._track.addEventListener('mouseleave', t._touchEndHandler);
       }
     }
 
@@ -534,8 +546,6 @@
       e.stopPropagation();
 
       const t = this;
-
-      console.log(e.target);
 
       if (t._isMove || (e.type === 'mousedown' && e.button > 0)) return;
       if (t._isTouchDevice && e.touches.length === 1) {
@@ -613,7 +623,7 @@
       const opts    = t.options;
       const target  = e.target;
       const clsList = target.classList;
-      const index   = +target.getAttribute('data-crystal-button');
+      const index   = Number(target.getAttribute('data-crystal-button'));
 
       if (t._isTouched || t._isMove) return;
       if (clsList.contains(t._navBtnCls)) {
@@ -668,7 +678,9 @@
         track.style.width = `${t._sliderWidth * t.slidesCount}px`;
         track.style[transform] = `translate3d(${t._transformX}px, 0, 0)`;
 
-        t._setHeight();
+        if (t.isEnabledOption('adaptiveHeight')) {
+          t._setHeight();
+        }
       }, 50);
     }
 
@@ -677,7 +689,7 @@
     }
   }
 
-  window['CrystalSlider'] = CrystalSlider;
+  window.CrystalSlider = CrystalSlider;
 
   /* Helpers */
   function isFunction(functionToCheck) {
@@ -730,4 +742,5 @@
     if (val === null) return;
     return ((typeof val === 'function') || (typeof val === 'object'));
   }
-})(window);
+
+})();

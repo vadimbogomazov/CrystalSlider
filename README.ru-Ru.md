@@ -66,9 +66,9 @@ CSS слайдера разделен на стили, необходимые д
 | keyboard | управление стрелками клавиатуры | Boolean | false |
 | easing | функция анимации | String | ease-out |
 | nav | включение/отключение навигации | Boolean | true |
-| navPrevVal | текст кнопки назад | String | Prev |
-| navNextVal | текст кнопки вперед | String | Next |
-| pagination | включение/отключение пагинации | Boolean | true |
+| navPrevVal | значение кнопки назад | String | Prev |
+| navNextVal | значение кнопки вперед | String | Next |
+| pagination | включение/отключение пагинации | Boolean | false |
 | thumbnails | включение/отключение миниатюр (изображения берутся из data-атрибутов слайдов) | Boolean | false |
 | zIndex | z-index активного слайда (используется в fade режиме) | Number | 98 |
 | onReady | callback после инициализации слайдера | Function | |
@@ -83,7 +83,8 @@ CSS слайдера разделен на стили, необходимые д
 | nextSlide() | следующий слайд |
 | goToSlide(index) | переход на слайд с заданным индексом |
 | isEnabledOption(option) | возвращает true, если опция активна |
-| destroy | удаляет все слушатели событий |
+| destroy() | уничтожает слайдер |
+| reinit(options) | реинициализация слайдера с новыми опциями |
 | activeSlide | индекс активного слайда |
 | slidesCount | количество слайдов |
 

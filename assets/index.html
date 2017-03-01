@@ -17,9 +17,11 @@
     <div class="crystal-slider">
       <div data-crystal-caption="Slide description">
         <img src="img/slide-1.jpg" alt="">
+        <!-- <img src="http://placehold.it/300x500" alt=""> -->
       </div>
       <div data-crystal-caption="Slide description 2">
         <img src="img/slide-2.jpg" alt="">
+        <!-- <img src="http://placehold.it/400x400" alt=""> -->
       </div>
       <div data-crystal-caption="Slide description 3">
         <img src="img/slide-3.jpg" alt="">
@@ -155,13 +157,13 @@
         </tr>
         <tr>
           <td>navPrevVal</td>
-          <td>previous button text</td>
+          <td>previous button value</td>
           <td>String</td>
           <td>Prev</td>
         </tr>
         <tr>
           <td>navNextVal</td>
-          <td>next button text</td>
+          <td>next button value</td>
           <td>String</td>
           <td>Next</td>
         </tr>
@@ -169,7 +171,7 @@
           <td>pagination</td>
           <td>enable/disable pagination</td>
           <td>Boolean</td>
-          <td>true</td>
+          <td>false</td>
         </tr>
         <tr>
           <td>thumbnails</td>
@@ -245,7 +247,15 @@
             destroy()
           </td>
           <td>
-            remove all event listeners
+            destroy slider
+          </td>
+        </tr>
+        <tr>
+          <td>
+            reinit(options)
+          </td>
+          <td>
+            reinit slider with new options
           </td>
         </tr>
       </table>
@@ -282,32 +292,6 @@
   </div>
 
   <script src="../dist/crystalslider.js"></script>
-  <script>
-    const crystalSlider = new CrystalSlider({
-      // fade: true,
-      // loop: false,
-      adaptiveHeight: true,
-      keyboard: true,
-      captions: true,
-      easing: 'cubic-bezier(0.785, 0.135, 0.15, 0.86)',
-      navPrevVal: '',
-      navNextVal: '',
-      // nav: false,
-      // pagination: false,
-      // captions: false,
-
-      beforeChange: function () {
-        console.log('Before change slide');
-      },
-      afterChange: function () {
-        console.log('After change slide');
-      },
-      onReady: function () {
-        console.log('Crystal Slider is ready');
-      }
-    });
-
-
-  </script>
+  <script src="js/scripts.js"></script>
 </body>
 </html>

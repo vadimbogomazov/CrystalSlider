@@ -66,8 +66,8 @@ The slider plugin has the following options:
 | keyboard | enable/disable keyboard arrows | Boolean | false |
 | easing | animation function | String | ease-out |
 | nav | enable/disable navigation | Boolean | true |
-| navPrevVal | previous button text | String | Prev |
-| navNextVal | next button text | String | Next |
+| navPrevVal | previous button value | String | Prev |
+| navNextVal | next button value | String | Next |
 | pagination | enable/disable pagination | Boolean | false |
 | thumbnails | enable/disable thumbnails (urls taken from data-attributes of slides) | Boolean | true |
 | zIndex | z-index of the active slide (using in fade mode) | Number | 98 |
@@ -83,7 +83,8 @@ The slider plugin has the following options:
 | nextSlide() | go to next slide |
 | goToSlide(index) | go to slide with current index |
 | isEnabledOption(option) | return true if option is active |
-| destroy() | remove all event listeners |
+| destroy() | destroy slider |
+| reinit(options) | reinit slider with new options |
 | activeSlide | get index of the active slide |
 | slidesCount | get number of slides |
 
