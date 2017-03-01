@@ -8,28 +8,32 @@
 
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="dist/crystalslider.min.css">
+  <link rel="stylesheet" href="../dist/crystalslider.min.css">
 </head>
 <body>
   <div class="page-wrapper">
     <h1 class="page-wrapper__title">Crystal Slider</h1>
 
     <div class="crystal-slider">
-      <div>
+      <div data-crystal-caption="Slide description">
         <img src="img/slide-1.jpg" alt="">
+        <!-- <img src="http://placehold.it/300x500" alt=""> -->
       </div>
-      <div>
+      <div data-crystal-caption="Slide description 2">
         <img src="img/slide-2.jpg" alt="">
+        <!-- <img src="http://placehold.it/400x400" alt=""> -->
       </div>
-      <div>
+      <div data-crystal-caption="Slide description 3">
         <img src="img/slide-3.jpg" alt="">
       </div>
-      <div>
+      <div data-crystal-caption="Slide description 4">
         <img src="img/slide-4.jpg" alt="">
       </div>
     </div>
 
     <div class="page-section">
+      <p>Readme languages: <a href="index.html">English</a>, <a href="index.ru.html">Русский</a></p>
+
       <h2>Features</h2>
       <ul>
         <li>lightweight JavaScript slider with minimally required functionality;</li>
@@ -57,7 +61,7 @@
 
     <h3>Step #2</h3>
 
-    <p>CSS slider is divided into styles needed for the plugin, and basic theme. Just include crystalslider.css:</p>
+    <p>Slider css is divided into styles needed for the plugin, and basic theme. Just include crystalslider.css:</p>
 
     <pre><code>&lt;link rel="stylesheet" href="css/crystalslider.css"&gt;</code></pre>
 
@@ -98,8 +102,14 @@
           <td>true</td>
         </tr>
         <tr>
+          <td>fade</td>
+          <td>enable/disable fade mode</td>
+          <td>Boolean</td>
+          <td>false</td>
+        </tr>
+        <tr>
           <td>duration</td>
-          <td>animation duration in milliseconds</td>
+          <td>animation duration (in milliseconds)</td>
           <td>Number</td>
           <td>500</td>
         </tr>
@@ -117,9 +127,15 @@
         </tr>
         <tr>
           <td>threshold</td>
-          <td>touch dragging threshold</td>
+          <td>touch dragging threshold (in pixels)</td>
           <td>Number</td>
           <td>30</td>
+        </tr>
+        <tr>
+          <td>title</td>
+          <td>enable/disable slides titles</td>
+          <td>Boolean</td>
+          <td>false</td>
         </tr>
         <tr>
           <td>keyboard</td>
@@ -141,21 +157,33 @@
         </tr>
         <tr>
           <td>navPrevVal</td>
-          <td>previous button text</td>
+          <td>previous button value</td>
           <td>String</td>
           <td>Prev</td>
         </tr>
         <tr>
           <td>navNextVal</td>
-          <td>next button text</td>
+          <td>next button value</td>
           <td>String</td>
           <td>Next</td>
         </tr>
         <tr>
           <td>pagination</td>
-          <td>enabled/disabled pagination</td>
+          <td>enable/disable pagination</td>
           <td>Boolean</td>
-          <td>true</td>
+          <td>false</td>
+        </tr>
+        <tr>
+          <td>thumbnails</td>
+          <td>enable/disable thumbnails (images are taken from data-attributes)</td>
+          <td>Boolean</td>
+          <td>false</td>
+        </tr>
+        <tr>
+          <td>zIndex</td>
+          <td>z-index of the active slide (using in fade mode)</td>
+          <td>Number</td>
+          <td>98</td>
         </tr>
         <tr>
           <td>onReady</td>
@@ -206,6 +234,30 @@
             go to slide with current index
           </td>
         </tr>
+        <tr>
+          <td>
+            isEnabledOption(option)
+          </td>
+          <td>
+            return true if option is active
+          </td>
+        </tr>
+        <tr>
+          <td>
+            destroy()
+          </td>
+          <td>
+            destroy slider
+          </td>
+        </tr>
+        <tr>
+          <td>
+            reinit(options)
+          </td>
+          <td>
+            reinit slider with new options
+          </td>
+        </tr>
       </table>
 
       <h3>Properties</h3>
@@ -230,6 +282,7 @@
       </table>
 
       <h2>Extra</h2>
+
       <ul>
         <li>Github: <a href="https://github.com/VadimBogomazov/CrystalSlider">https://github.com/VadimBogomazov/CrystalSlider</a></li>
         <li>Version: 1.0.0</li>
@@ -238,25 +291,7 @@
     </div>
   </div>
 
-  <script src="dist/crystalslider.min.js"></script>
-  <script>
-    const crystalSlider = new CrystalSlider({
-      adaptiveHeight: true,
-      keyboard: true,
-      easing: 'cubic-bezier(0.785, 0.135, 0.15, 0.86)',
-      navPrevVal: '',
-      navNextVal: '',
-
-      beforeChange: function () {
-        console.log('Before change');
-      },
-      afterChange: function () {
-        console.log('After change');
-      },
-      onReady: function () {
-        console.log('Slider is ready');
-      }
-    });
-  </script>
+  <script src="../dist/crystalslider.js"></script>
+  <script src="js/scripts.js"></script>
 </body>
 </html>

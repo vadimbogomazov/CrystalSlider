@@ -1,4 +1,4 @@
-/* CrystalSlider */
+/* Crystal Slider */
 
 /* Required styles */
 
@@ -8,20 +8,11 @@
 
   &__slides-container {
     overflow: hidden;
-    position: relative;
   }
 
   &__track {
     margin: 0;
     padding: 0;
-
-    &.is-draggable {
-      cursor: grab;
-    }
-
-    &.is-touch {
-      cursor: grabbing;
-    }
   }
 
   &__slide {
@@ -30,22 +21,57 @@
   }
 }
 
+.crystal-slider {
+  &.is-draggable {
+    .crystal-slider__track {
+      cursor: grab;
+    }
+  }
+
+  &.is-touch {
+    .crystal-slider__track {
+      cursor: grabbing;
+    }
+  }
+}
+
 .crystal-slider-nav {
   &__btn {
     background: none;
     cursor: pointer;
     user-select: none;
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
   }
 }
 
 .crystal-slider-pagination {
   user-select: none;
+
+  &__inner {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }
 
 /* Basic theme */
 
 .crystal-slider {
   padding-bottom: 32px;
+
+  &__caption {
+    background: rgba(0, 0, 0, .8);
+    bottom: 0;
+    color: #fff;
+    font-weight: 700;
+    left: 0;
+    padding: 8px 32px;
+    position: absolute;
+    right: 0;
+  }
 }
 
 .crystal-slider-nav {
@@ -101,7 +127,6 @@
   }
 
   &__item {
-    display: inline-block;
     margin: 0 0 0 16px;
     position: relative;
     height: 10px;
@@ -141,4 +166,4 @@
   }
 }
 
-/* /CrystalSlider */
+/* /Crystal Slider */

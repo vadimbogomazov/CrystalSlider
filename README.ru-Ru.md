@@ -1,6 +1,6 @@
 # Crystal Slider
 
-### Языки руководства: [English](README.md), [Русский](README.ru-Ru.md)
+Языки руководства: [English](README.md), [Русский](README.ru-Ru.md)
 
 ## Особенности
 
@@ -39,7 +39,7 @@ CSS слайдера разделен на стили, необходимые д
 
 ### Шаг 3
 
-Последний шаг - подключите crystalslider.min.js и вызовите плагин:
+Последний шаг — подключите crystalslider.min.js и вызовите плагин:
 
 ```html
 <script src="js/crystalslider.min.js"></script>
@@ -57,16 +57,20 @@ CSS слайдера разделен на стили, необходимые д
 | selector | селектор слайдера | String | .crystal-slider |
 | activeSlide | индекс активного слайда | Number | 1 |
 | loop | цикличность слайдера | Boolean | true |
-| duration | продолжительность анимации | Number | 500 |
+| fade | включение/отключение fade режима | Boolean | false |
+| duration | продолжительность анимации (в миллисекундах) | Number | 500 |
 | draggable | включение/отключение драга | Boolean | true |
 | adaptiveHeight | включение/отключение адаптивной высоты для слайдера | Boolean | false |
-| threshold | минимальное смещение указателя для смены слайда | Number | 30 |
+| threshold | минимальное смещение указателя для смены слайда (в пикселях) | Number | 30 |
+| title | включение/отключение заголовков слайдов | Boolean | false |
 | keyboard | управление стрелками клавиатуры | Boolean | false |
 | easing | функция анимации | String | ease-out |
 | nav | включение/отключение навигации | Boolean | true |
-| navPrevVal | текст кнопки назад | String | Prev |
-| navNextVal | текст кнопки вперед | String | Next |
-| pagination | включение/отключение пагинации | Boolean | true |
+| navPrevVal | значение кнопки назад | String | Prev |
+| navNextVal | значение кнопки вперед | String | Next |
+| pagination | включение/отключение пагинации | Boolean | false |
+| thumbnails | включение/отключение миниатюр (изображения берутся из data-атрибутов слайдов) | Boolean | false |
+| zIndex | z-index активного слайда (используется в fade режиме) | Number | 98 |
 | onReady | callback после инициализации слайдера | Function | |
 | beforeChange | callback перед сменой слайда | Function | |
 | afterChange | callback после смены слайда | Function | |
@@ -78,6 +82,9 @@ CSS слайдера разделен на стили, необходимые д
 | prevSlide() | предыдущий слайд |
 | nextSlide() | следующий слайд |
 | goToSlide(index) | переход на слайд с заданным индексом |
+| isEnabledOption(option) | возвращает true, если опция активна |
+| destroy() | уничтожает слайдер |
+| reinit(options) | реинициализация слайдера с новыми опциями |
 | activeSlide | индекс активного слайда |
 | slidesCount | количество слайдов |
 

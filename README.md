@@ -1,6 +1,6 @@
 # Crystal Slider
 
-### Readme languages: [English](README.md), [Русский](README.ru-Ru.md)
+Readme languages: [English](README.md), [Русский](README.ru-Ru.md)
 
 ## Features
 
@@ -31,7 +31,7 @@ Add basic html markup into your document:
 
 ### Step 2
 
-CSS slider is divided into styles needed for the plugin, and basic theme. Just include crystalslider.css:
+Slider css is divided into styles needed for the plugin, and basic theme. Just include crystalslider.css:
 
 ```html
 <link rel="stylesheet" href="css/crystalslider.css">
@@ -57,16 +57,20 @@ The slider plugin has the following options:
 | selector | slider selector | String | .crystal-slider |
 | activeSlide | set index of the active slide | Number | 1 |
 | loop | enable/disable slider loop | Boolean | true |
-| duration | animation duration | Number | 500 |
+| fade | enable/disable fade mode | Boolean | false |
+| duration | animation duration (in milliseconds) | Number | 500 |
 | draggable | enable/disable drag | Boolean | true |
 | adaptiveHeight | enable/disable adaptive height for slider | Boolean | false |
-| threshold | touch dragging threshold | Number | 30 |
+| threshold | touch dragging threshold (in pixels) | Number | 30 |
+| title | enable/disable slides titles | Boolean | false |
 | keyboard | enable/disable keyboard arrows | Boolean | false |
 | easing | animation function | String | ease-out |
 | nav | enable/disable navigation | Boolean | true |
-| navPrevVal | previous button text | String | Prev |
-| navNextVal | next button text | String | Next |
-| pagination | enabled/disabled pagination | Boolean | true |
+| navPrevVal | previous button value | String | Prev |
+| navNextVal | next button value | String | Next |
+| pagination | enable/disable pagination | Boolean | false |
+| thumbnails | enable/disable thumbnails (urls taken from data-attributes of slides) | Boolean | true |
+| zIndex | z-index of the active slide (using in fade mode) | Number | 98 |
 | onReady | callback after slider init | Function | |
 | beforeChange | callback before slide change | Function | |
 | afterChange | callback after slide change | Function | |
@@ -78,6 +82,9 @@ The slider plugin has the following options:
 | prevSlide() | go to previous slide |
 | nextSlide() | go to next slide |
 | goToSlide(index) | go to slide with current index |
+| isEnabledOption(option) | return true if option is active |
+| destroy() | destroy slider |
+| reinit(options) | reinit slider with new options |
 | activeSlide | get index of the active slide |
 | slidesCount | get number of slides |
 

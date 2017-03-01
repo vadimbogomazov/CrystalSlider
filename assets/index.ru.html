@@ -9,28 +9,30 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="dist/crystalslider.min.css">
+  <link rel="stylesheet" href="../dist/crystalslider.min.css">
 </head>
 <body>
   <div class="page-wrapper">
     <h1 class="page-wrapper__title">Crystal Slider</h1>
 
     <div class="crystal-slider">
-      <div>
+      <div data-crystal-caption="Описание к слайду">
         <img src="img/slide-1.jpg" alt="">
       </div>
-      <div>
+      <div data-crystal-caption="Описание к слайду 2">
         <img src="img/slide-2.jpg" alt="">
       </div>
-      <div>
+      <div data-crystal-caption="Описание к слайду 3">
         <img src="img/slide-3.jpg" alt="">
       </div>
-      <div>
+      <div data-crystal-caption="Описание к слайду 4">
         <img src="img/slide-4.jpg" alt="">
       </div>
     </div>
 
     <div class="page-section">
+      <p>Языки руководства: <a href="index.html">English</a>, <a href="index.ru.html">Русский</a></p>
+
       <h2>Особенности</h2>
       <ul>
         <li>легкий JavaScript слайдер с минимально необходимым функционалом;</li>
@@ -64,7 +66,7 @@
 
       <h3>Шаг #3</h3>
 
-      <p>Последний шаг - подключите crystalslider.min.js и вызовите плагин:</p>
+      <p>Последний шаг — подключите crystalslider.min.js и вызовите плагин:</p>
       <pre><code>&lt;script src="js/crystalslider.min.js"&gt;&lt;/script&gt;
 &lt;script&gt;
   const crystalSlider = new CrystalSlider();
@@ -99,8 +101,14 @@
           <td>true</td>
         </tr>
         <tr>
+          <td>fade</td>
+          <td>включение/отключение fade режима</td>
+          <td>Boolean</td>
+          <td>false</td>
+        </tr>
+        <tr>
           <td>duration</td>
-          <td>продолжительность анимации</td>
+          <td>продолжительность анимации (в миллисекундах)</td>
           <td>Number</td>
           <td>500</td>
         </tr>
@@ -118,9 +126,15 @@
         </tr>
         <tr>
           <td>threshold</td>
-          <td>минимальное смещение указателя для смены слайда</td>
+          <td>минимальное смещение указателя для смены слайда (в пикселях)</td>
           <td>Number</td>
           <td>30</td>
+        </tr>
+        <tr>
+          <td>title</td>
+          <td>включение/отключение заголовков слайдов</td>
+          <td>Boolean</td>
+          <td>false</td>
         </tr>
         <tr>
           <td>keyboard</td>
@@ -142,13 +156,13 @@
         </tr>
         <tr>
           <td>navPrevVal</td>
-          <td>текст кнопки назад</td>
+          <td>значение кнопки назад</td>
           <td>String</td>
           <td>Prev</td>
         </tr>
         <tr>
           <td>navNextVal</td>
-          <td>текст кнопки вперед</td>
+          <td>значение кнопки вперед</td>
           <td>String</td>
           <td>Next</td>
         </tr>
@@ -156,7 +170,19 @@
           <td>pagination</td>
           <td>пагинация</td>
           <td>Boolean</td>
-          <td>true</td>
+          <td>false</td>
+        </tr>
+        <tr>
+          <td>thumbnails</td>
+          <td>включение/отключение миниатюр (изображения берутся из data-атрибутов слайдов)</td>
+          <td>Boolean</td>
+          <td>false</td>
+        </tr>
+        <tr>
+          <td>zIndex</td>
+          <td>z-index активного слайда (используется в fade режиме)</td>
+          <td>Number</td>
+          <td>98</td>
         </tr>
         <tr>
           <td>onReady</td>
@@ -207,6 +233,30 @@
             переход на слайд с заданным индексом
           </td>
         </tr>
+        <tr>
+          <td>
+            isEnabledOption(option)
+          </td>
+          <td>
+            возвращает true, если опция активна
+          </td>
+        </tr>
+        <tr>
+          <td>
+            destroy()
+          </td>
+          <td>
+            уничтожает слайдер
+          </td>
+        </tr>
+        <tr>
+          <td>
+            reinit(options)
+          </td>
+          <td>
+            реинициализация слайдера с новыми опциями
+          </td>
+        </tr>
       </table>
 
       <h3>Свойства</h3>
@@ -231,6 +281,7 @@
       </table>
 
       <h2>Дополнительно</h2>
+
       <ul>
         <li>Github: <a href="https://github.com/VadimBogomazov/CrystalSlider">https://github.com/VadimBogomazov/CrystalSlider</a></li>
         <li>Версия: 1.0.0</li>
@@ -239,25 +290,7 @@
     </div>
   </div>
 
-  <script src="dist/crystalslider.min.js"></script>
-  <script>
-    const crystalSlider = new CrystalSlider({
-      autoHeight: true,
-      keyboard: true,
-      easing: 'cubic-bezier(0.785, 0.135, 0.15, 0.86)',
-      navPrevVal: '',
-      navNextVal: '',
-
-      beforeChange: function () {
-        console.log('Before change');
-      },
-      afterChange: function () {
-        console.log('After change');
-      },
-      onReady: function () {
-        console.log('Slider is ready');
-      }
-    });
-  </script>
+  <script src="../dist/crystalslider.min.js"></script>
+  <script src="js/scripts.js"></script>
 </body>
 </html>
