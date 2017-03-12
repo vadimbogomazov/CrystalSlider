@@ -8,7 +8,7 @@
 
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="../dist/crystalslider.min.css">
 </head>
 <body>
@@ -16,16 +16,16 @@
     <h1 class="page-wrapper__title">Crystal Slider</h1>
 
     <div class="crystal-slider">
-      <div data-crystal-caption="Описание к слайду">
+      <div data-crystal-title="Описание к слайду">
         <img src="img/slide-1.jpg" alt="">
       </div>
-      <div data-crystal-caption="Описание к слайду 2">
+      <div data-crystal-title="Описание к слайду 2">
         <img src="img/slide-2.jpg" alt="">
       </div>
-      <div data-crystal-caption="Описание к слайду 3">
+      <div data-crystal-title="Описание к слайду 3">
         <img src="img/slide-3.jpg" alt="">
       </div>
-      <div data-crystal-caption="Описание к слайду 4">
+      <div data-crystal-title="Описание к слайду 4">
         <img src="img/slide-4.jpg" alt="">
       </div>
     </div>
@@ -35,16 +35,17 @@
 
       <h2>Особенности</h2>
       <ul>
-        <li>легкий JavaScript слайдер с минимально необходимым функционалом;</li>
+        <li>легкий слайдер с минимально необходимым функционалом, написанный на чистом JS;</li>
         <li>без зависимостей;</li>
         <li>респонсив;</li>
         <li>поддержка тач устройств;</li>
+        <li>прост в использовании;</li>
       </ul>
 
       <h2>Установка</h2>
-      <h3>Шаг #1</h3>
+      <h3>Создайте HTML разметку</h3>
 
-      <p>Базовая разметка HTML в документе:</p>
+      <p>Создайте элемент <code>&lt;div class="crystal-slider"&gt;</code> и элемент <code>&lt;div&gt;</code> внутри для каждого слайда:</p>
 
       <pre><code>&lt;div class="crystal-slider"&gt;
   &lt;div&gt;
@@ -58,18 +59,23 @@
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
 
-      <h3>Шаг #2</h3>
+      <h3>Подключите файлы плагина</h3>
 
-      <p>CSS слайдера разделен на стили, необходимые для работы плагина, и стили базовой темы. Просто подключите файл crystalslider.css:</p>
+      <p>Подключите файлы <code>crystalslider.css</code> и <code>crystalslider.min.js</code>:</p>
 
-      <pre><code>&lt;link rel="stylesheet" href="css/crystalslider.css"&gt;</code></pre>
+      <pre><code>&lt;link rel="stylesheet" href="css/crystalslider.css"&gt;
+&lt;script src="js/crystalslider.min.js"&gt;
+</code></pre>
 
-      <h3>Шаг #3</h3>
+      <p>CSS слайдера разделен на стили, необходимые для корректной работы плагина, и стили базовой темы (опционально).</p>
 
-      <p>Последний шаг — подключите crystalslider.min.js и вызовите плагин:</p>
-      <pre><code>&lt;script src="js/crystalslider.min.js"&gt;&lt;/script&gt;
-&lt;script&gt;
-  const crystalSlider = new CrystalSlider();
+      <h3>Вызовите плагин</h3>
+
+      <p>И последний шаг — вызовите плагин, указав необходимый селектор в опциях:</p>
+      <pre><code>&lt;script&gt;
+  const crystalSlider = new CrystalSlider({
+    selector: 'your-selector' // .crystal-slider – селектор по умолчанию
+  });
 &lt;/script&gt;</code></pre>
 
       <h2>Опции</h2>
@@ -102,7 +108,7 @@
         </tr>
         <tr>
           <td>fade</td>
-          <td>включение/отключение fade режима</td>
+          <td>fade режим</td>
           <td>Boolean</td>
           <td>false</td>
         </tr>
@@ -114,13 +120,13 @@
         </tr>
         <tr>
           <td>draggable</td>
-          <td>активация/деактивация драга</td>
+          <td>драг слайдов</td>
           <td>Boolean</td>
           <td>true</td>
         </tr>
         <tr>
           <td>adaptiveHeight</td>
-          <td>включение/отключение адаптивной высоты для слайдера</td>
+          <td>адаптивная высота</td>
           <td>Boolean</td>
           <td>false</td>
         </tr>
@@ -131,20 +137,20 @@
           <td>30</td>
         </tr>
         <tr>
-          <td>title</td>
-          <td>включение/отключение заголовков слайдов</td>
+          <td>titles</td>
+          <td>подписи к слайдам (значения берутся из data-атрибутов слайдов)</td>
           <td>Boolean</td>
           <td>false</td>
         </tr>
         <tr>
           <td>keyboard</td>
-          <td>управление стрелками клавиатуры</td>
+          <td>управление стрелками клавиатуры ← →</td>
           <td>Boolean</td>
           <td>false</td>
         </tr>
         <tr>
           <td>easing</td>
-          <td>функция анимации</td>
+          <td>функция плавности анимации (<a href="http://easings.net/ru" target="_blank">http://easings.net/en</a>)</td>
           <td>String</td>
           <td>ease-out</td>
         </tr>
@@ -174,13 +180,13 @@
         </tr>
         <tr>
           <td>thumbnails</td>
-          <td>включение/отключение миниатюр (изображения берутся из data-атрибутов слайдов)</td>
+          <td>миниатюры слайдов (изображения берутся из data-атрибутов слайдов)</td>
           <td>Boolean</td>
           <td>false</td>
         </tr>
         <tr>
           <td>zIndex</td>
-          <td>z-index активного слайда (используется в fade режиме)</td>
+          <td>z-index слайдов (опция используется в fade режиме)</td>
           <td>Number</td>
           <td>98</td>
         </tr>
@@ -214,7 +220,7 @@
             nextSlide()
           </td>
           <td>
-            следующий слайд
+            переход на следующий слайд
           </td>
         </tr>
         <tr>
@@ -222,7 +228,7 @@
             prevSlide()
           </td>
           <td>
-            предыдущий слайд
+            переход на предыдущий слайд
           </td>
         </tr>
         <tr>
@@ -230,7 +236,7 @@
             goToSlide(index)
           </td>
           <td>
-            переход на слайд с заданным индексом
+            переход на слайд с заданным индексом (index {Number})
           </td>
         </tr>
         <tr>
@@ -238,7 +244,7 @@
             isEnabledOption(option)
           </td>
           <td>
-            возвращает true, если опция активна
+            возвращает true, если опция включена (option {String})
           </td>
         </tr>
         <tr>
@@ -246,7 +252,7 @@
             destroy()
           </td>
           <td>
-            уничтожает слайдер
+            уничтожает экземпляр слайдера
           </td>
         </tr>
         <tr>
@@ -254,7 +260,7 @@
             reinit(options)
           </td>
           <td>
-            реинициализация слайдера с новыми опциями
+            реинициализация слайдера с новыми опциями (options {Object})
           </td>
         </tr>
       </table>
@@ -267,15 +273,15 @@
             activeSlide
           </td>
           <td>
-            индекс активного слайда
+            индекс активного слайда (только для чтения)
           </td>
         </tr>
         <tr>
           <td>
-            slidesCount
+            slidesLength
           </td>
           <td>
-            количество слайдов
+            количество слайдов (только для чтения)
           </td>
         </tr>
       </table>

@@ -4,16 +4,17 @@
 
 ## Особенности
 
-- легкий JavaScript слайдер с минимально необходимым функционалом;
+- легкий слайдер с минимально необходимым функционалом, написанный на чистом JS;
 - без зависимостей;
 - респонсив;
 - поддержка тач устройств;
+- прост в использовании;
 
 ## Установка
 
-### Шаг 1
+### Создайте HTML разметку
 
-Базовая разметка HTML в документе:
+Создайте элемент `<div class="crystal-slider">` и элемент `<div>` внутри для каждого слайда:
 
 ```html
 <div class="crystal-slider">
@@ -29,22 +30,26 @@
 </div>
 ```
 
-### Шаг 2
+### Подключите файлы плагина
 
-CSS слайдера разделен на стили, необходимые для работы плагина, и базовую тему. Просто подключите файл crystalslider.css:
+Подключите файлы `crystalslider.css` и `crystalslider.min.js`:
 
 ```html
 <link rel="stylesheet" href="css/crystalslider.css">
+<script src="js/crystalslider.min.js">
 ```
 
-### Шаг 3
+CSS слайдера разделен на стили, необходимые для корректной работы плагина, и стили базовой темы (опционально).
 
-Последний шаг — подключите crystalslider.min.js и вызовите плагин:
+### Вызовите плагин
+
+И последний шаг — вызовите плагин, указав необходимый селектор в опциях:
 
 ```html
-<script src="js/crystalslider.min.js"></script>
 <script>
-  const crystalSlider = new CrystalSlider();
+  const crystalSlider = new CrystalSlider({
+    selector: 'your-selector' // .crystal-slider – селектор по умолчанию
+  });
 </script>
 ```
 
@@ -57,20 +62,20 @@ CSS слайдера разделен на стили, необходимые д
 | selector | селектор слайдера | String | .crystal-slider |
 | activeSlide | индекс активного слайда | Number | 1 |
 | loop | цикличность слайдера | Boolean | true |
-| fade | включение/отключение fade режима | Boolean | false |
+| fade | fade режим | Boolean | false |
 | duration | продолжительность анимации (в миллисекундах) | Number | 500 |
-| draggable | включение/отключение драга | Boolean | true |
-| adaptiveHeight | включение/отключение адаптивной высоты для слайдера | Boolean | false |
+| draggable | драг слайдов | Boolean | true |
+| adaptiveHeight | адаптивная высота | Boolean | false |
 | threshold | минимальное смещение указателя для смены слайда (в пикселях) | Number | 30 |
-| title | включение/отключение заголовков слайдов | Boolean | false |
-| keyboard | управление стрелками клавиатуры | Boolean | false |
-| easing | функция анимации | String | ease-out |
-| nav | включение/отключение навигации | Boolean | true |
+| titles | подписи к слайдам (значения берутся из data-атрибутов слайдов) | Boolean | false |
+| keyboard | управление стрелками клавиатуры ← → | Boolean | false |
+| easing | функция плавности анимации ([http://easings.net/ru](http://easings.net/ru)) | String | ease-out |
+| nav | навигация | Boolean | true |
 | navPrevVal | значение кнопки назад | String | Prev |
 | navNextVal | значение кнопки вперед | String | Next |
-| pagination | включение/отключение пагинации | Boolean | false |
-| thumbnails | включение/отключение миниатюр (изображения берутся из data-атрибутов слайдов) | Boolean | false |
-| zIndex | z-index активного слайда (используется в fade режиме) | Number | 98 |
+| pagination | пагинация | Boolean | false |
+| thumbnails | миниатюры (изображения берутся из data-атрибутов слайдов) | Boolean | false |
+| zIndex | z-index слайдов (опция используется в fade режиме) | Number | 98 |
 | onReady | callback после инициализации слайдера | Function | |
 | beforeChange | callback перед сменой слайда | Function | |
 | afterChange | callback после смены слайда | Function | |
@@ -79,14 +84,14 @@ CSS слайдера разделен на стили, необходимые д
 
 | Название | Описание |
 | ------ | ------ |
-| prevSlide() | предыдущий слайд |
-| nextSlide() | следующий слайд |
-| goToSlide(index) | переход на слайд с заданным индексом |
-| isEnabledOption(option) | возвращает true, если опция активна |
-| destroy() | уничтожает слайдер |
-| reinit(options) | реинициализация слайдера с новыми опциями |
-| activeSlide | индекс активного слайда |
-| slidesCount | количество слайдов |
+| prevSlide() | переход на предыдущий слайд |
+| nextSlide() | переход на следующий слайд |
+| goToSlide(index) | переход на слайд с заданным индексом (index {Number}) |
+| isEnabledOption(option) | возвращает true, если опция включена (option {String}) |
+| destroy() | уничтожает экземпляр слайдера |
+| reinit(options) | реинициализация слайдера с новыми опциями (options {Object}) |
+| activeSlide | индекс активного слайда (только для чтения) |
+| slidesLength | количество слайдов (только для чтения) |
 
 ## Дополнительно
 

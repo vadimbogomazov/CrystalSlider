@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width,user-scalable=no">
 
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="../dist/crystalslider.min.css">
 </head>
 <body>
@@ -15,18 +15,16 @@
     <h1 class="page-wrapper__title">Crystal Slider</h1>
 
     <div class="crystal-slider">
-      <div data-crystal-caption="Slide description">
+      <div data-crystal-title="Slide description">
         <img src="img/slide-1.jpg" alt="">
-        <!-- <img src="http://placehold.it/300x500" alt=""> -->
       </div>
-      <div data-crystal-caption="Slide description 2">
+      <div data-crystal-title="Slide description 2">
         <img src="img/slide-2.jpg" alt="">
-        <!-- <img src="http://placehold.it/400x400" alt=""> -->
       </div>
-      <div data-crystal-caption="Slide description 3">
+      <div data-crystal-title="Slide description 3">
         <img src="img/slide-3.jpg" alt="">
       </div>
-      <div data-crystal-caption="Slide description 4">
+      <div data-crystal-title="Slide description 4">
         <img src="img/slide-4.jpg" alt="">
       </div>
     </div>
@@ -36,16 +34,17 @@
 
       <h2>Features</h2>
       <ul>
-        <li>lightweight JavaScript slider with minimally required functionality;</li>
-        <li>without dependencies;</li>
+        <li>lightweight slider with minimum required functionality written in vanilla JS;</li>
+        <li>no dependencies;</li>
         <li>responsive;</li>
-        <li>support touch devices;</li>
+        <li>touch device support;</li>
+        <li>userfriendly;</li>
       </ul>
 
       <h2>Installation</h2>
-      <h3>Step #1</h3>
+      <h3>Create HTML markup</h3>
 
-      <p>Add basic html markup into your document:</p>
+      <p>Create <code>&lt;div class="crystal-slider"&gt;</code> and <code>&lt;div&gt;</code> inside for each slide:</p>
 
       <pre><code>&lt;div class="crystal-slider"&gt;
   &lt;div&gt;
@@ -59,18 +58,22 @@
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
 
-    <h3>Step #2</h3>
+    <h3>Include plugin files</h3>
 
-    <p>Slider css is divided into styles needed for the plugin, and basic theme. Just include crystalslider.css:</p>
+    <p>Include <code>crystalslider.css</code> and <code>crystalslider.min.js</code>:</p>
 
-    <pre><code>&lt;link rel="stylesheet" href="css/crystalslider.css"&gt;</code></pre>
+    <pre><code>&lt;link rel="stylesheet" href="css/crystalslider.css"&gt;
+&lt;script src="js/crystalslider.min.js"&gt;&lt;/script&gt;
+</code></pre>
 
-    <h3>Step #3</h3>
-    <p>The last step — include crystalslider.min.js and call plugin:</p>
+    <p>Slider css is divided into styles needed for correct plugin work, and styles of the basic theme (optional).</p>
 
-      <pre><code>&lt;script src="js/crystalslider.min.js"&gt;&lt;/script&gt;
-&lt;script&gt;
-  const crystalSlider = new CrystalSlider();
+    <h3>Call plugin</h3>
+    <p>And the last step — calling plugin by specifying the required selector in options:</p>
+      <pre><code>&lt;script&gt;
+  const crystalSlider = new CrystalSlider({
+    selector: 'your-selector' // .crystal-slider – default selector
+  });
 &lt;/script&gt;</code></pre>
 
       <h2>Options</h2>
@@ -91,67 +94,67 @@
         </tr>
         <tr>
           <td>activeSlide</td>
-          <td>set index of active slide</td>
+          <td>active slide index</td>
           <td>Number</td>
           <td>1</td>
         </tr>
         <tr>
           <td>loop</td>
-          <td>enable/disable slider loop</td>
+          <td>slider loop</td>
           <td>Boolean</td>
           <td>true</td>
         </tr>
         <tr>
           <td>fade</td>
-          <td>enable/disable fade mode</td>
+          <td>fade mode</td>
           <td>Boolean</td>
           <td>false</td>
         </tr>
         <tr>
           <td>duration</td>
-          <td>animation duration (in milliseconds)</td>
+          <td>animation duration (in ms)</td>
           <td>Number</td>
           <td>500</td>
         </tr>
         <tr>
           <td>draggable</td>
-          <td>enable/disable drag</td>
+          <td>slide dragging</td>
           <td>Boolean</td>
           <td>true</td>
         </tr>
         <tr>
           <td>adaptiveHeight</td>
-          <td>enable/disable adaptive height for slider</td>
+          <td>adaptive height</td>
           <td>Boolean</td>
           <td>false</td>
         </tr>
         <tr>
           <td>threshold</td>
-          <td>touch dragging threshold (in pixels)</td>
+          <td>touch dragging threshold (in px)</td>
           <td>Number</td>
           <td>30</td>
         </tr>
         <tr>
-          <td>title</td>
-          <td>enable/disable slides titles</td>
+          <td>titles</td>
+          <td>slide titles (values are taken from the data-attributes of slides)</td>
           <td>Boolean</td>
           <td>false</td>
         </tr>
         <tr>
           <td>keyboard</td>
-          <td>enable/disable keyboard arrows</td>
+          <td>keyboard arrows</td>
           <td>Boolean</td>
           <td>false</td>
         </tr>
         <tr>
           <td>easing</td>
-          <td>animation function</td>
+          <td>cubic bezier easing function (<a href="http://easings.net/en" target="_blank">http://easings.net/en</a>)</td>
           <td>String</td>
           <td>ease-out</td>
         </tr>
         <tr>
           <td>nav</td>
-          <td>enable/disable navigation</td>
+          <td>navigation</td>
           <td>Boolean</td>
           <td>true</td>
         </tr>
@@ -169,25 +172,25 @@
         </tr>
         <tr>
           <td>pagination</td>
-          <td>enable/disable pagination</td>
+          <td>pagination</td>
           <td>Boolean</td>
           <td>false</td>
         </tr>
         <tr>
           <td>thumbnails</td>
-          <td>enable/disable thumbnails (images are taken from data-attributes)</td>
+          <td>thumbnails (images are taken from the data-attributes of slides)</td>
           <td>Boolean</td>
           <td>false</td>
         </tr>
         <tr>
           <td>zIndex</td>
-          <td>z-index of the active slide (using in fade mode)</td>
+          <td>slide z-index (used in fade mode)</td>
           <td>Number</td>
           <td>98</td>
         </tr>
         <tr>
           <td>onReady</td>
-          <td>callback after slider init</td>
+          <td>callback after slider initiation</td>
           <td>Function</td>
           <td></td>
         </tr>
@@ -215,7 +218,7 @@
             prevSlide()
           </td>
           <td>
-            go to previous slide
+            slides to the previous slide
           </td>
         </tr>
         <tr>
@@ -223,7 +226,7 @@
             nextSlide()
           </td>
           <td>
-            go to next slide
+            slides to the next slide
           </td>
         </tr>
         <tr>
@@ -231,7 +234,7 @@
             goToSlide(index)
           </td>
           <td>
-            go to slide with current index
+            slides to a slide with the set index (option {Number})
           </td>
         </tr>
         <tr>
@@ -239,7 +242,7 @@
             isEnabledOption(option)
           </td>
           <td>
-            return true if option is active
+            returns true if the option is enable (option {String})
           </td>
         </tr>
         <tr>
@@ -247,7 +250,7 @@
             destroy()
           </td>
           <td>
-            destroy slider
+            destroy the slider instance
           </td>
         </tr>
         <tr>
@@ -255,7 +258,7 @@
             reinit(options)
           </td>
           <td>
-            reinit slider with new options
+            slider reinit with new options (options {Object})
           </td>
         </tr>
       </table>
@@ -268,15 +271,15 @@
             activeSlide
           </td>
           <td>
-            get index of the active slide
+            active slide index (read only)
           </td>
         </tr>
         <tr>
           <td>
-            slidesCount
+            slidesLength
           </td>
           <td>
-            get slides count
+            number of slides (read only)
           </td>
         </tr>
       </table>

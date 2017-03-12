@@ -4,16 +4,17 @@ Readme languages: [English](README.md), [Русский](README.ru-Ru.md)
 
 ## Features
 
-- lightweight JavaScript slider with minimally required functionality;
-- without dependencies;
+- lightweight slider with minimum required functionality written in vanilla JS;
+- no dependencies;
 - responsive;
-- support touch devices;
+- touch device support;
+- userfriendly;
 
 ## Installation
 
-### Step 1
+### Create HTML markup
 
-Add basic html markup into your document:
+Create `<div class="crystal-slider">` and `<div>` inside for each slide:
 
 ```html
 <div class="crystal-slider">
@@ -29,22 +30,26 @@ Add basic html markup into your document:
 </div>
 ```
 
-### Step 2
+### Include plugin files
 
-Slider css is divided into styles needed for the plugin, and basic theme. Just include crystalslider.css:
+Include `crystalslider.css` and `crystalslider.min.js`:
 
 ```html
 <link rel="stylesheet" href="css/crystalslider.css">
+<script src="js/crystalslider.min.js">
 ```
 
-### Step 3
+Slider css is divided into styles needed for correct plugin work, and styles of the basic theme (optional).
 
-The last step — include crystalslider.min.js and call plugin:
+### Call plugin
+
+And the last step — calling plugin by specifying the required selector in options:
 
 ```html
-<script src="js/crystalslider.min.js"></script>
 <script>
-  const crystalSlider = new CrystalSlider();
+  const crystalSlider = new CrystalSlider({
+    selector: 'your-selector' // .crystal-slider – default selector
+  });
 </script>
 ```
 
@@ -55,23 +60,23 @@ The slider plugin has the following options:
 | Name | Description | Type | Default |
 | ------ | ------ | ------ | ------ |
 | selector | slider selector | String | .crystal-slider |
-| activeSlide | set index of the active slide | Number | 1 |
-| loop | enable/disable slider loop | Boolean | true |
-| fade | enable/disable fade mode | Boolean | false |
-| duration | animation duration (in milliseconds) | Number | 500 |
-| draggable | enable/disable drag | Boolean | true |
-| adaptiveHeight | enable/disable adaptive height for slider | Boolean | false |
-| threshold | touch dragging threshold (in pixels) | Number | 30 |
-| title | enable/disable slides titles | Boolean | false |
-| keyboard | enable/disable keyboard arrows | Boolean | false |
-| easing | animation function | String | ease-out |
-| nav | enable/disable navigation | Boolean | true |
+| activeSlide | active slide index | Number | 1 |
+| loop | slider loop | Boolean | true |
+| fade | fade mode | Boolean | false |
+| duration | animation duration (in ms) | Number | 500 |
+| draggable | slide dragging | Boolean | true |
+| adaptiveHeight | adaptive height for slider | Boolean | false |
+| threshold | touch dragging threshold (in px) | Number | 30 |
+| titles | slides titles (values are taken from the data-attributes of slides) | Boolean | false |
+| keyboard | keyboard arrows ← → | Boolean | false |
+| easing | cubic bezier easing function ([http://easings.net/en](http://easings.net/en)) | String | ease-out |
+| nav | navigation | Boolean | true |
 | navPrevVal | previous button value | String | Prev |
 | navNextVal | next button value | String | Next |
-| pagination | enable/disable pagination | Boolean | false |
-| thumbnails | enable/disable thumbnails (urls taken from data-attributes of slides) | Boolean | true |
-| zIndex | z-index of the active slide (using in fade mode) | Number | 98 |
-| onReady | callback after slider init | Function | |
+| pagination | pagination | Boolean | false |
+| thumbnails | thumbnails (urls taken from the data-attributes of slides) | Boolean | true |
+| zIndex | slide z-index (used in fade mode) | Number | 98 |
+| onReady | callback after slider initiation | Function | |
 | beforeChange | callback before slide change | Function | |
 | afterChange | callback after slide change | Function | |
 
@@ -79,14 +84,14 @@ The slider plugin has the following options:
 
 | Name | Description |
 | ------ | ------ |
-| prevSlide() | go to previous slide |
-| nextSlide() | go to next slide |
-| goToSlide(index) | go to slide with current index |
-| isEnabledOption(option) | return true if option is active |
-| destroy() | destroy slider |
-| reinit(options) | reinit slider with new options |
-| activeSlide | get index of the active slide |
-| slidesCount | get number of slides |
+| prevSlide() | slides to the previous slide |
+| nextSlide() | slides to the next slide |
+| goToSlide(index) | slides to a slide with the set index (index {Number}) |
+| isEnabledOption(option) | returns true if the option is enable (option {String}) |
+| destroy() | destroy the slider instance |
+| reinit(options) | slider reinit with new options (options {Object}) |
+| activeSlide | active slide index (read only) |
+| slidesLength | number of slides (read only) |
 
 ## Extra
 
