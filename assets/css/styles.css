@@ -439,10 +439,23 @@ img {
 }
 
 .page-wrapper__title {
+  color: #fa5505;
+  font-family: 'Streetwear';
+  letter-spacing: 1px;
   text-align: center;
 }
 
 .page-section {
   margin: 20px auto 0;
   max-width: 900px;
+}
+
+@font-face {
+  font-family: 'Streetwear';
+  src: url('../fonts/Streetwear.eot');
+  src: url('../fonts/Streetwear.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Streetwear.woff') format('woff'),
+    url('../fonts/Streetwear.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }

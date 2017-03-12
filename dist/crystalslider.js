@@ -2,7 +2,6 @@
   Name    : Crystal Slider
   Version : 1.0.0
   Github  : https://github.com/VadimBogomazov/CrystalSlider
-  Author  : Vadim Bogomazov
 */
 
 (function () {
@@ -24,7 +23,7 @@
     draggable      : true,
     adaptiveHeight : false,
     threshold      : 30,
-    captions       : false,
+    titles         : false,
     keyboard       : false,
     easing         : 'ease-out',
     // Nav
@@ -62,10 +61,10 @@
 
       if (t.activeSlide <= 1 && !t.isEnabledOption('loop')) return;
       if (isFunction(opts.beforeChange)) {
-        opts.beforeChange.call(t, t.activeSlide, t.slidesCount);
+        opts.beforeChange.call(t, t.activeSlide, t.slidesLength);
       }
 
-      (t.activeSlide <= 1 && t.isEnabledOption('loop')) ? t.activeSlide = t.slidesCount : t.activeSlide -= 1;
+      (t.activeSlide <= 1 && t.isEnabledOption('loop')) ? t.activeSlide = t.slidesLength : t.activeSlide -= 1;
       t._setActiveSlide();
     }
 
@@ -73,12 +72,12 @@
       const t    = this;
       const opts = t.options;
 
-      if ((t.activeSlide >= t.slidesCount) && !t.isEnabledOption('loop')) return;
+      if ((t.activeSlide >= t.slidesLength) && !t.isEnabledOption('loop')) return;
       if (isFunction(opts.beforeChange)) {
-        opts.beforeChange.call(t, t.activeSlide, t.slidesCount);
+        opts.beforeChange.call(t, t.activeSlide, t.slidesLength);
       }
 
-      (t.activeSlide >= t.slidesCount && t.isEnabledOption('loop')) ? t.activeSlide = 1 : t.activeSlide += 1;
+      (t.activeSlide >= t.slidesLength && t.isEnabledOption('loop')) ? t.activeSlide = 1 : t.activeSlide += 1;
       t._setActiveSlide();
     }
 
@@ -86,8 +85,8 @@
       const t    = this;
       const opts = this.options;
 
-      if (!Number.isInteger(index) || (index < 1 && index > t.slidesCount)) return;
-      t._callSliderEvent(opts.beforeChange, t.activeSlide, t.slidesCount);
+      if (!Number.isInteger(index) || (index < 1 && index > t.slidesLength)) return;
+      t._callSliderEvent(opts.beforeChange, t.activeSlide, t.slidesLength);
 
       t.activeSlide = index;
       t._setActiveSlide();
@@ -97,7 +96,7 @@
       return (this.options[option] === true) || false;
     }
 
-    destroy() {
+    _unbindEvents() {
       const t = this;
       const slider = t._slider;
       const track = t._track;
@@ -113,12 +112,19 @@
         slider.removeEventListener('click', t._mouseClickHandler);
       }
 
+      // Remove track listeners
       if (t.isEnabledOption('draggable')) {
         track.removeEventListener((t._isTouchDevice) ? 'touchstart' : 'mousedown', t._touchStartHandler);
         track.removeEventListener((t._isTouchDevice) ? 'touchmove'  : 'mousemove', t._touchMoveHandler);
         track.removeEventListener((t._isTouchDevice) ? 'touchend'   : 'mouseup', t._touchEndHandler);
         track.removeEventListener('mouseleave', t._touchEndHandler);
       }
+    }
+
+    destroy() {
+      const t = this;
+      const slider = t._slider;
+      const track = t._track;
 
       // Remove attributes
       slider.removeAttribute('id')
@@ -133,8 +139,8 @@
         removeElem(t._pagination);
       }
 
-      if (t.isEnabledOption('captions')) {
-        slider.querySelectorAll(`.${t._captionCls}`).forEach(caption => removeElem(caption));
+      if (t.isEnabledOption('titles')) {
+        slider.querySelectorAll(`.${t._titleCls}`).forEach(title => removeElem(title));
       }
 
       t._slides.forEach(elem => {
@@ -162,7 +168,7 @@
       }
 
       // Public read-only properties
-      t.slidesCount = t._slides.length;
+      t.slidesLength = t._slides.length;
       t.activeSlide = t.options.activeSlide;
 
       t._build();
@@ -208,7 +214,7 @@
         t._isMove = false;
 
         if (changeSlide) {
-          t._callSliderEvent(opts.afterChange, t.activeSlide, t.slidesCount);
+          t._callSliderEvent(opts.afterChange, t.activeSlide, t.slidesLength);
         }
       }, opts.duration);
     }
@@ -254,12 +260,12 @@
 
       slides[t.activeSlide - 1].classList.add(t._activeCls);
 
-      if (t.isEnabledOption('pagination') && t.slidesCount > 1) {
+      if (t.isEnabledOption('pagination') && t.slidesLength > 1) {
         pagination.querySelectorAll(`.${t._paginationBtnCls}`).forEach((elem) => elem.classList.remove(t._activeCls));
         pagination.querySelectorAll(`.${t._paginationBtnCls}`)[t.activeSlide - 1].classList.add(t._activeCls);
       }
 
-      if (t.slidesCount > 1) {
+      if (t.slidesLength > 1) {
         t._disableNavBtns();
         if (t.isEnabledOption('adaptiveHeight')) {
           t._setHeight();
@@ -295,10 +301,7 @@
     _init() {
       const t = this;
 
-      console.log(this)
-
       t._slider = doc.querySelector(t.options.selector);
-
       if (t._slider === null) {
         throw new Error(`Selector ${t.options.selector} does not exist`);
       }
@@ -331,7 +334,7 @@
       t._containerCls       = `${sliderCls}__slides-container`
       t._trackCls           = `${sliderCls}__track`;
       t._slideCls           = `${sliderCls}__slide`;
-      t._captionCls         = `${sliderCls}__caption`;
+      t._titleCls           = `${sliderCls}__title`;
 
       t._navCls             = `${sliderCls}-nav`;
       t._navBtnCls          = `${t._navCls}__btn`;
@@ -349,10 +352,10 @@
       t._disabledCls        = 'is-disabled';
 
       // Public read-only properties
-      t.slidesCount = t._slides.length;
+      t.slidesLength = t._slides.length;
       t.activeSlide = t.options.activeSlide;
 
-      if (t.activeSlide < 1 || t.activeSlide > t.slidesCount) {
+      if (t.activeSlide < 1 || t.activeSlide > t.slidesLength) {
         throw new Error(`Slide index ${t.activeSlide} does not exist`);
       }
     }
@@ -375,7 +378,7 @@
       }
 
       track.classList.add(t._trackCls);
-      track.style.width = `${t._sliderWidth * t.slidesCount}px`;
+      track.style.width = `${t._sliderWidth * t.slidesLength}px`;
       track.style[transform] = `translate3d(${t._transformX}px, 0, 0)`;
 
       container.classList.add(t._containerCls);
@@ -389,7 +392,7 @@
 
         elem.classList.add(t._slideCls);
         elem.setAttribute('data-crystal-slide', index + 1);
-        elemStyle.width = `${100 / t.slidesCount}%`;
+        elemStyle.width = `${100 / t.slidesLength}%`;
 
         if (t.isEnabledOption('fade')) {
           elemStyle.transition = `opacity ${opts.duration}ms ${opts.easing}`;
@@ -401,20 +404,20 @@
           elemStyle.zIndex = opts.zIndex - 1;
         }
 
-        if (t.isEnabledOption('captions')) {
-          const caption = doc.createElement('div');
+        if (t.isEnabledOption('titles')) {
+          const title = doc.createElement('div');
 
-          caption.classList.add(t._captionCls);
-          caption.innerHTML = elem.getAttribute('data-crystal-caption');
+          title.classList.add(t._titleCls);
+          title.innerHTML = elem.getAttribute('data-crystal-title');
 
-          elem.appendChild(caption);
+          elem.appendChild(title);
         }
 
         fragment.appendChild(elem);
       });
 
-      if (t.isEnabledOption('captions')) {
-        t._captions = slider.querySelectorAll(`${t._captionCls}`);
+      if (t.isEnabledOption('titles')) {
+        t._titles = slider.querySelectorAll(`${t._titleCls}`);
       }
 
       track.appendChild(fragment);
@@ -433,7 +436,7 @@
       }
 
       slider.classList.add(t._sliderReadyCls);
-      t._callSliderEvent(opts.onReady, t.activeSlide, t.slidesCount);
+      t._callSliderEvent(opts.onReady, t.activeSlide, t.slidesLength);
     }
 
     _createNav() {
@@ -533,8 +536,8 @@
           end: 0,
         };
 
-        t._track.addEventListener((t._isTouchDevice) ? 'touchstart' : 'mousedown', t._touchStartHandler, false);
-        t._track.addEventListener((t._isTouchDevice) ? 'touchmove'  : 'mousemove', t._touchMoveHandler, false);
+        t._track.addEventListener((t._isTouchDevice) ? 'touchstart' : 'mousedown', t._touchStartHandler, (t._isTouchDevice) ? { passive: true } : false);
+        t._track.addEventListener((t._isTouchDevice) ? 'touchmove'  : 'mousemove', t._touchMoveHandler, (t._isTouchDevice) ? { passive: true } : false);
         t._track.addEventListener((t._isTouchDevice) ? 'touchend'   : 'mouseup', t._touchEndHandler, false);
         t._track.addEventListener('mouseleave', t._touchEndHandler);
       }
@@ -607,7 +610,7 @@
 
       if (!opts.loop) {
         if ((activeSlide <= 1 && coordsResult < 0) ||
-            (activeSlide >= t.slidesCount && (coordsResult > 0))
+            (activeSlide >= t.slidesLength && (coordsResult > 0))
           ) {
           t._setPosition(false);
 
@@ -675,7 +678,7 @@
           t._transformX = Math.ceil(-t._sliderWidth * (t.activeSlide - 1));
         }
 
-        track.style.width = `${t._sliderWidth * t.slidesCount}px`;
+        track.style.width = `${t._sliderWidth * t.slidesLength}px`;
         track.style[transform] = `translate3d(${t._transformX}px, 0, 0)`;
 
         if (t.isEnabledOption('adaptiveHeight')) {
