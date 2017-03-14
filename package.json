@@ -1,12 +1,13 @@
 {
   "name": "CrystalSlider",
   "version": "1.0.0",
-  "description": "Lightweight JavaScript Slider without dependencies",
+  "description": "Lightweight and simple slider written in vanilla JS",
   "repository": "https://github.com/VadimBogomazov/CrystalSlider.git",
   "author": "Vadim Bogomazov <bogomazov.vadim@yandex.ru>",
   "license": "MIT",
   "keywords": [
-    "slider"
+    "slider",
+    "crystalslider"
   ],
   "scripts": {
     "start": "gulp"
@@ -24,6 +25,5 @@
     "gulp-babel-minify": "^0.1.12",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
-    "gulp-uglify": "^2.0.1"
   }
 }

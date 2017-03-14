@@ -65,16 +65,16 @@ The slider plugin has the following options:
 | fade | fade mode | Boolean | false |
 | duration | animation duration (in ms) | Number | 500 |
 | draggable | slide dragging | Boolean | true |
-| adaptiveHeight | adaptive height for slider | Boolean | false |
+| adaptiveHeight | adaptive height | Boolean | false |
 | threshold | touch dragging threshold (in px) | Number | 30 |
 | titles | slides titles (values are taken from the data-attributes of slides) | Boolean | false |
 | keyboard | keyboard arrows ← → | Boolean | false |
-| easing | cubic bezier easing function ([http://easings.net/en](http://easings.net/en)) | String | ease-out |
+| easing | easing function ([http://easings.net/en](http://easings.net/en)) | String | ease-out |
 | nav | navigation | Boolean | true |
 | navPrevVal | previous button value | String | Prev |
 | navNextVal | next button value | String | Next |
 | pagination | pagination | Boolean | false |
-| thumbnails | thumbnails (urls taken from the data-attributes of slides) | Boolean | true |
+| thumbnails | thumbnails (images are taken from the data-attributes of slides) | Boolean | true |
 | zIndex | slide z-index (used in fade mode) | Number | 98 |
 | onReady | callback after slider initiation | Function | |
 | beforeChange | callback before slide change | Function | |

@@ -96,31 +96,6 @@
       return (this.options[option] === true) || false;
     }
 
-    _unbindEvents() {
-      const t = this;
-      const slider = t._slider;
-      const track = t._track;
-
-      // Remove window listeners
-      if (t.isEnabledOption('keyboard')) {
-        window.removeEventListener('keyup', t._keyUpHandler);
-      }
-      window.removeEventListener('resize', t._resizeHandler);
-
-      // Remove slider listeners
-      if (t.isEnabledOption('nav') || t.isEnabledOption('pagination')) {
-        slider.removeEventListener('click', t._mouseClickHandler);
-      }
-
-      // Remove track listeners
-      if (t.isEnabledOption('draggable')) {
-        track.removeEventListener((t._isTouchDevice) ? 'touchstart' : 'mousedown', t._touchStartHandler);
-        track.removeEventListener((t._isTouchDevice) ? 'touchmove'  : 'mousemove', t._touchMoveHandler);
-        track.removeEventListener((t._isTouchDevice) ? 'touchend'   : 'mouseup', t._touchEndHandler);
-        track.removeEventListener('mouseleave', t._touchEndHandler);
-      }
-    }
-
     destroy() {
       const t = this;
       const slider = t._slider;
@@ -540,6 +515,31 @@
         t._track.addEventListener((t._isTouchDevice) ? 'touchmove'  : 'mousemove', t._touchMoveHandler, (t._isTouchDevice) ? { passive: true } : false);
         t._track.addEventListener((t._isTouchDevice) ? 'touchend'   : 'mouseup', t._touchEndHandler, false);
         t._track.addEventListener('mouseleave', t._touchEndHandler);
+      }
+    }
+
+    _unbindEvents() {
+      const t = this;
+      const slider = t._slider;
+      const track = t._track;
+
+      // Remove window listeners
+      if (t.isEnabledOption('keyboard')) {
+        window.removeEventListener('keyup', t._keyUpHandler);
+      }
+      window.removeEventListener('resize', t._resizeHandler);
+
+      // Remove slider listeners
+      if (t.isEnabledOption('nav') || t.isEnabledOption('pagination')) {
+        slider.removeEventListener('click', t._mouseClickHandler);
+      }
+
+      // Remove track listeners
+      if (t.isEnabledOption('draggable')) {
+        track.removeEventListener((t._isTouchDevice) ? 'touchstart' : 'mousedown', t._touchStartHandler);
+        track.removeEventListener((t._isTouchDevice) ? 'touchmove'  : 'mousemove', t._touchMoveHandler);
+        track.removeEventListener((t._isTouchDevice) ? 'touchend'   : 'mouseup', t._touchEndHandler);
+        track.removeEventListener('mouseleave', t._touchEndHandler);
       }
     }
 
