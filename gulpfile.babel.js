@@ -13,8 +13,6 @@ const paths = {
   dist: 'dist'
 };
 
-const pluginName = 'crystalslider';
-
 // Tasks
 gulp.task('clean', (cb) => del([`${paths.dist}/**`], cb));
 
@@ -24,7 +22,7 @@ gulp.task('copy', () => {
 });
 
 gulp.task('sass', () => {
-  return gulp.src(`${paths.src}/**.scss`)
+  return gulp.src(`${paths.src}/*.scss`)
     .pipe(autoprefixer({
       browsers: ['last 2 versions'],
       cascade: false
@@ -35,7 +33,7 @@ gulp.task('sass', () => {
 });
 
 gulp.task('scripts', () => {
-  return gulp.src(`${paths.src}/**.js`)
+  return gulp.src(`${paths.src}/*.js`)
     .pipe(babel())
     .pipe(babelminify())
     .pipe(rename({ suffix: '.min' }))
@@ -44,8 +42,8 @@ gulp.task('scripts', () => {
 
 gulp.task('watch', () => {
   gulp.watch(`${paths.src}/*.*`, ['copy']);
-  gulp.watch(`${paths.src}/**.scss`, ['sass']);
-  gulp.watch(`${paths.src}/**.js`, ['scripts']);
+  gulp.watch(`${paths.src}/*.scss`, ['sass']);
+  gulp.watch(`${paths.src}/*.js`, ['scripts']);
 });
 
 gulp.task('default', ['clean', 'copy', 'sass', 'scripts', 'watch']);
