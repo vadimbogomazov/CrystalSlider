@@ -2,12 +2,16 @@
   "name": "CrystalSlider",
   "version": "1.0.0",
   "description": "Lightweight and simple slider written in vanilla JS",
-  "repository": "https://github.com/VadimBogomazov/CrystalSlider.git",
   "author": "Vadim Bogomazov <bogomazov.vadim@yandex.ru>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vadimbogomazov/CrystalSlider"
+  },
   "keywords": [
     "slider",
-    "crystalslider"
+    "crystalslider",
+    "responsive"
   ],
   "scripts": {
     "start": "gulp"
