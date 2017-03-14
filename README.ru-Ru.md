@@ -10,6 +10,10 @@
 - поддержка тач устройств;
 - прост в использовании;
 
+## Демо
+
+[https://vadimbogomazov.github.io/CrystalSlider/](https://vadimbogomazov.github.io/CrystalSlider/)
+
 ## Установка
 
 ### Создайте HTML разметку
