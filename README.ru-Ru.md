@@ -14,6 +14,11 @@
 
 [https://vadimbogomazov.github.io/CrystalSlider/](https://vadimbogomazov.github.io/CrystalSlider/)
 
+### Больше примеров
+
+- [Несколько экземпляров слайдера](/examples/multiple.html)
+- ...
+
 ## Установка
 
 ### Создайте HTML разметку

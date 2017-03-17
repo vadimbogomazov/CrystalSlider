@@ -1,44 +1,14 @@
 /*
   Name    : Crystal Slider
   Version : 1.0.0
-  Github  : https://github.com/VadimBogomazov/CrystalSlider
+  Github  : https://github.com/vadimbogomazov/CrystalSlider
 */
 
 (function () {
-  'use strict';
-
   const doc           = document;
   const transform     = transformProp();
   const transitionEnd = transitionEndEventName();
   const sliderCls     = 'crystal-slider';
-
-    // Default options
-  const options = {
-    // Main
-    selector       : `.${sliderCls}`,
-    activeSlide    : 1,
-    loop           : true,
-    fade           : false,
-    duration       : 500,
-    draggable      : true,
-    adaptiveHeight : false,
-    threshold      : 30,
-    titles         : false,
-    keyboard       : false,
-    easing         : 'ease-out',
-    // Nav
-    nav            : true,
-    navPrevVal     : 'Prev',
-    navNextVal     : 'Next',
-    // Pagination
-    pagination     : false,
-    thumbnails     : false,
-    zIndex         : 98,
-    // Callbacks
-    onReady        : function () {},
-    beforeChange   : function () {},
-    afterChange    : function () {},
-  };
 
   class CrystalSlider {
     constructor(opts) {
@@ -46,112 +16,43 @@
 
       const t = this;
 
-      t.options = Object.assign(options, opts);
+      // Default options
+      t.options = {
+        // Main
+        selector       : `.${sliderCls}`,
+        activeSlide    : 1,
+        loop           : true,
+        fade           : false,
+        duration       : 500,
+        draggable      : true,
+        adaptiveHeight : false,
+        threshold      : 30,
+        titles         : false,
+        keyboard       : false,
+        easing         : 'ease-out',
+        // Nav
+        nav            : true,
+        navPrevVal     : 'Prev',
+        navNextVal     : 'Next',
+        // Pagination
+        pagination     : false,
+        thumbnails     : false,
+        zIndex         : 98,
+        // Callbacks
+        onReady        : function () {},
+        beforeChange   : function () {},
+        afterChange    : function () {},
+      };
+
+      if (isObject(opts)) {
+        t.options = Object.assign(t.options, opts);
+      }
+
       t._id = `${sliderCls + '-' + CrystalSlider._count}`;
 
       t._init();
       t._build();
       t._bindEvents();
-    }
-
-    // Public methods
-    prevSlide() {
-      const t    = this;
-      const opts = t.options;
-
-      if (t.activeSlide <= 1 && !t.isEnabledOption('loop')) return;
-      if (isFunction(opts.beforeChange)) {
-        opts.beforeChange.call(t, t.activeSlide, t.slidesLength);
-      }
-
-      (t.activeSlide <= 1 && t.isEnabledOption('loop')) ? t.activeSlide = t.slidesLength : t.activeSlide -= 1;
-      t._setActiveSlide();
-    }
-
-    nextSlide() {
-      const t    = this;
-      const opts = t.options;
-
-      if ((t.activeSlide >= t.slidesLength) && !t.isEnabledOption('loop')) return;
-      if (isFunction(opts.beforeChange)) {
-        opts.beforeChange.call(t, t.activeSlide, t.slidesLength);
-      }
-
-      (t.activeSlide >= t.slidesLength && t.isEnabledOption('loop')) ? t.activeSlide = 1 : t.activeSlide += 1;
-      t._setActiveSlide();
-    }
-
-    goToSlide(index) {
-      const t    = this;
-      const opts = this.options;
-
-      if (!Number.isInteger(index) || (index < 1 && index > t.slidesLength)) return;
-      t._callSliderEvent(opts.beforeChange, t.activeSlide, t.slidesLength);
-
-      t.activeSlide = index;
-      t._setActiveSlide();
-    }
-
-    isEnabledOption(option) {
-      return (this.options[option] === true) || false;
-    }
-
-    destroy() {
-      const t = this;
-      const slider = t._slider;
-      const track = t._track;
-
-      // Remove attributes
-      slider.removeAttribute('id')
-      slider.classList.remove(t._sliderReadyCls, t._id, t._draggableCls);
-
-      // Remove controls
-      if (t.isEnabledOption('nav')) {
-        removeElem(t._nav);
-      }
-
-      if (t.isEnabledOption('pagination')) {
-        removeElem(t._pagination);
-      }
-
-      if (t.isEnabledOption('titles')) {
-        slider.querySelectorAll(`.${t._titleCls}`).forEach(title => removeElem(title));
-      }
-
-      t._slides.forEach(elem => {
-        elem.classList.remove(t._slideCls, t._activeCls);
-        elem.removeAttribute('style');
-        elem.removeAttribute('data-crystal-slide');
-      });
-
-      // Remove wrappers
-      unwrap(t._track);
-      unwrap(t._container);
-
-      if (t._windowTimer) {
-        clearTimeout(t._windowTimer);
-      }
-    }
-
-    reinit(opts) {
-      const t = this;
-
-      t.destroy();
-
-      if (isObject(opts)) {
-        t.options = Object.assign(options, opts);
-      }
-
-      // Public read-only properties
-      t.slidesLength = t._slides.length;
-      t.activeSlide = t.options.activeSlide;
-
-      t._build();
-      t._bindEvents();
-
-      if (t.isEnabledOption('adaptiveHeight')) {
-        t._setHeight();
-      }
     }
 
     // Private Methods
@@ -276,7 +177,7 @@
     _init() {
       const t = this;
 
-      t._slider = doc.querySelector(t.options.selector);
+      t._slider = (typeof t.options.selector === 'string') ? doc.querySelector(t.options.selector) : t.options.selector;
       if (t._slider === null) {
         throw new Error(`Selector ${t.options.selector} does not exist`);
       }
@@ -566,10 +467,14 @@
 
       const t = this;
 
-      if (!t._isTouched || t._isMove) return;
+      if (!t._isTouched || t._isMove) {
+        return;
+      }
 
       if (t._isTouchDevice) {
-        if (e.changedTouches[0].identifier !== t._touch.identifier) return;
+        if (e.changedTouches[0].identifier !== t._touch.identifier) {
+          return;
+        }
       }
 
       t._dragCoords.end = (t._touch) ? e.changedTouches[0].pageX : e.pageX;
@@ -590,17 +495,23 @@
       const coordsResult = dragStart - dragEnd;
       const activeSlide  = t.activeSlide;
 
-      if (t._isMove) return;
+      if (t._isMove) {
+        return;
+      }
 
       if (t._isTouchDevice) {
-        if (e.changedTouches[0].identifier !== t._touch.identifier) return;
+        if (e.changedTouches[0].identifier !== t._touch.identifier) {
+          return;
+        }
       }
 
       t._isTouched = false;
       t._slider.classList.remove(t._touchCls);
       t._resetDrag();
 
-      if (!coordsResult) return;
+      if (!coordsResult) {
+        return;
+      }
 
       if (Math.abs(coordsResult) <= opts.threshold) {
         t._setPosition(false);
@@ -628,7 +539,9 @@
       const clsList = target.classList;
       const index   = Number(target.getAttribute('data-crystal-button'));
 
-      if (t._isTouched || t._isMove) return;
+      if (t._isTouched || t._isMove) {
+        return;
+      }
       if (clsList.contains(t._navBtnCls)) {
         (target.getAttribute('data-crystal-button') === 'prev') ? t.prevSlide() : t.nextSlide();
       }
@@ -650,7 +563,9 @@
         right: 39
       }
 
-      if (t._isMove || !t.isEnabledOption('keyboard')) return;
+      if (t._isMove || !t.isEnabledOption('keyboard')) {
+        return;
+      }
 
       switch (e.keyCode) {
         case KEYS.left:
@@ -690,6 +605,112 @@
     _resizeHandler() {
       this._updateWidth();
     }
+
+    // Public methods
+    prevSlide() {
+      const t    = this;
+      const opts = t.options;
+
+      if (t.activeSlide <= 1 && !t.isEnabledOption('loop')) {
+        return;
+      }
+      if (isFunction(opts.beforeChange)) {
+        opts.beforeChange.call(t, t.activeSlide, t.slidesLength);
+      }
+
+      (t.activeSlide <= 1 && t.isEnabledOption('loop')) ? t.activeSlide = t.slidesLength : t.activeSlide -= 1;
+      t._setActiveSlide();
+    }
+
+    nextSlide() {
+      const t    = this;
+      const opts = t.options;
+
+      if ((t.activeSlide >= t.slidesLength) && !t.isEnabledOption('loop')) {
+        return;
+      }
+      if (isFunction(opts.beforeChange)) {
+        opts.beforeChange.call(t, t.activeSlide, t.slidesLength);
+      }
+
+      (t.activeSlide >= t.slidesLength && t.isEnabledOption('loop')) ? t.activeSlide = 1 : t.activeSlide += 1;
+      t._setActiveSlide();
+    }
+
+    goToSlide(index) {
+      const t    = this;
+      const opts = this.options;
+
+      if (!Number.isInteger(index) || (index < 1 && index > t.slidesLength)) {
+        return;
+      }
+      t._callSliderEvent(opts.beforeChange, t.activeSlide, t.slidesLength);
+
+      t.activeSlide = index;
+      t._setActiveSlide();
+    }
+
+    isEnabledOption(option) {
+      return (this.options[option] === true) || false;
+    }
+
+    destroy() {
+      const t = this;
+      const slider = t._slider;
+      const track = t._track;
+
+      // Remove attributes
+      slider.removeAttribute('id')
+      slider.classList.remove(t._sliderReadyCls, t._id, t._draggableCls);
+
+      // Remove controls
+      if (t.isEnabledOption('nav')) {
+        removeElem(t._nav);
+      }
+
+      if (t.isEnabledOption('pagination')) {
+        removeElem(t._pagination);
+      }
+
+      if (t.isEnabledOption('titles')) {
+        slider.querySelectorAll(`.${t._titleCls}`).forEach(title => removeElem(title));
+      }
+
+      t._slides.forEach(elem => {
+        elem.classList.remove(t._slideCls, t._activeCls);
+        elem.removeAttribute('style');
+        elem.removeAttribute('data-crystal-slide');
+      });
+
+      // Remove wrappers
+      unwrap(t._track);
+      unwrap(t._container);
+
+      if (t._windowTimer) {
+        clearTimeout(t._windowTimer);
+      }
+    }
+
+    reinit(opts) {
+      const t = this;
+
+      t.destroy();
+
+      if (isObject(opts)) {
+        t.options = Object.assign(options, opts);
+      }
+
+      // Public read-only properties
+      t.slidesLength = t._slides.length;
+      t.activeSlide = t.options.activeSlide;
+
+      t._build();
+      t._bindEvents();
+
+      if (t.isEnabledOption('adaptiveHeight')) {
+        t._setHeight();
+      }
+    }
   }
 
   window.CrystalSlider = CrystalSlider;
@@ -723,7 +744,9 @@
     };
 
     for (let i in transitions) {
-      if (transitions.hasOwnProperty(i) && elem.style[i] !== undefined) return transitions[i];
+      if (transitions.hasOwnProperty(i) && elem.style[i] !== undefined) {
+        return transitions[i];
+      }
     }
   }
 

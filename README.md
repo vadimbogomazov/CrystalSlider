@@ -14,6 +14,11 @@ Readme languages: [English](README.md), [Русский](README.ru-Ru.md)
 
 [https://vadimbogomazov.github.io/CrystalSlider/](https://vadimbogomazov.github.io/CrystalSlider/)
 
+### More examples
+
+- [Multiple slider instances](examples/multiple.html)
+- ...
+
 ## Installation
 
 ### Create HTML markup
