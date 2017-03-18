@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', function () {
   const crystalSlider = new CrystalSlider({
-    autoHeight: true,
+    adaptiveHeight: true,
     keyboard: true,
     pagination: true,
     titles: true,

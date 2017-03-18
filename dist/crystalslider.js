@@ -167,11 +167,9 @@
     }
 
     _setHeight() {
-      const t = this;
-      const opts = t.options;
-      const container = t._container;
+      const t = this
 
-      container.style.height = `${t._slides[t.activeSlide - 1].clientHeight}px`;
+      t._container.style.height = `${t._slides[t.activeSlide - 1].clientHeight}px`;
     }
 
     _init() {
@@ -245,7 +243,10 @@
       const container   = doc.createElement('div');
       const track       = doc.createElement('div');
       const fragment    = doc.createDocumentFragment();
-      t._transformX     = Math.ceil(-t._sliderWidth * (t.activeSlide - 1));
+
+      if (!t.isEnabledOption('fade')) {
+        t._transformX = Math.ceil(-t._sliderWidth * (t.activeSlide - 1));
+      }
 
       slider.setAttribute('data-crystal-id', t._id);
       slider.classList.add(t._id);
@@ -272,7 +273,7 @@
 
         if (t.isEnabledOption('fade')) {
           elemStyle.transition = `opacity ${opts.duration}ms ${opts.easing}`;
-          elemStyle.left = -(parseInt(elemStyle.width) * index) + '%';
+          elemStyle.left = -(parseFloat(elemStyle.width) * index) + '%';
         }
 
         if (t.isEnabledOption('fade') && index !== t.activeSlide - 1) {
@@ -327,7 +328,7 @@
       `;
 
       t._nav = nav;
-      t._slider.appendChild(t._nav);
+      t._container.appendChild(t._nav);
     }
 
     _createPagination() {
@@ -697,7 +698,7 @@
       t.destroy();
 
       if (isObject(opts)) {
-        t.options = Object.assign(options, opts);
+        t.options = Object.assign(t.options, opts);
       }
 
       // Public read-only properties
@@ -765,7 +766,9 @@
   }
 
   function isObject(val) {
-    if (val === null) return;
+    if (val === null) {
+      return;
+    }
     return ((typeof val === 'function') || (typeof val === 'object'));
   }
 

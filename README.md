@@ -17,7 +17,7 @@ Readme languages: [English](README.md), [Русский](README.ru-Ru.md)
 ### More examples
 
 - [Multiple slider instances](examples/multiple.html)
-- ...
+- [Slider with thumbnails](examples/thumbnails.html)
 
 ## Installation
 

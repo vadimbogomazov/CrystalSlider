@@ -1,72 +1,78 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Crystal Slider | Examples</title>
+  <title>Crystal Slider | Multiple slider instances</title>
 
   <meta name="viewport" content="width=device-width,user-scalable=no">
 
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="../dist/crystalslider.min.css">
+
+  <style>
+    .crystal-slider {
+      margin-bottom: 32px;
+    }
+  </style>
 </head>
 <body>
   <div class="page-wrapper">
     <h1 class="page-wrapper__title">Crystal Slider</h1>
 
     <div class="crystal-slider">
-      <div data-crystal-title="Описание к слайду">
+      <div>
         <img src="../assets/img/slide-1.jpg" alt="">
       </div>
-      <div data-crystal-title="Описание к слайду 2">
+      <div>
         <img src="../assets/img/slide-2.jpg" alt="">
       </div>
-      <div data-crystal-title="Описание к слайду 3">
+      <div>
         <img src="../assets/img/slide-3.jpg" alt="">
       </div>
-      <div data-crystal-title="Описание к слайду 4">
+      <div>
         <img src="../assets/img/slide-4.jpg" alt="">
       </div>
     </div>
 
     <div class="crystal-slider">
-      <div data-crystal-title="Описание к слайду">
+      <div>
         <img src="../assets/img/slide-1.jpg" alt="">
       </div>
-      <div data-crystal-title="Описание к слайду 2">
+      <div>
         <img src="../assets/img/slide-2.jpg" alt="">
       </div>
-      <div data-crystal-title="Описание к слайду 3">
+      <div>
         <img src="../assets/img/slide-3.jpg" alt="">
       </div>
-      <div data-crystal-title="Описание к слайду 4">
+      <div>
         <img src="../assets/img/slide-4.jpg" alt="">
       </div>
     </div>
 
     <div class="crystal-slider">
-      <div data-crystal-title="Описание к слайду">
+      <div>
         <img src="../assets/img/slide-1.jpg" alt="">
       </div>
-      <div data-crystal-title="Описание к слайду 2">
+      <div>
         <img src="../assets/img/slide-2.jpg" alt="">
       </div>
-      <div data-crystal-title="Описание к слайду 3">
+      <div>
         <img src="../assets/img/slide-3.jpg" alt="">
       </div>
-      <div data-crystal-title="Описание к слайду 4">
+      <div>
         <img src="../assets/img/slide-4.jpg" alt="">
       </div>
     </div>
 
     <div class="page-section">
+      <h3>JavaScript</h3>
       <pre><code>const sliders = document.querySelectorAll('.crystal-slider');
 
 for (slider of sliders) {
     new CrystalSlider({
       selector: slider
-    })
+    });
 }</code></pre>
   </div>
 

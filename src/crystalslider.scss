@@ -1,5 +1,9 @@
 /* Crystal Slider */
 
+$padding: 16px;
+$main-color: #fa5505;
+$second-color: #fff;
+
 /* Required styles */
 
 .crystal-slider {
@@ -8,6 +12,7 @@
 
   &__slides-container {
     overflow: hidden;
+    position: relative;
   }
 
   &__track {
@@ -19,9 +24,7 @@
     float: left;
     position: relative;
   }
-}
 
-.crystal-slider {
   &.is-draggable {
     .crystal-slider__track {
       cursor: grab;
@@ -54,21 +57,20 @@
   &__inner {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
   }
 }
 
 /* Basic theme */
 
 .crystal-slider {
-  padding-bottom: 32px;
-
   &__title {
     background: rgba(0, 0, 0, .8);
     bottom: 0;
-    color: #fff;
+    color: $second-color;
     font-weight: 700;
     left: 0;
-    padding: 8px 32px;
+    padding: ($padding / 2) ($padding * 2);
     position: absolute;
     right: 0;
   }
@@ -79,14 +81,12 @@
     background: none;
     border: solid currentColor;
     border-width: 0 2px 2px 0;
-    color: #fa5505;
+    color: $main-color;
     cursor: pointer;
     font-size: 0;
     height: 20px;
-    margin-top: -20px;
     padding: 2px;
     position: absolute;
-    transform: translateY(-50%);
     top: 50%;
     width: 20px;
     z-index: 98;
@@ -97,13 +97,13 @@
     }
 
     &_prev {
-      left: 32px;
-      transform: rotate(135deg);
+      left: $padding * 2;
+      transform: translateY(-50%) rotate(135deg);
     }
 
     &_next {
-      transform: rotate(-45deg);
-      right: 32px;
+      transform: translateY(-50%) rotate(-45deg);
+      right: $padding * 2;
     }
 
     &.is-disabled {
@@ -113,28 +113,21 @@
 }
 
 .crystal-slider-pagination {
-  bottom: 0;
-  position: absolute;
-  left: 50%;
-  text-align: center;
-  transform: translateX(-50%);
-  z-index: 99;
-
   &__inner {
+    margin: (-$padding) 0 0 (-$padding);
     list-style: none;
-    margin: 0 0 0 -16px;
     padding: 0;
   }
 
   &__item {
-    margin: 0 0 0 16px;
+    margin: $padding 0 0 $padding;
     position: relative;
     height: 10px;
     width: 10px;
   }
 
   &__btn {
-    background: #fa5505;
+    background: $main-color;
     border-radius: 50%;
     border: 0;
     cursor: pointer;
@@ -152,7 +145,7 @@
 
     &.is-active {
       &:after {
-        background: #fff;
+        background: $second-color;
         border-radius: 50%;
         content: '';
         height: 4px;
