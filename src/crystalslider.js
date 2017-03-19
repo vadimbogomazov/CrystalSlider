@@ -49,7 +49,6 @@
       }
 
       t._id = `${sliderCls + '-' + CrystalSlider._count}`;
-      t._isTouchDevice = isTouchDevice();
 
       t._init();
       t._build();
@@ -184,6 +183,7 @@
       // Private properties
       t._sliderWidth   = t._slider.getBoundingClientRect().width;
       t._slides        = Array.from(t._slider.children);
+      t._isTouchDevice = isTouchDevice();
 
       t._isMove        = false;
       t._isTouched     = false;
@@ -374,6 +374,7 @@
     // Events
     _bindEvents() {
       const t = this;
+      const track = t._track;
 
       // Events
       const eventHandlers = [
@@ -413,10 +414,10 @@
           end: 0,
         };
 
-        t._track.addEventListener((t._isTouchDevice) ? 'touchstart' : 'mousedown', t._touchStartHandler, (t._isTouchDevice) ? { passive: true } : false);
-        t._track.addEventListener((t._isTouchDevice) ? 'touchmove'  : 'mousemove', t._touchMoveHandler, (t._isTouchDevice) ? { passive: true } : false);
-        t._track.addEventListener((t._isTouchDevice) ? 'touchend'   : 'mouseup', t._touchEndHandler, false);
-        t._track.addEventListener('mouseleave', t._touchEndHandler);
+        track.addEventListener((t._isTouchDevice) ? 'touchstart' : 'mousedown', t._touchStartHandler, false);
+        track.addEventListener((t._isTouchDevice) ? 'touchmove'  : 'mousemove', t._touchMoveHandler, false);
+        track.addEventListener((t._isTouchDevice) ? 'touchend'   : 'mouseup', t._touchEndHandler, false);
+        track.addEventListener('mouseleave', t._touchEndHandler);
       }
     }
 
@@ -490,7 +491,6 @@
     }
 
     _touchEndHandler(e) {
-      e.preventDefault();
       e.stopPropagation();
 
       const t            = this;
@@ -669,6 +669,8 @@
       slider.removeAttribute('id')
       slider.classList.remove(t._sliderReadyCls, t._id, t._draggableCls);
 
+      track
+
       // Remove controls
       if (t.isEnabledOption('nav')) {
         removeElem(t._nav);
@@ -706,7 +708,10 @@
         t.options = Object.assign(t.options, opts);
       }
 
-      t._init();
+      // Public read-only properties
+      t.slidesLength = t._slides.length;
+      t.activeSlide = t.options.activeSlide;
+
       t._build();
       t._bindEvents();
 
