@@ -3,6 +3,8 @@
 $padding: 16px;
 $main-color: #fa5505;
 $second-color: #fff;
+$transition-delay: 0.3s;
+$active-color: #b53b00;
 
 /* Required styles */
 
@@ -23,6 +25,7 @@ $second-color: #fff;
   &__slide {
     float: left;
     position: relative;
+    touch-action: none;
   }
 
   &.is-draggable {
@@ -64,6 +67,8 @@ $second-color: #fff;
 /* Basic theme */
 
 .crystal-slider {
+  padding-bottom: ($padding * 2);
+
   &__title {
     background: rgba(0, 0, 0, .8);
     bottom: 0;
@@ -85,15 +90,21 @@ $second-color: #fff;
     cursor: pointer;
     font-size: 0;
     height: 20px;
+    margin-top: -($padding);
     padding: 2px;
     position: absolute;
     top: 50%;
+    transition: border-color $transition-delay;
     width: 20px;
     z-index: 98;
 
     &:focus,
     &:active {
       outline: none;
+    }
+
+    &:hover {
+      border-color: $active-color;
     }
 
     &_prev {
@@ -114,15 +125,18 @@ $second-color: #fff;
 
 .crystal-slider-pagination {
   &__inner {
-    margin: (-$padding) 0 0 (-$padding);
+    left: 0;
     list-style: none;
+    margin: (-$padding) 0 0 (-$padding);
     padding: 0;
+    position: absolute;
+    right: 0;
   }
 
   &__item {
+    height: 10px;
     margin: $padding 0 0 $padding;
     position: relative;
-    height: 10px;
     width: 10px;
   }
 
@@ -136,6 +150,7 @@ $second-color: #fff;
     height: 100%;
     padding: 0;
     position: relative;
+    transition: background $transition-delay;
     width: 100%;
 
     &:focus,
@@ -143,7 +158,13 @@ $second-color: #fff;
       outline: none;
     }
 
+    &:hover {
+      background: $active-color;
+    }
+
     &.is-active {
+      background: $active-color;
+
       &:after {
         background: $second-color;
         border-radius: 50%;
