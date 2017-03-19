@@ -49,6 +49,7 @@
       }
 
       t._id = `${sliderCls + '-' + CrystalSlider._count}`;
+      t._isTouchDevice = isTouchDevice();
 
       t._init();
       t._build();
@@ -167,7 +168,7 @@
     }
 
     _setHeight() {
-      const t = this
+      const t = this;
 
       t._container.style.height = `${t._slides[t.activeSlide - 1].clientHeight}px`;
     }
@@ -183,7 +184,6 @@
       // Private properties
       t._sliderWidth   = t._slider.getBoundingClientRect().width;
       t._slides        = Array.from(t._slider.children);
-      t._isTouchDevice = isTouchDevice();
 
       t._isMove        = false;
       t._isTouched     = false;
@@ -328,7 +328,7 @@
       `;
 
       t._nav = nav;
-      t._container.appendChild(t._nav);
+      t._slider.appendChild(t._nav);
     }
 
     _createPagination() {
@@ -447,10 +447,12 @@
 
     // Events handlers
     _touchStartHandler(e) {
-      e.preventDefault();
-      e.stopPropagation();
-
       const t = this;
+
+      if (!t._isTouchDevice) {
+        e.preventDefault();
+      }
+      e.stopPropagation();
 
       if (t._isMove || (e.type === 'mousedown' && e.button > 0)) return;
       if (t._isTouchDevice && e.touches.length === 1) {
@@ -463,10 +465,12 @@
     }
 
     _touchMoveHandler(e) {
-      e.preventDefault();
-      e.stopPropagation();
-
       const t = this;
+
+      if (!t._isTouchDevice) {
+        e.preventDefault();
+      }
+      e.stopPropagation();
 
       if (!t._isTouched || t._isMove) {
         return;
@@ -551,6 +555,7 @@
 
     _transitionEndHandler() {
       const t = this;
+
       t._slider.classList.remove(t._touchCls);
     }
 
@@ -701,10 +706,7 @@
         t.options = Object.assign(t.options, opts);
       }
 
-      // Public read-only properties
-      t.slidesLength = t._slides.length;
-      t.activeSlide = t.options.activeSlide;
-
+      t._init();
       t._build();
       t._bindEvents();
 
