@@ -49,6 +49,7 @@
       }
 
       t._id = `${sliderCls + '-' + CrystalSlider._count}`;
+      t._isTouchDevice = isTouchDevice();
 
       t._init();
       t._build();
@@ -183,7 +184,6 @@
       // Private properties
       t._sliderWidth   = t._slider.getBoundingClientRect().width;
       t._slides        = Array.from(t._slider.children);
-      t._isTouchDevice = isTouchDevice();
 
       t._isMove        = false;
       t._isTouched     = false;
@@ -669,8 +669,6 @@
       slider.removeAttribute('id')
       slider.classList.remove(t._sliderReadyCls, t._id, t._draggableCls);
 
-      track
-
       // Remove controls
       if (t.isEnabledOption('nav')) {
         removeElem(t._nav);
@@ -708,10 +706,7 @@
         t.options = Object.assign(t.options, opts);
       }
 
-      // Public read-only properties
-      t.slidesLength = t._slides.length;
-      t.activeSlide = t.options.activeSlide;
-
+      t._init();
       t._build();
       t._bindEvents();
 
