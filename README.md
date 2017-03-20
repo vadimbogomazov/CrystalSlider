@@ -10,6 +10,15 @@ Readme languages: [English](README.md), [Русский](README.ru-Ru.md)
 - touch device support;
 - userfriendly;
 
+## Demo
+
+[https://vadimbogomazov.github.io/CrystalSlider/](https://vadimbogomazov.github.io/CrystalSlider/)
+
+### More examples
+
+- [Multiple slider instances](examples/multiple.html)
+- [Slider with thumbnails](examples/thumbnails.html)
+
 ## Installation
 
 ### Create HTML markup

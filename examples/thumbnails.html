@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Crystal Slider | Slider with thumbnails navigation</title>
+
+  <meta name="viewport" content="width=device-width,user-scalable=no">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../dist/crystalslider.min.css">
+
+  <style>
+    .crystal-slider-pagination__item {
+      height: 31px;
+      width: 50px;
+    }
+
+    .crystal-slider-pagination__btn {
+      border-radius: 0;
+    }
+
+    .crystal-slider-pagination__btn.is-active {
+      outline: 2px solid #fa5505;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <h1 class="page-wrapper__title">Crystal Slider</h1>
+
+    <div class="crystal-slider">
+      <div data-crystal-thumbnail="../assets/img/slide-thumbnail-1.jpg">
+        <img src="../assets/img/slide-1.jpg" alt="">
+      </div>
+      <div data-crystal-thumbnail="../assets/img/slide-thumbnail-2.jpg">
+        <img src="../assets/img/slide-2.jpg" alt="">
+      </div>
+      <div data-crystal-thumbnail="../assets/img/slide-thumbnail-3.jpg">
+        <img src="../assets/img/slide-3.jpg" alt="">
+      </div>
+      <div data-crystal-thumbnail="../assets/img/slide-thumbnail-4.jpg">
+        <img src="../assets/img/slide-4.jpg" alt="">
+      </div>
+    </div>
+
+    <div class="page-section">
+      <h3>HTML</h3>
+      <pre><code>&lt;div class="crystal-slider"&gt;
+  &lt;div data-crystal-thumbnail="img/slide-thumbnail-1.jpg"&gt;
+    &lt;img src="img/slide-1.jpg" alt=""&gt;
+  &lt;/div&gt;
+  &lt;div data-crystal-thumbnail="img/slide-thumbnail-2.jpg"&gt;
+    &lt;img src="img/slide-2.jpg" alt=""&gt;
+  &lt;/div&gt;
+  &lt;div data-crystal-thumbnail="img/slide-thumbnail-3.jpg"&gt;
+    &lt;img src="img/slide-3.jpg" alt=""&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+      <h3>JavaScript</h3>
+      <pre><code>const crystalSlider = new CrystalSlider({
+  pagination: true,
+  thumbnails: true
+});</code></pre>
+  </div>
+
+  <script src="../dist/crystalslider.min.js"></script>
+  <script>
+    const crystalSlider = new CrystalSlider({
+      pagination: true,
+      thumbnails: true,
+      fade: true
+    });
+  </script>
+</body>
+</html>

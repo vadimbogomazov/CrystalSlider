@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Crystal Slider | Multiple slider instances</title>
+
+  <meta name="viewport" content="width=device-width,user-scalable=no">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../dist/crystalslider.min.css">
+
+  <style>
+    .crystal-slider {
+      margin-bottom: 32px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <h1 class="page-wrapper__title">Crystal Slider</h1>
+
+    <div class="crystal-slider">
+      <div>
+        <img src="../assets/img/slide-1.jpg" alt="">
+      </div>
+      <div>
+        <img src="../assets/img/slide-2.jpg" alt="">
+      </div>
+      <div>
+        <img src="../assets/img/slide-3.jpg" alt="">
+      </div>
+      <div>
+        <img src="../assets/img/slide-4.jpg" alt="">
+      </div>
+    </div>
+
+    <div class="crystal-slider">
+      <div>
+        <img src="../assets/img/slide-1.jpg" alt="">
+      </div>
+      <div>
+        <img src="../assets/img/slide-2.jpg" alt="">
+      </div>
+      <div>
+        <img src="../assets/img/slide-3.jpg" alt="">
+      </div>
+      <div>
+        <img src="../assets/img/slide-4.jpg" alt="">
+      </div>
+    </div>
+
+    <div class="crystal-slider">
+      <div>
+        <img src="../assets/img/slide-1.jpg" alt="">
+      </div>
+      <div>
+        <img src="../assets/img/slide-2.jpg" alt="">
+      </div>
+      <div>
+        <img src="../assets/img/slide-3.jpg" alt="">
+      </div>
+      <div>
+        <img src="../assets/img/slide-4.jpg" alt="">
+      </div>
+    </div>
+
+    <div class="page-section">
+      <h3>JavaScript</h3>
+      <pre><code>const sliders = document.querySelectorAll('.crystal-slider');
+
+for (slider of sliders) {
+    new CrystalSlider({
+      selector: slider
+    });
+}</code></pre>
+  </div>
+
+  <script src="../dist/crystalslider.min.js"></script>
+  <script>
+    const sliders = document.querySelectorAll('.crystal-slider');
+
+    for (slider of sliders) {
+      new CrystalSlider({
+        selector: slider
+      })
+    }
+  </script>
+</body>
+</html>
