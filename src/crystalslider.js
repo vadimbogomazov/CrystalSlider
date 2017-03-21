@@ -57,122 +57,6 @@
     }
 
     // Private Methods
-    _setPosition(changeSlide = true) {
-      const t = this;
-      const opts = t.options;
-      const slides = t._slides;
-      const containerStyle = t._container.style;
-      const trackStyle = t._track.style;
-
-      t._isMove = true;
-
-      if (!t.isEnabledOption('fade')) {
-        t._transformX = Math.ceil(-t._sliderWidth * (t.activeSlide - 1));
-
-        trackStyle[transform] = `translate3d(${t._transformX}px, 0, 0)`;
-        trackStyle.webkitTransition = `-webkit-transform ${opts.duration}ms ${opts.easing}`;
-        trackStyle.transition = `transform ${opts.duration}ms ${opts.easing}`;
-      }
-
-      if (t.isEnabledOption('adaptiveHeight')) {
-        containerStyle.webkitTransition = `height ${opts.duration}ms ${opts.easing}`;
-        containerStyle.transition = `height ${opts.duration}ms ${opts.easing}`;
-      }
-
-      setTimeout(() => {
-        trackStyle.webkitTransition = '';
-        trackStyle.transition = '';
-
-        if (t.isEnabledOption('adaptiveHeight')) {
-          containerStyle.webkitTransition = '';
-          containerStyle.transition = '';
-        }
-
-        t._isMove = false;
-
-        if (changeSlide) {
-          t._callSliderEvent(opts.afterChange, t.activeSlide, t.slidesLength);
-        }
-      }, opts.duration);
-    }
-
-    _disableNavBtns() {
-      const t           = this;
-      const opts        = t.options;
-      const slider      = t._slider;
-      const slides      = t._slides;
-      const nav         = t._nav;
-      const activeSlide = t.activeSlide;
-
-      if (t.isEnabledOption('nav') && !t.isEnabledOption('loop')) {
-        nav.querySelectorAll(`.${t._navBtnCls}`).forEach((elem) => elem.classList.remove(t._disabledCls));
-
-        if (activeSlide <= 1) {
-          nav.querySelector(`.${t._navPrevBtnCls}`).classList.add(t._disabledCls);
-        } else if (activeSlide >= slides.length) {
-          nav.querySelector(`.${t._navNextBtnCls}`).classList.add(t._disabledCls);
-        }
-      }
-    }
-
-    _setActiveSlide() {
-      const t          = this;
-      const opts       = t.options;
-      const slider     = t._slider;
-      const slides     = t._slides;
-      const pagination = t._pagination;
-
-      slides.forEach((elem) => {
-        if (t.isEnabledOption('fade')) {
-          elem.style.opacity = 0;
-          elem.style.zIndex = opts.zIndex - 1;
-        }
-        elem.classList.remove(t._activeCls);
-      });
-
-      if (t.isEnabledOption('fade')) {
-        slides[t.activeSlide - 1].style.opacity = 1;
-        slides[t.activeSlide - 1].style.zIndex = opts.zIndex;
-      }
-
-      slides[t.activeSlide - 1].classList.add(t._activeCls);
-
-      if (t.isEnabledOption('pagination') && t.slidesLength > 1) {
-        pagination.querySelectorAll(`.${t._paginationBtnCls}`).forEach((elem) => elem.classList.remove(t._activeCls));
-        pagination.querySelectorAll(`.${t._paginationBtnCls}`)[t.activeSlide - 1].classList.add(t._activeCls);
-      }
-
-      if (t.slidesLength > 1) {
-        t._disableNavBtns();
-        if (t.isEnabledOption('adaptiveHeight')) {
-          t._setHeight();
-        }
-
-        t._setPosition();
-      } else {
-        t._setPosition(false);
-      }
-    }
-
-    _callSliderEvent(sliderEvent, values) {
-      if (isFunction(sliderEvent)) {
-        sliderEvent.apply(this, [...arguments].slice(1));
-      }
-    }
-
-    _resetDrag() {
-      const t = this;
-
-      t._dragCoords.start = 0;
-      t._dragCoords.end   = 0;
-    }
-
-    _setHeight() {
-      const t = this;
-
-      t._container.style.height = `${t._slides[t.activeSlide - 1].clientHeight}px`;
-    }
-
     _init() {
       const t = this;
 
@@ -227,7 +111,7 @@
 
       // Public read-only properties
       t.slidesLength = t._slides.length;
-      t.activeSlide = t.options.activeSlide;
+      t.activeSlide  = t.options.activeSlide;
 
       if (t.activeSlide < 1 || t.activeSlide > t.slidesLength) {
         throw new Error(`Slide index ${t.activeSlide} does not exist`);
@@ -371,6 +255,122 @@
       t._disableNavBtns();
     }
 
+    _setPosition(changeSlide = true) {
+      const t = this;
+      const opts = t.options;
+      const slides = t._slides;
+      const containerStyle = t._container.style;
+      const trackStyle = t._track.style;
+
+      t._isMove = true;
+
+      if (!t.isEnabledOption('fade')) {
+        t._transformX = Math.ceil(-t._sliderWidth * (t.activeSlide - 1));
+
+        trackStyle[transform] = `translate3d(${t._transformX}px, 0, 0)`;
+        trackStyle.webkitTransition = `-webkit-transform ${opts.duration}ms ${opts.easing}`;
+        trackStyle.transition = `transform ${opts.duration}ms ${opts.easing}`;
+      }
+
+      if (t.isEnabledOption('adaptiveHeight')) {
+        containerStyle.webkitTransition = `height ${opts.duration}ms ${opts.easing}`;
+        containerStyle.transition = `height ${opts.duration}ms ${opts.easing}`;
+      }
+
+      setTimeout(() => {
+        trackStyle.webkitTransition = '';
+        trackStyle.transition = '';
+
+        if (t.isEnabledOption('adaptiveHeight')) {
+          containerStyle.webkitTransition = '';
+          containerStyle.transition = '';
+        }
+
+        t._isMove = false;
+
+        if (changeSlide) {
+          t._callSliderEvent(opts.afterChange, t.activeSlide, t.slidesLength);
+        }
+      }, opts.duration);
+    }
+
+    _disableNavBtns() {
+      const t           = this;
+      const opts        = t.options;
+      const slider      = t._slider;
+      const slides      = t._slides;
+      const nav         = t._nav;
+      const activeSlide = t.activeSlide;
+
+      if (t.isEnabledOption('nav') && !t.isEnabledOption('loop')) {
+        nav.querySelectorAll(`.${t._navBtnCls}`).forEach((elem) => elem.classList.remove(t._disabledCls));
+
+        if (activeSlide <= 1) {
+          nav.querySelector(`.${t._navPrevBtnCls}`).classList.add(t._disabledCls);
+        } else if (activeSlide >= slides.length) {
+          nav.querySelector(`.${t._navNextBtnCls}`).classList.add(t._disabledCls);
+        }
+      }
+    }
+
+    _setActiveSlide() {
+      const t          = this;
+      const opts       = t.options;
+      const slider     = t._slider;
+      const slides     = t._slides;
+      const pagination = t._pagination;
+
+      slides.forEach((elem) => {
+        if (t.isEnabledOption('fade')) {
+          elem.style.opacity = 0;
+          elem.style.zIndex = opts.zIndex - 1;
+        }
+        elem.classList.remove(t._activeCls);
+      });
+
+      if (t.isEnabledOption('fade')) {
+        slides[t.activeSlide - 1].style.opacity = 1;
+        slides[t.activeSlide - 1].style.zIndex = opts.zIndex;
+      }
+
+      slides[t.activeSlide - 1].classList.add(t._activeCls);
+
+      if (t.isEnabledOption('pagination') && t.slidesLength > 1) {
+        pagination.querySelectorAll(`.${t._paginationBtnCls}`).forEach((elem) => elem.classList.remove(t._activeCls));
+        pagination.querySelectorAll(`.${t._paginationBtnCls}`)[t.activeSlide - 1].classList.add(t._activeCls);
+      }
+
+      if (t.slidesLength > 1) {
+        t._disableNavBtns();
+        if (t.isEnabledOption('adaptiveHeight')) {
+          t._setHeight();
+        }
+
+        t._setPosition();
+      } else {
+        t._setPosition(false);
+      }
+    }
+
+    _resetDrag() {
+      const t = this;
+
+      t._dragCoords.start = 0;
+      t._dragCoords.end   = 0;
+    }
+
+    _setHeight() {
+      const t = this;
+
+      t._container.style.height = `${t._slides[t.activeSlide - 1].clientHeight}px`;
+    }
+
+    _callSliderEvent(sliderEvent, values) {
+      if (isFunction(sliderEvent)) {
+        sliderEvent.apply(this, [...arguments].slice(1));
+      }
+    }
+
     // Events
     _bindEvents() {
       const t = this;
@@ -455,7 +455,9 @@
       }
       e.stopPropagation();
 
-      if (t._isMove || (e.type === 'mousedown' && e.button > 0)) return;
+      if (t._isMove || (e.type === 'mousedown' && e.button > 0)) {
+        return;
+      }
       if (t._isTouchDevice && e.touches.length === 1) {
         t._touch = e.changedTouches[0];
       }
@@ -550,7 +552,9 @@
       if (clsList.contains(t._navBtnCls)) {
         (target.getAttribute('data-crystal-button') === 'prev') ? t.prevSlide() : t.nextSlide();
       }
-      if (clsList.contains(t._paginationBtnCls) && index !== t.activeSlide) t.goToSlide(index);
+      if (clsList.contains(t._paginationBtnCls) && index !== t.activeSlide) {
+        t.goToSlide(index);
+      }
     }
 
     _transitionEndHandler() {
@@ -666,7 +670,7 @@
       const track = t._track;
 
       // Remove attributes
-      slider.removeAttribute('id')
+      slider.removeAttribute('data-crystal-id');
       slider.classList.remove(t._sliderReadyCls, t._id, t._draggableCls);
 
       // Remove controls

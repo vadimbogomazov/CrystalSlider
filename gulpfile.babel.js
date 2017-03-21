@@ -9,20 +9,20 @@ import rename from 'gulp-rename';
 import del from 'del';
 
 const paths = {
-  src: 'src',
-  dist: 'dist'
+  src: 'src/',
+  dist: 'dist/'
 };
 
 // Tasks
-gulp.task('clean', (cb) => del([`${paths.dist}/**`], cb));
+gulp.task('clean', (cb) => del([`${paths.dist}*`], cb));
 
 gulp.task('copy', () => {
-  return gulp.src(`${paths.src}/*.*`)
+  return gulp.src(`${paths.src}*.*`)
     .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('sass', () => {
-  return gulp.src(`${paths.src}/*.scss`)
+  return gulp.src(`${paths.src}*.scss`)
     .pipe(autoprefixer({
       browsers: ['last 2 versions'],
       cascade: false
@@ -33,7 +33,7 @@ gulp.task('sass', () => {
 });
 
 gulp.task('scripts', () => {
-  return gulp.src(`${paths.src}/*.js`)
+  return gulp.src(`${paths.src}*.js`)
     .pipe(babel())
     .pipe(babelminify())
     .pipe(rename({ suffix: '.min' }))
@@ -41,9 +41,9 @@ gulp.task('scripts', () => {
 });
 
 gulp.task('watch', () => {
-  gulp.watch(`${paths.src}/*.*`, ['copy']);
-  gulp.watch(`${paths.src}/*.scss`, ['sass']);
-  gulp.watch(`${paths.src}/*.js`, ['scripts']);
+  gulp.watch(`${paths.src}*.*`, ['copy']);
+  gulp.watch(`${paths.src}*.scss`, ['sass']);
+  gulp.watch(`${paths.src}*.js`, ['scripts']);
 });
 
 gulp.task('default', ['clean', 'copy', 'sass', 'scripts', 'watch']);
