@@ -15,29 +15,33 @@
       CrystalSlider._count = (CrystalSlider._count || 0) + 1;
 
       const t = this;
-
       // Default options
       t.options = {
         // Main
-        selector       : `.${sliderCls}`,
-        activeSlide    : 1,
-        loop           : true,
-        fade           : false,
-        duration       : 500,
-        draggable      : true,
-        adaptiveHeight : false,
-        threshold      : 30,
-        titles         : false,
-        keyboard       : false,
-        easing         : 'ease-out',
+        selector           : `.${sliderCls}`,
+        activeSlide        : 1,
+        play               : false,
+        playInterval       : 5000,
+        pauseOnHover       : false,
+        loop               : true,
+        fade               : false,
+        zIndex             : 98,
+        duration           : 500,
+        draggable          : true,
+        adaptiveHeight     : false,
+        threshold          : 30,
+        titles             : false,
+        keyboard           : false,
+        easing             : 'ease-out',
         // Nav
-        nav            : true,
-        navPrevVal     : 'Prev',
-        navNextVal     : 'Next',
+        nav                : true,
+        navPrevVal         : 'Prev',
+        navNextVal         : 'Next',
+        appendNavTo        : null,
         // Pagination
-        pagination     : false,
-        thumbnails     : false,
-        zIndex         : 98,
+        pagination         : false,
+        thumbnails         : false,
+        appendPaginationTo : null,
         // Callbacks
         onReady        : function () {},
         beforeChange   : function () {},
@@ -173,6 +177,18 @@
       t._container.style.height = `${t._slides[t.activeSlide - 1].clientHeight}px`;
     }
 
+    _playSlider() {
+      const t = this;
+      const opts = t.options;
+
+      if (t._isTouched /*|| t._isMove*/) {
+        t.stop();
+        return;
+      }
+
+      t.nextSlide();
+    }
+
     _init() {
       const t = this;
 
@@ -195,6 +211,7 @@
       t._transformX    = null;
       t._touch         = null;
       t._windowTimer   = null;
+      t._playTimer     = null;
 
       if (t.options.draggable === true) {
         t._dragCoords = {
@@ -313,6 +330,11 @@
       }
 
       slider.classList.add(t._sliderReadyCls);
+
+      if (t.isEnabledOption('play')) {
+        t.play();
+      }
+
       t._callSliderEvent(opts.onReady, t.activeSlide, t.slidesLength);
     }
 
@@ -328,7 +350,17 @@
       `;
 
       t._nav = nav;
-      t._slider.appendChild(t._nav);
+
+      if (!opts.appendNavTo) {
+        t._slider.insertBefore(t._nav, t._container);
+      } else {
+        let navContainer = document.querySelector(opts.appendNavTo);
+
+        if (navContainer === null) {
+          return;
+        }
+        navContainer.appendChild(t._nav);
+      }
     }
 
     _createPagination() {
@@ -379,6 +411,8 @@
       // Events
       const eventHandlers = [
         '_mouseClickHandler',
+        '_mouseEnterHandler',
+        '_mouseLeaveHandler',
         '_touchStartHandler',
         '_touchMoveHandler',
         '_touchEndHandler',
@@ -393,8 +427,6 @@
         t[handler] = t[handler].bind(t);
       });
 
-      // Window events
-      window.addEventListener('DOMContentLoaded', t._updateWidth);
       window.addEventListener('resize', t._resizeHandler);
       if (t.isEnabledOption('adaptiveHeight')) {
         window.addEventListener('load', t._setHeight);
@@ -402,9 +434,20 @@
       if (t.isEnabledOption('keyboard')) {
         window.addEventListener('keyup', t._keyUpHandler);
       }
-      if (t.isEnabledOption('nav') || t.isEnabledOption('pagination')) {
+
+      document.addEventListener('DOMContentLoaded', t._updateWidth);
+
+      if (t.isEnabledOption('nav')) {
+        t._nav.addEventListener('click', t._mouseClickHandler);
+      }
+
+      if (t.isEnabledOption('pagination')) {
         t._slider.addEventListener('click', t._mouseClickHandler);
       }
+
+      t._track.addEventListener('mouseenter', t._mouseEnterHandler);
+      t._track.addEventListener('mouseleave', t._mouseLeaveHandler);
+
       t._slider.addEventListener(transitionEnd, t._transitionEndHandler);
 
       // Touch events
@@ -426,18 +469,23 @@
       const slider = t._slider;
       const track = t._track;
 
-      // Remove window listeners
+      // Remove listeners
       if (t.isEnabledOption('keyboard')) {
         window.removeEventListener('keyup', t._keyUpHandler);
       }
       window.removeEventListener('resize', t._resizeHandler);
 
-      // Remove slider listeners
-      if (t.isEnabledOption('nav') || t.isEnabledOption('pagination')) {
+      if (t.isEnabledOption('nav')) {
+        t._nav.removeEventListener('click', t._mouseClickHandler);
+      }
+
+      if (t.isEnabledOption('pagination')) {
         slider.removeEventListener('click', t._mouseClickHandler);
       }
 
-      // Remove track listeners
+      track.removeEventListener('mouseenter', t._mouseEnterHandler);
+      track.removeEventListener('mouseleave', t._mouseLeaveHandler);
+
       if (t.isEnabledOption('draggable')) {
         track.removeEventListener((t._isTouchDevice) ? 'touchstart' : 'mousedown', t._touchStartHandler);
         track.removeEventListener((t._isTouchDevice) ? 'touchmove'  : 'mousemove', t._touchMoveHandler);
@@ -447,6 +495,41 @@
     }
 
     // Events handlers
+    _mouseClickHandler(e) {
+      const t       = this;
+      const opts    = t.options;
+      const target  = e.target;
+      const clsList = target.classList;
+      const index   = Number(target.getAttribute('data-crystal-button'));
+
+      if (t._isTouched || t._isMove) {
+        return;
+      }
+      if (clsList.contains(t._navBtnCls)) {
+        (target.getAttribute('data-crystal-button') === 'prev') ? t.prevSlide() : t.nextSlide();
+      }
+      if (clsList.contains(t._paginationBtnCls) && index !== t.activeSlide) {
+        t.goToSlide(index);
+      }
+    }
+
+    _mouseEnterHandler(e) {
+      const t       = this;
+      const opts    = t.options;
+
+      if (t.isEnabledOption('play') && t.isEnabledOption('pauseOnHover')) {
+        t.stop();
+      }
+    }
+
+    _mouseLeaveHandler(e) {
+      const t = this;
+
+      if (t.isEnabledOption('play') && t.isEnabledOption('pauseOnHover')) {
+        t.play();
+      }
+    }
+
     _touchStartHandler(e) {
       const t = this;
 
@@ -514,6 +597,10 @@
       t._slider.classList.remove(t._touchCls);
       t._resetDrag();
 
+      if (t.isEnabledOption('play') && !t.isEnabledOption('pauseOnHover')) {
+        t.play();
+      }
+
       if (!coordsResult) {
         return;
       }
@@ -535,22 +622,6 @@
       }
 
       (dragStart > dragEnd) ? t.nextSlide() : t.prevSlide();
-    }
-
-    _mouseClickHandler(e) {
-      const t       = this;
-      const opts    = t.options;
-      const target  = e.target;
-      const clsList = target.classList;
-      const index   = Number(target.getAttribute('data-crystal-button'));
-
-      if (t._isTouched || t._isMove) {
-        return;
-      }
-      if (clsList.contains(t._navBtnCls)) {
-        (target.getAttribute('data-crystal-button') === 'prev') ? t.prevSlide() : t.nextSlide();
-      }
-      if (clsList.contains(t._paginationBtnCls) && index !== t.activeSlide) t.goToSlide(index);
     }
 
     _transitionEndHandler() {
@@ -633,8 +704,13 @@
       const opts = t.options;
 
       if ((t.activeSlide >= t.slidesLength) && !t.isEnabledOption('loop')) {
+        if (t.isEnabledOption('play')) {
+          t.stop();
+        }
+
         return;
       }
+
       if (isFunction(opts.beforeChange)) {
         opts.beforeChange.call(t, t.activeSlide, t.slidesLength);
       }
@@ -654,6 +730,30 @@
 
       t.activeSlide = index;
       t._setActiveSlide();
+    }
+
+    play() {
+      const t = this;
+      const opts = t.options;
+
+      if (!opts.play) {
+        opts.play = true;
+      }
+
+      if (t._playTimer) {
+        clearInterval(t._playTimer);
+      }
+
+      t._playTimer = setInterval(() => t._playSlider(), opts.playInterval);
+    }
+
+    stop() {
+      const t = this;
+
+      if (t.isEnabledOption('play')) {
+        clearInterval(t._playTimer);
+      }
+
     }
 
     isEnabledOption(option) {
