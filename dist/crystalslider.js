@@ -20,7 +20,7 @@
         // Main
         selector           : `.${sliderCls}`,
         activeSlide        : 1,
-        play               : false,
+        autoplay           : false,
         playInterval       : 5000,
         pauseOnHover       : false,
         loop               : true,
@@ -181,8 +181,7 @@
       const t = this;
       const opts = t.options;
 
-      if (t._isTouched /*|| t._isMove*/) {
-        t.stop();
+      if (t._isTouched || t._paused) {
         return;
       }
 
@@ -210,7 +209,7 @@
       t._pagination    = null;
       t._transformX    = null;
       t._touch         = null;
-      t._windowTimer   = null;
+      t._resizeTimer   = null;
       t._playTimer     = null;
 
       if (t.options.draggable === true) {
@@ -244,7 +243,7 @@
 
       // Public read-only properties
       t.slidesLength = t._slides.length;
-      t.activeSlide = t.options.activeSlide;
+      t.activeSlide  = t.options.activeSlide;
 
       if (t.activeSlide < 1 || t.activeSlide > t.slidesLength) {
         throw new Error(`Slide index ${t.activeSlide} does not exist`);
@@ -331,7 +330,7 @@
 
       slider.classList.add(t._sliderReadyCls);
 
-      if (t.isEnabledOption('play')) {
+      if (t.isEnabledOption('autoplay')) {
         t.play();
       }
 
@@ -445,8 +444,10 @@
         t._slider.addEventListener('click', t._mouseClickHandler);
       }
 
-      t._track.addEventListener('mouseenter', t._mouseEnterHandler);
-      t._track.addEventListener('mouseleave', t._mouseLeaveHandler);
+      if (t.isEnabledOption('pauseOnHover')) {
+        t._track.addEventListener('mouseenter', t._mouseEnterHandler);
+        t._track.addEventListener('mouseleave', t._mouseLeaveHandler);
+      }
 
       t._slider.addEventListener(transitionEnd, t._transitionEndHandler);
 
@@ -483,8 +484,10 @@
         slider.removeEventListener('click', t._mouseClickHandler);
       }
 
-      track.removeEventListener('mouseenter', t._mouseEnterHandler);
-      track.removeEventListener('mouseleave', t._mouseLeaveHandler);
+      if (t.isEnabledOption('pauseOnHover')) {
+        track.removeEventListener('mouseenter', t._mouseEnterHandler);
+        track.removeEventListener('mouseleave', t._mouseLeaveHandler);
+      }
 
       if (t.isEnabledOption('draggable')) {
         track.removeEventListener((t._isTouchDevice) ? 'touchstart' : 'mousedown', t._touchStartHandler);
@@ -514,19 +517,19 @@
     }
 
     _mouseEnterHandler(e) {
-      const t       = this;
-      const opts    = t.options;
+      const t    = this;
+      const opts = t.options;
 
-      if (t.isEnabledOption('play') && t.isEnabledOption('pauseOnHover')) {
-        t.stop();
+      if (t.isEnabledOption('pauseOnHover')) {
+        t._paused = true;
       }
     }
 
     _mouseLeaveHandler(e) {
       const t = this;
 
-      if (t.isEnabledOption('play') && t.isEnabledOption('pauseOnHover')) {
-        t.play();
+      if (t.isEnabledOption('pauseOnHover')) {
+        t._paused = false;
       }
     }
 
@@ -597,9 +600,9 @@
       t._slider.classList.remove(t._touchCls);
       t._resetDrag();
 
-      if (t.isEnabledOption('play') && !t.isEnabledOption('pauseOnHover')) {
-        t.play();
-      }
+      // if (e.type === 'mouseup' && t.isEnabledOption('autoplay') && !t.isEnabledOption('pauseOnHover')) {
+      //   t.play();
+      // }
 
       if (!coordsResult) {
         return;
@@ -658,11 +661,11 @@
       const t     = this;
       const track = t._track;
 
-      if (t._windowTimer) {
-        clearTimeout(t._windowTimer);
+      if (t._resizeTimer) {
+        clearTimeout(t._resizeTimer);
       }
 
-      t._windowTimer = setTimeout(function() {
+      t._resizeTimer = setTimeout(function() {
         t.windowWidth = window.innerWidth;
         t._sliderWidth = t._slider.getBoundingClientRect().width;
 
@@ -704,9 +707,10 @@
       const opts = t.options;
 
       if ((t.activeSlide >= t.slidesLength) && !t.isEnabledOption('loop')) {
-        if (t.isEnabledOption('play')) {
-          t.stop();
-        }
+        t._paused = true;
+        // if (t.isEnabledOption('autoplay')) {
+        //   t.stop();
+        // }
 
         return;
       }
@@ -736,10 +740,6 @@
       const t = this;
       const opts = t.options;
 
-      if (!opts.play) {
-        opts.play = true;
-      }
-
       if (t._playTimer) {
         clearInterval(t._playTimer);
       }
@@ -750,7 +750,7 @@
     stop() {
       const t = this;
 
-      if (t.isEnabledOption('play')) {
+      if (t._playTimer) {
         clearInterval(t._playTimer);
       }
 
@@ -792,8 +792,13 @@
       unwrap(t._track);
       unwrap(t._container);
 
-      if (t._windowTimer) {
-        clearTimeout(t._windowTimer);
+      // Clear timers
+      if (t._resizeTimer) {
+        clearTimeout(t._resizeTimer);
+      }
+
+      if (t._playTimer) {
+        clearTimeout(t._playTimer);
       }
     }
 

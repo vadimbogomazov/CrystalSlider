@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Crystal Slider | Autoplay</title>
+
+  <meta name="viewport" content="width=device-width,user-scalable=no">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../dist/crystalslider.min.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <h1 class="page-wrapper__title">Crystal Slider</h1>
+
+    <div class="crystal-slider">
+      <div data-crystal-thumbnail="../assets/img/slide-thumbnail-1.jpg">
+        <img src="../assets/img/slide-1.jpg" alt="">
+      </div>
+      <div data-crystal-thumbnail="../assets/img/slide-thumbnail-2.jpg">
+        <img src="../assets/img/slide-2.jpg" alt="">
+      </div>
+      <div data-crystal-thumbnail="../assets/img/slide-thumbnail-3.jpg">
+        <img src="../assets/img/slide-3.jpg" alt="">
+      </div>
+      <div data-crystal-thumbnail="../assets/img/slide-thumbnail-4.jpg">
+        <img src="../assets/img/slide-4.jpg" alt="">
+      </div>
+    </div>
+
+    <div class="page-section">
+      <p>
+        <button type="button" name="button" id="play">Play</button>
+        <button type="button" name="button" id="stop">Stop</button>
+      </p>
+
+      <h3>JavaScript</h3>
+      <pre><code>const crystalSlider = new CrystalSlider({
+  autoplay: true
+});</code></pre>
+  </div>
+
+  <script src="../dist/crystalslider.min.js"></script>
+  <script>
+    const crystalSlider = new CrystalSlider({
+      autoplay: true,
+      playInterval: 1000,
+      pauseOnHover: true,
+    });
+
+    document.getElementById('play').addEventListener('click', () => {
+      crystalSlider.play();
+    });
+    document.getElementById('stop').addEventListener('click', () => {
+      crystalSlider.stop();
+    });
+  </script>
+</body>
+</html>

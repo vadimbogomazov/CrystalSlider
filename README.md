@@ -1,4 +1,6 @@
 # Crystal Slider
+![version 1.0.0](https://badge.fury.io/gh/vadimbogomazov%2Fcrystalslider.svg)
+
 
 Readme languages: [English](README.md), [Русский](README.ru-Ru.md)
 
@@ -18,6 +20,7 @@ Readme languages: [English](README.md), [Русский](README.ru-Ru.md)
 
 - [Multiple slider instances](examples/multiple.html)
 - [Slider with thumbnails](examples/thumbnails.html)
+- [Autoplay](examples/autoplay.html)
 
 ## Installation
 

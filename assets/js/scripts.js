@@ -19,14 +19,4 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('Slider is ready, ', `active slide – ${activeSlide}, `, `total slides – ${totalSlides}`);
     }
   });
-
-  document.getElementById('play').onclick = function () {
-    crystalSlider.play();
-  }
-
-  document.getElementById('stop').onclick = function () {
-    crystalSlider.stop();
-  }
-
-  // crystalSlider.play();
 });

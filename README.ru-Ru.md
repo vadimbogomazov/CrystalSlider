@@ -1,4 +1,5 @@
 # Crystal Slider
+![версия 1.0.0](https://badge.fury.io/gh/vadimbogomazov%2Fcrystalslider.svg)
 
 Языки руководства: [English](README.md), [Русский](README.ru-Ru.md)
 
@@ -18,6 +19,7 @@
 
 - [Несколько экземпляров слайдера](/examples/multiple.html)
 - [Слайдер с миниатюрами](examples/thumbnails.html)
+- [Смена слайдов с интервалом](examples/autoplay.html)
 
 ## Установка
 
