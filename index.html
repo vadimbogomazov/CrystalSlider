@@ -6,6 +6,9 @@
 
   <meta name="viewport" content="width=device-width,user-scalable=no">
 
+  <meta name="description" content="Crystal Slider - lightweight and simple slider written in vanilla JS">
+	<meta name="keywords" content="crystal, slider, carousel">
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="dist/crystalslider.min.css">
@@ -32,7 +35,7 @@
     <div class="page-section">
       <ul class="info-list">
         <li class="info-list__item">
-          <a href="http://github.com/vadimbogomazov/CrystalSlider/archive/v1.0.0.zip" class="info-list__link">Download</a>
+          <a href="http://github.com/vadimbogomazov/CrystalSlider/archive/v1.1.0.zip" class="info-list__link">Download</a>
         </li>
         <li class="info-list__item">
           <a href="https://github.com/vadimbogomazov/CrystalSlider" class="info-list__link">Github</a>
@@ -47,7 +50,7 @@
         <li>no dependencies;</li>
         <li>responsive;</li>
         <li>touch device support;</li>
-        <li>userfriendly;</li>
+        <li>user-friendly;</li>
       </ul>
 
       <h2>More examples</h2>
@@ -61,6 +64,9 @@
         </li>
         <li>
           <a href="examples/autoplay.html">Autoplay</a>
+        </li>
+        <li>
+          <a href="examples/appendto.html">Append navigation/pagination to custom element</a>
         </li>
       </ul>
 
@@ -112,7 +118,7 @@
         <tr>
           <td>selector</td>
           <td>slider selector</td>
-          <td>String</td>
+          <td>String or DOM element</td>
           <td>.crystal-slider</td>
         </tr>
         <tr>
@@ -126,6 +132,24 @@
           <td>slider loop</td>
           <td>Boolean</td>
           <td>true</td>
+        </tr>
+        <tr>
+          <td>autoplay</td>
+          <td>slider autoplay</td>
+          <td>Boolean</td>
+          <td>false</td>
+        </tr>
+        <tr>
+          <td>playInterval</td>
+          <td>play interval</td>
+          <td>Number</td>
+          <td>5000</td>
+        </tr>
+        <tr>
+          <td>pauseOnHover</td>
+          <td>pause on hover</td>
+          <td>Boolean</td>
+          <td>false</td>
         </tr>
         <tr>
           <td>fade</td>
@@ -195,8 +219,8 @@
         </tr>
         <tr>
           <td>appendNavTo</td>
-          <td></td>
-          <td>String</td>
+          <td>element where the navigation are attached</td>
+          <td>String or DOM element</td>
           <td>null</td>
         </tr>
         <tr>
@@ -210,6 +234,12 @@
           <td>thumbnails (images are taken from the data-attributes of slides)</td>
           <td>Boolean</td>
           <td>false</td>
+        </tr>
+        <tr>
+          <td>appendPaginationTo</td>
+          <td>element where the pagination are attached</td>
+          <td>String or DOM element</td>
+          <td>null</td>
         </tr>
         <tr>
           <td>zIndex</td>
@@ -271,7 +301,7 @@
             play()
           </td>
           <td>
-
+            start auto changing slides
           </td>
         </tr>
         <tr>
@@ -279,7 +309,7 @@
             stop()
           </td>
           <td>
-
+            stop auto changing slides
           </td>
         </tr>
         <tr>
@@ -332,13 +362,21 @@
       <h2>Extra</h2>
 
       <ul>
-        <li>Version: 1.0.0</li>
+        <li>Version: 1.1.0</li>
         <li>License: MIT</li>
       </ul>
     </div>
   </div>
 
   <script src="dist/crystalslider.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js"></script> -->
+<!--   <script>
+      window.requirejs(['dist/crystalslider.min'], function(CrystalSlider) {
+        console.log(window)
+        console.log(CrystalSlider)
+          new CrystalSlider()
+      });
+  </script> -->
   <script src="assets/js/scripts.js"></script>
 </body>
 </html>

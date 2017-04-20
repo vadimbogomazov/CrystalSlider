@@ -2,17 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Crystal Slider | Autoplay</title>
+  <title>Crystal Slider | Append nav and pagination to custom elements</title>
 
   <meta name="viewport" content="width=device-width,user-scalable=no">
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="../dist/crystalslider.min.css">
+
+  <style>
+    .b-nav {
+      text-align: right;
+    }
+
+    .b-pagination {
+      margin-bottom: 20px;
+    }
+
+    .b-pagination .crystal-slider-pagination__inner,
+    .b-nav .crystal-slider-nav__btn {
+      position: static;
+    }
+  </style>
 </head>
 <body>
   <div class="page-wrapper">
     <h1 class="page-wrapper__title">Crystal Slider</h1>
+
+    <div class="b-pagination"></div>
 
     <div class="crystal-slider">
       <div data-crystal-thumbnail="../assets/img/slide-thumbnail-1.jpg">
@@ -30,33 +47,22 @@
     </div>
 
     <div class="page-section">
-      <p>
-        <button type="button" name="button" id="play">Play</button>
-        <button type="button" name="button" id="stop">Stop</button>
-      </p>
+      <div class="b-nav"></div>
 
       <h3>JavaScript</h3>
       <pre><code>const crystalSlider = new CrystalSlider({
-  autoplay: true,
-  pauseOnHover: true,
-  playInterval: 3000
+  appendNavTo: document.querySelector('.b-nav'),
+  appendPaginationTo: '.b-pagination',
+  pagination: true
 });</code></pre>
   </div>
 
   <script src="../dist/crystalslider.min.js"></script>
   <script>
-    var crystalSlider = new CrystalSlider({
-      autoplay: true,
-      playInterval: 3000,
-      pauseOnHover: true,
+    const crystalSlider = new CrystalSlider({
+      appendNavTo: document.querySelector('.b-nav'),
+      appendPaginationTo: '.b-pagination',
       pagination: true,
-    });
-
-    document.getElementById('play').addEventListener('click', () => {
-      crystalSlider.play();
-    });
-    document.getElementById('stop').addEventListener('click', () => {
-      crystalSlider.stop();
     });
   </script>
 </body>

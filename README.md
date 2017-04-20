@@ -1,5 +1,5 @@
 # Crystal Slider
-![version 1.0.0](https://badge.fury.io/gh/vadimbogomazov%2Fcrystalslider.svg)
+![version 1.1.0](https://badge.fury.io/gh/vadimbogomazov%2Fcrystalslider.svg)
 
 
 Readme languages: [English](README.md), [Русский](README.ru-Ru.md)
@@ -10,7 +10,7 @@ Readme languages: [English](README.md), [Русский](README.ru-Ru.md)
 - no dependencies;
 - responsive;
 - touch device support;
-- userfriendly;
+- user-friendly;
 
 ## Demo
 
@@ -21,6 +21,7 @@ Readme languages: [English](README.md), [Русский](README.ru-Ru.md)
 - [Multiple slider instances](examples/multiple.html)
 - [Slider with thumbnails](examples/thumbnails.html)
 - [Autoplay](examples/autoplay.html)
+- [Append navigation/pagination to custom element](examples/appendto.html)
 
 ## Installation
 
@@ -74,6 +75,9 @@ The slider plugin has the following options:
 | selector | slider selector | String | .crystal-slider |
 | activeSlide | active slide index | Number | 1 |
 | loop | slider loop | Boolean | true |
+| autoplay | slider autoplay | Boolean | false |
+| playInterval | play interval | Number | 5000 |
+| pauseOnHover | pause on hover | Boolean | false |
 | fade | fade mode | Boolean | false |
 | duration | animation duration (in ms) | Number | 500 |
 | draggable | slide dragging | Boolean | true |
@@ -85,7 +89,9 @@ The slider plugin has the following options:
 | nav | navigation | Boolean | true |
 | navPrevVal | previous button value | String | Prev |
 | navNextVal | next button value | String | Next |
+| appendNavTo | element where the navigation are attached | String or DOM element | null |
 | pagination | pagination | Boolean | false |
+| appendPaginationTo | element where the pagination are attached | String or DOM element | null |
 | thumbnails | thumbnails (images are taken from the data-attributes of slides) | Boolean | true |
 | zIndex | slide z-index (used in fade mode) | Number | 98 |
 | onReady | callback after slider initiation | Function | |
@@ -99,6 +105,8 @@ The slider plugin has the following options:
 | prevSlide() | slides to the previous slide |
 | nextSlide() | slides to the next slide |
 | goToSlide(index) | slides to a slide with the set index (index {Number}) |
+| play() | start auto changing slides |
+| stop() | stop auto changing slides |
 | isEnabledOption(option) | returns true if the option is enable (option {String}) |
 | destroy() | destroy the slider instance |
 | reinit(options) | slider reinit with new options (options {Object}) |
@@ -107,5 +115,5 @@ The slider plugin has the following options:
 
 ## Extra
 
-- Version: 1.0.0
+- Version: 1.1.0
 - License: MIT

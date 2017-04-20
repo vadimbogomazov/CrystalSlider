@@ -1,5 +1,5 @@
 # Crystal Slider
-![версия 1.0.0](https://badge.fury.io/gh/vadimbogomazov%2Fcrystalslider.svg)
+![версия 1.1.0](https://badge.fury.io/gh/vadimbogomazov%2Fcrystalslider.svg)
 
 Языки руководства: [English](README.md), [Русский](README.ru-Ru.md)
 
@@ -9,7 +9,7 @@
 - без зависимостей;
 - респонсив;
 - поддержка тач устройств;
-- прост в использовании;
+- простой в использовании;
 
 ## Демо
 
@@ -20,6 +20,7 @@
 - [Несколько экземпляров слайдера](/examples/multiple.html)
 - [Слайдер с миниатюрами](examples/thumbnails.html)
 - [Смена слайдов с интервалом](examples/autoplay.html)
+- [Добавление навигации/пагинации к кастомному элементу](examples/appendto.html)
 
 ## Установка
 
@@ -73,6 +74,9 @@ CSS слайдера разделен на стили, необходимые д
 | selector | селектор слайдера | String | .crystal-slider |
 | activeSlide | индекс активного слайда | Number | 1 |
 | loop | цикличность слайдера | Boolean | true |
+| autoplay | автовоспроизведение слайдера | Boolean | false |
+| playInterval | интервал смены слайдов | Number | 5000 |
+| pauseOnHover | пауза при наведении | Boolean | false |
 | fade | fade режим | Boolean | false |
 | duration | продолжительность анимации (в миллисекундах) | Number | 500 |
 | draggable | драг слайдов | Boolean | true |
@@ -84,7 +88,9 @@ CSS слайдера разделен на стили, необходимые д
 | nav | навигация | Boolean | true |
 | navPrevVal | значение кнопки назад | String | Prev |
 | navNextVal | значение кнопки вперед | String | Next |
+| appendNavTo | элемент, куда добавится навигация | String or DOM element | null |
 | pagination | пагинация | Boolean | false |
+| appendPaginationTo | элемент, куда добавится пагинация | String or DOM element | null |
 | thumbnails | миниатюры (изображения берутся из data-атрибутов слайдов) | Boolean | false |
 | zIndex | z-index слайдов (опция используется в fade режиме) | Number | 98 |
 | onReady | callback после инициализации слайдера | Function | |
@@ -98,6 +104,8 @@ CSS слайдера разделен на стили, необходимые д
 | prevSlide() | переход на предыдущий слайд |
 | nextSlide() | переход на следующий слайд |
 | goToSlide(index) | переход на слайд с заданным индексом (index {Number}) |
+| play() | начать автовоспроизведение слайдов |
+| stop() | остановить автовоспроизведение слайдов |
 | isEnabledOption(option) | возвращает true, если опция включена (option {String}) |
 | destroy() | уничтожает экземпляр слайдера |
 | reinit(options) | реинициализация слайдера с новыми опциями (options {Object}) |
@@ -106,5 +114,5 @@ CSS слайдера разделен на стили, необходимые д
 
 ## Дополнительно
 
-- Версия: 1.0.0
+- Версия: 1.1.0
 - Лицензия: MIT
