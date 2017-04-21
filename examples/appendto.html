@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Crystal Slider | Append nav and pagination to custom elements</title>
+  <title>Crystal Slider | Append nav/pagination to custom element</title>
 
   <meta name="viewport" content="width=device-width,user-scalable=no">
 
@@ -63,7 +63,21 @@
       appendNavTo: document.querySelector('.b-nav'),
       appendPaginationTo: '.b-pagination',
       pagination: true,
+
+      afterChange: function (crystalSlider, activeSlide, nextSlide, totalSlides) {
+      	if (activeSlide === 2) {
+      		// crystalSlider.destroy();
+      		crystalSlider.reinit({
+      			autoplay: true,
+      			fade: true,
+      			appendPaginationTo: null,
+            appendNavTo: null,
+      		})
+      	}
+      }
     });
+
+    crystalSlider.destroy();
   </script>
 </body>
 </html>

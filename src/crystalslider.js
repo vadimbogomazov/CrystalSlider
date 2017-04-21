@@ -77,8 +77,6 @@ export default class CrystalSlider {
     t._isTouchDevice = isTouchDevice();
 
     t._init();
-    t._build();
-    t._bindEvents();
   }
 
   // Private methods
@@ -256,6 +254,9 @@ export default class CrystalSlider {
     if (t.activeSlide < 1 || t.activeSlide > t.slidesLength) {
       throw new Error(`Slide index ${t.activeSlide} does not exist`);
     }
+
+    t._build();
+    t._bindEvents();
   }
 
   _build() {
@@ -347,9 +348,9 @@ export default class CrystalSlider {
   }
 
   _createNav() {
-    const t       = this;
-    const opts    = t.options;
-    const nav     = doc.createElement('div');
+    const t    = this;
+    const opts = t.options;
+    const nav  = doc.createElement('div');
 
     nav.classList.add(opts.navCls);
     nav.innerHTML = `
@@ -406,7 +407,7 @@ export default class CrystalSlider {
     ul.appendChild(fragment);
     t._pagination.appendChild(ul);
 
-    if (!opts.appendNavTo) {
+    if (!opts.appendPaginationTo) {
       t._slider.appendChild(t._pagination);
     } else {
       let paginationContainer = (typeof opts.appendPaginationTo === 'string') ? doc.querySelector(opts.appendPaginationTo) : opts.appendPaginationTo;
@@ -711,10 +712,18 @@ export default class CrystalSlider {
     this._updateWidth();
   }
 
+  _playClear() {
+    const t = this;
+
+    if (t._playTimer) {
+      clearInterval(t._playTimer);
+    }
+  }
+
   // Public methods
   prevSlide() {
-    const t    = this;
-    const opts = t.options;
+    const t       = this;
+    const opts    = t.options;
     let nextSlide = t.activeSlide - 1;
 
     if (t.activeSlide <= 1 && !t.isEnabledOption('loop')) {
@@ -734,8 +743,8 @@ export default class CrystalSlider {
   }
 
   nextSlide() {
-    const t    = this;
-    const opts = t.options;
+    const t       = this;
+    const opts    = t.options;
     let nextSlide = t.activeSlide + 1;
 
     if ((t.activeSlide >= t.slidesLength) && !t.isEnabledOption('loop')) {
@@ -788,20 +797,13 @@ export default class CrystalSlider {
     t._playClear();
   }
 
-  _playClear() {
-    const t = this;
-
-    if (t._playTimer) {
-      clearInterval(t._playTimer);
-    }
-  }
-
   isEnabledOption(option) {
     return (this.options[option] === true) || false;
   }
 
   destroy() {
     const t = this;
+    const opts = t.options;
     const slider = t._slider;
     const track = t._track;
 
@@ -821,6 +823,7 @@ export default class CrystalSlider {
     }
 
     if (t.isEnabledOption('pagination')) {
+      console.log(t._pagination.parentNode)
       removeElem(t._pagination);
     }
 
@@ -850,8 +853,6 @@ export default class CrystalSlider {
     }
 
     t._init();
-    t._build();
-    t._bindEvents();
 
     if (t.isEnabledOption('adaptiveHeight')) {
       t._setHeight();
@@ -871,6 +872,7 @@ function mergeObjects() {
       resObj[keys[j]] = obj[keys[j]];
     }
   }
+
   return resObj;
 }
 

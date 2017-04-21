@@ -451,7 +451,9 @@ img {
 }
 
 .info-list {
+  display: -ms-flexbox;
   display: flex;
+  -ms-flex-pack: center;
   justify-content: center;
   list-style: none;
   margin-left: -32px;
