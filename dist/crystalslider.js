@@ -491,9 +491,9 @@ export default class CrystalSlider {
   }
 
   _unbindEvents() {
-    const t = this;
+    const t      = this;
     const slider = t._slider;
-    const track = t._track;
+    const track  = t._track;
 
     // Remove listeners
     if (t.isEnabledOption('keyboard')) {
@@ -802,10 +802,10 @@ export default class CrystalSlider {
   }
 
   destroy() {
-    const t = this;
-    const opts = t.options;
+    const t      = this;
+    const opts   = t.options;
     const slider = t._slider;
-    const track = t._track;
+    const track  = t._track;
 
     // Remove attributes
     slider.removeAttribute('id')
@@ -823,7 +823,6 @@ export default class CrystalSlider {
     }
 
     if (t.isEnabledOption('pagination')) {
-      console.log(t._pagination.parentNode)
       removeElem(t._pagination);
     }
 

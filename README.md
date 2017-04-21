@@ -113,7 +113,6 @@ The slider plugin has the following options:
 | activeSlide | active slide index (read only) |
 | slidesLength | number of slides (read only) |
 
-## Extra
+## License
 
-- Version: 1.1.0
-- License: MIT
+MIT

@@ -62,19 +62,7 @@
     const crystalSlider = new CrystalSlider({
       appendNavTo: document.querySelector('.b-nav'),
       appendPaginationTo: '.b-pagination',
-      pagination: true,
-
-      afterChange: function (crystalSlider, activeSlide, nextSlide, totalSlides) {
-      	if (activeSlide === 2) {
-      		// crystalSlider.destroy();
-      		crystalSlider.reinit({
-      			autoplay: true,
-      			fade: true,
-      			appendPaginationTo: null,
-            appendNavTo: null,
-      		})
-      	}
-      }
+      pagination: true
     });
 
     crystalSlider.destroy();
