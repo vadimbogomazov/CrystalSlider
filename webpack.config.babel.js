@@ -26,11 +26,11 @@ module.exports = {
   },
 
   plugins: [
-    // new webpack.optimize.UglifyJsPlugin({
-    // 	sourceMap: true,
-    //   compress: {
-    //     warnings: false
-    //   }
-    // })
+    new webpack.optimize.UglifyJsPlugin({
+    	sourceMap: true,
+      compress: {
+        warnings: false
+      }
+    })
   ]
 };

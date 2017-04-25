@@ -32,16 +32,16 @@
     <div class="b-pagination"></div>
 
     <div class="crystal-slider">
-      <div data-crystal-thumbnail="../assets/img/slide-thumbnail-1.jpg">
+      <div>
         <img src="../assets/img/slide-1.jpg" alt="">
       </div>
-      <div data-crystal-thumbnail="../assets/img/slide-thumbnail-2.jpg">
+      <div>
         <img src="../assets/img/slide-2.jpg" alt="">
       </div>
-      <div data-crystal-thumbnail="../assets/img/slide-thumbnail-3.jpg">
+      <div>
         <img src="../assets/img/slide-3.jpg" alt="">
       </div>
-      <div data-crystal-thumbnail="../assets/img/slide-thumbnail-4.jpg">
+      <div>
         <img src="../assets/img/slide-4.jpg" alt="">
       </div>
     </div>
@@ -62,22 +62,8 @@
     const crystalSlider = new CrystalSlider({
       appendNavTo: document.querySelector('.b-nav'),
       appendPaginationTo: '.b-pagination',
-      pagination: true,
-
-      afterChange: function (crystalSlider, activeSlide, nextSlide, totalSlides) {
-      	if (activeSlide === 2) {
-      		// crystalSlider.destroy();
-      		crystalSlider.reinit({
-      			autoplay: true,
-      			fade: true,
-      			appendPaginationTo: null,
-            appendNavTo: null,
-      		})
-      	}
-      }
+      pagination: true
     });
-
-    crystalSlider.destroy();
   </script>
 </body>
 </html>

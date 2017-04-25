@@ -6,7 +6,8 @@
 'use strict';
 
 const doc           = document;
-const transform     = transformProp();
+const transform     = setProperty('transform');
+const transition    = setProperty('transition');
 const transitionEnd = transitionEndEventName();
 const sliderCls     = 'crystal-slider';
 
@@ -81,11 +82,11 @@ export default class CrystalSlider {
 
   // Private methods
   _setPosition(changeSlide = true) {
-    const t = this;
-    const opts = t.options;
-    const slides = t._slides;
+    const t              = this;
+    const opts           = t.options;
+    const slides         = t._slides;
     const containerStyle = t._container.style;
-    const trackStyle = t._track.style;
+    const trackStyle     = t._track.style;
 
     t._isMove = true;
 
@@ -93,22 +94,18 @@ export default class CrystalSlider {
       t._transformX = Math.ceil(-t._sliderWidth * (t.activeSlide - 1));
 
       trackStyle[transform] = `translate3d(${t._transformX}px, 0, 0)`;
-      trackStyle.webkitTransition = `-webkit-transform ${opts.duration}ms ${opts.easing}`;
-      trackStyle.transition = `transform ${opts.duration}ms ${opts.easing}`;
+      trackStyle[transition] = `transform ${opts.duration}ms ${opts.easing}`;
     }
 
     if (t.isEnabledOption('adaptiveHeight')) {
-      containerStyle.webkitTransition = `height ${opts.duration}ms ${opts.easing}`;
-      containerStyle.transition = `height ${opts.duration}ms ${opts.easing}`;
+      containerStyle[transition] = `height ${opts.duration}ms ${opts.easing}`;
     }
 
     setTimeout(() => {
-      trackStyle.webkitTransition = '';
-      trackStyle.transition = '';
+      trackStyle[transition] = '';
 
       if (t.isEnabledOption('adaptiveHeight')) {
-        containerStyle.webkitTransition = '';
-        containerStyle.transition = '';
+        containerStyle[transition] = '';
       }
 
       t._isMove = false;
@@ -823,7 +820,6 @@ export default class CrystalSlider {
     }
 
     if (t.isEnabledOption('pagination')) {
-      console.log(t._pagination.parentNode)
       removeElem(t._pagination);
     }
 
@@ -876,16 +872,20 @@ function mergeObjects() {
   return resObj;
 }
 
-function transformProp() {
+function setProperty(prop) {
   const elem = doc.createElement('div');
 
-  if (elem.style.transform === null) {
-    if (elem.style['WebkitTransform'] !== undefined) {
-      return 'WebkitTransform';
+  if (elem.style[prop] === null) {
+    if (elem.style['Webkit' + capitalizeFirstLetter(prop)] !== undefined) {
+      return 'Webkit' + capitalizeFirstLetter(prop);
     }
   }
 
-  return 'transform';
+  return prop;
+}
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function transitionEndEventName() {

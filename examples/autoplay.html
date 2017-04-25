@@ -15,16 +15,16 @@
     <h1 class="page-wrapper__title">Crystal Slider</h1>
 
     <div class="crystal-slider">
-      <div data-crystal-thumbnail="../assets/img/slide-thumbnail-1.jpg">
+      <div>
         <img src="../assets/img/slide-1.jpg" alt="">
       </div>
-      <div data-crystal-thumbnail="../assets/img/slide-thumbnail-2.jpg">
+      <div>
         <img src="../assets/img/slide-2.jpg" alt="">
       </div>
-      <div data-crystal-thumbnail="../assets/img/slide-thumbnail-3.jpg">
+      <div>
         <img src="../assets/img/slide-3.jpg" alt="">
       </div>
-      <div data-crystal-thumbnail="../assets/img/slide-thumbnail-4.jpg">
+      <div>
         <img src="../assets/img/slide-4.jpg" alt="">
       </div>
     </div>
@@ -47,9 +47,8 @@
   <script>
     var crystalSlider = new CrystalSlider({
       autoplay: true,
-      playInterval: 3000,
       pauseOnHover: true,
-      pagination: true,
+      playInterval: 3000
     });
 
     document.getElementById('play').addEventListener('click', () => {

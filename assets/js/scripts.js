@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     keyboard: true,
     pagination: true,
     titles: true,
-    play: false,
+    autoplay: true,
 
     beforeChange: function(crystalSlider, activeSlide, nextSlide, totalSlides) {
       console.log('Before change slider, ', 'active slide – ' + activeSlide, ', next slide - ' + nextSlide, ', total slides – ' + totalSlides);
