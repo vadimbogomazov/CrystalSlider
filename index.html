@@ -6,6 +6,9 @@
 
   <meta name="viewport" content="width=device-width,user-scalable=no">
 
+  <meta name="description" content="Crystal Slider - lightweight and simple slider written in vanilla JS">
+	<meta name="keywords" content="crystal, slider, carousel">
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="dist/crystalslider.min.css">
@@ -30,6 +33,15 @@
     </div>
 
     <div class="page-section">
+      <ul class="info-list">
+        <li class="info-list__item">
+          <a href="http://github.com/vadimbogomazov/CrystalSlider/archive/v1.1.0.zip" class="info-list__link">Download</a>
+        </li>
+        <li class="info-list__item">
+          <a href="https://github.com/vadimbogomazov/CrystalSlider" class="info-list__link">Github</a>
+        </li>
+      </ul>
+
       <p>Readme languages: <a href="index.html">English</a>, <a href="index.ru.html">Русский</a></p>
 
       <h2>Features</h2>
@@ -38,7 +50,7 @@
         <li>no dependencies;</li>
         <li>responsive;</li>
         <li>touch device support;</li>
-        <li>userfriendly;</li>
+        <li>user-friendly;</li>
       </ul>
 
       <h2>More examples</h2>
@@ -49,6 +61,12 @@
         </li>
         <li>
           <a href="examples/thumbnails.html">Slider with thumbnails navigation</a>
+        </li>
+        <li>
+          <a href="examples/autoplay.html">Autoplay</a>
+        </li>
+        <li>
+          <a href="examples/appendto.html">Append navigation/pagination to custom element</a>
         </li>
       </ul>
 
@@ -100,7 +118,7 @@
         <tr>
           <td>selector</td>
           <td>slider selector</td>
-          <td>String</td>
+          <td>String or DOM element</td>
           <td>.crystal-slider</td>
         </tr>
         <tr>
@@ -114,6 +132,24 @@
           <td>slider loop</td>
           <td>Boolean</td>
           <td>true</td>
+        </tr>
+        <tr>
+          <td>autoplay</td>
+          <td>slider autoplay</td>
+          <td>Boolean</td>
+          <td>false</td>
+        </tr>
+        <tr>
+          <td>playInterval</td>
+          <td>play interval</td>
+          <td>Number</td>
+          <td>5000</td>
+        </tr>
+        <tr>
+          <td>pauseOnHover</td>
+          <td>pause on hover</td>
+          <td>Boolean</td>
+          <td>false</td>
         </tr>
         <tr>
           <td>fade</td>
@@ -182,6 +218,12 @@
           <td>Next</td>
         </tr>
         <tr>
+          <td>appendNavTo</td>
+          <td>element where the navigation are attached</td>
+          <td>String or DOM element</td>
+          <td>null</td>
+        </tr>
+        <tr>
           <td>pagination</td>
           <td>pagination</td>
           <td>Boolean</td>
@@ -192,6 +234,12 @@
           <td>thumbnails (images are taken from the data-attributes of slides)</td>
           <td>Boolean</td>
           <td>false</td>
+        </tr>
+        <tr>
+          <td>appendPaginationTo</td>
+          <td>element where the pagination are attached</td>
+          <td>String or DOM element</td>
+          <td>null</td>
         </tr>
         <tr>
           <td>zIndex</td>
@@ -250,6 +298,22 @@
         </tr>
         <tr>
           <td>
+            play()
+          </td>
+          <td>
+            start auto changing slides
+          </td>
+        </tr>
+        <tr>
+          <td>
+            stop()
+          </td>
+          <td>
+            stop auto changing slides
+          </td>
+        </tr>
+        <tr>
+          <td>
             isEnabledOption(option)
           </td>
           <td>
@@ -298,7 +362,7 @@
       <h2>Extra</h2>
 
       <ul>
-        <li>Version: 1.0.0</li>
+        <li>Version: 1.1.0</li>
         <li>License: MIT</li>
       </ul>
     </div>

@@ -6,6 +6,9 @@
 
   <meta name="viewport" content="width=device-width,user-scalable=no">
 
+  <meta name="description" content="Crystal Slider - легкий и простой слайдер, написанный на чистом JS">
+  <meta name="keywords" content="слайдер, карусель">
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="dist/crystalslider.min.css">
@@ -30,6 +33,15 @@
     </div>
 
     <div class="page-section">
+      <ul class="info-list">
+        <li class="info-list__item">
+          <a href="http://github.com/vadimbogomazov/CrystalSlider/archive/v1.1.0.zip" class="info-list__link">Download</a>
+        </li>
+        <li class="info-list__item">
+          <a href="https://github.com/vadimbogomazov/CrystalSlider" class="info-list__link">Github</a>
+        </li>
+      </ul>
+
       <p>Языки руководства: <a href="index.html">English</a>, <a href="index.ru.html">Русский</a></p>
 
       <h2>Особенности</h2>
@@ -38,7 +50,7 @@
         <li>без зависимостей;</li>
         <li>респонсив;</li>
         <li>поддержка тач устройств;</li>
-        <li>прост в использовании;</li>
+        <li>простой в использовании;</li>
       </ul>
 
       <h2>Больше примеров</h2>
@@ -49,6 +61,12 @@
         </li>
         <li>
           <a href="examples/thumbnails.html">Слайдер с миниатюрами</a>
+        </li>
+        <li>
+          <a href="examples/autoplay.html">Смена слайдов с интервалом</a>
+        </li>
+        <li>
+          <a href="examples/appendto.html">Добавление навигации/пагинации к кастомному элементу</a>
         </li>
       </ul>
 
@@ -117,6 +135,24 @@
           <td>true</td>
         </tr>
         <tr>
+          <td>autoplay</td>
+          <td>автовоспроизведение слайдера</td>
+          <td>Boolean</td>
+          <td>false</td>
+        </tr>
+        <tr>
+          <td>playInterval</td>
+          <td>интервал смены слайдов</td>
+          <td>Number</td>
+          <td>5000</td>
+        </tr>
+        <tr>
+          <td>pauseOnHover</td>
+          <td>пауза при наведении</td>
+          <td>Boolean</td>
+          <td>false</td>
+        </tr>
+        <tr>
           <td>fade</td>
           <td>fade режим</td>
           <td>Boolean</td>
@@ -183,10 +219,22 @@
           <td>Next</td>
         </tr>
         <tr>
+          <td>appendNavTo</td>
+          <td>элемент, куда добавится навигация</td>
+          <td>String or DOM element</td>
+          <td>null</td>
+        </tr>
+        <tr>
           <td>pagination</td>
           <td>пагинация</td>
           <td>Boolean</td>
           <td>false</td>
+        </tr>
+        <tr>
+          <td>appendPaginationTo</td>
+          <td>элемент, куда добавится пагинация</td>
+          <td>String or DOM element</td>
+          <td>null</td>
         </tr>
         <tr>
           <td>thumbnails</td>
@@ -251,6 +299,22 @@
         </tr>
         <tr>
           <td>
+            play()
+          </td>
+          <td>
+            начать автовоспроизведение слайдов
+          </td>
+        </tr>
+        <tr>
+          <td>
+            stop()
+          </td>
+          <td>
+            остановить автовоспроизведение слайдов
+          </td>
+        </tr>
+        <tr>
+          <td>
             isEnabledOption(option)
           </td>
           <td>
@@ -299,7 +363,7 @@
       <h2>Дополнительно</h2>
 
       <ul>
-        <li>Версия: 1.0.0</li>
+        <li>Версия: 1.1.0</li>
         <li>Лицензия: MIT</li>
       </ul>
     </div>
