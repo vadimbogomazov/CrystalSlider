@@ -1,5 +1,5 @@
 # Crystal Slider
-![version 1.1.0](https://badge.fury.io/gh/vadimbogomazov%2Fcrystalslider.svg)
+![version 1.1.0](https://badge.fury.io/gh/vadimbogomazov%2FCrystalSlider.svg)
 
 
 Readme languages: [English](README.md), [Русский](README.ru-Ru.md)
