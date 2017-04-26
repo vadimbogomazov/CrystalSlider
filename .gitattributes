@@ -1,0 +1,3 @@
+assets/* linguist-vendored
+examples/* linguist-vendored
+dist/*.css linguist-vendored
