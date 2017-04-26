@@ -25,6 +25,10 @@ Readme languages: [English](README.md), [Русский](README.ru-Ru.md)
 
 ## Installation
 
+Install via NPM:
+
+``` npm install crystalslider ```
+
 ### Create HTML markup
 
 Create `<div class="crystal-slider">` and `<div>` inside for each slide:
